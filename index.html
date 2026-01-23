@@ -884,7 +884,10 @@ function bindGuardActionsBA(){
       btnPay.onclick = ()=> requireAuthBA(()=> payPublish());
     }
   }
-  window.BA_OPEN_POST = openPost;
+// =============================
+// EXPOSE ACTIONS (GLOBAL)
+// =============================
+window.BA_OPEN_POST = openPost;
 window.BA_CREATE_DRAFT = createDraft;
 window.BA_PAY_PUBLISH = payPublish;
 
