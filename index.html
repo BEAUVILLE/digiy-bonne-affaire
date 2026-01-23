@@ -775,7 +775,11 @@ function money(x){
 function waLink(phone, msg){
   const p = String(phone||"").replace(/[^\d]/g,"");
   return "https://wa.me/" + p + "?text=" + encodeURIComponent(msg||"");
-}
+}function loadCtx(){
+  const s = window.DIGIY_GUARD?.getSession?.() || {};
+  if(s.slug) localStorage.setItem("DIGIY_SLUG", s.slug);
+  if(s.owner_id) localStorage.setItem("DIGIY_PRO_ID", s.owner_id);
+}    
 
 // =============================
 // EXEMPLES VITRINE (12)
