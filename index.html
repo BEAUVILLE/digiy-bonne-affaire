@@ -633,11 +633,21 @@
           else location.href = "https://beauville.github.io/mon-espace-digiy/";
         };
       }
-      const cockpit = $("btnCockpit");
-if(cockpit){
-  const u = new URL("./cockpit.html", location.href);
-  if(CTX.slug) u.searchParams.set("slug", CTX.slug);
-  cockpit.href = u.toString();
+ // ✅ Cockpit PRO (aucune redirection auto, clic explicite)
+const cockpit = $("btnCockpit");
+if (cockpit) {
+  cockpit.style.pointerEvents = "auto";
+  cockpit.style.cursor = "pointer";
+
+  cockpit.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    // IMPORTANT: mets le vrai fichier cockpit ici
+    const target = withSlug("./cockpit.html"); 
+    location.href = target;
+  }, { passive: false });
+}
 }
       const fab = $("fabBack");
       if(fab){
