@@ -97,7 +97,7 @@
 
         toast("Connexion…", "");
         try{
-          const r = await window.DIGIY_GUARD.loginWithPin(slug, phone, pin);
+          const r = await window.DIGIY_GUARD.loginWithPin(phone, pin);
           if(r?.ok){
             toast("✅ Connecté.", "ok");
             setTimeout(()=> location.href = next, 220);
