@@ -840,50 +840,117 @@
     }
   }
 
-  // 🔒 Verrouille publier + draft + payer
  // =============================
+// GUARD BA — COMPLET (Public free / Post locked)
+// =============================
+const CTX = { slug:"", owner_id:"" };
+
+function setStatus(t){
+  const el = document.getElementById("guard_status");
+  if(el) el.textContent = t;
+}
+function hideStatus(){
+  const el = document.getElementById("guard_status");
+  if(el) el.style.display = "none";
+}
+
+function loadCtxBA(){
+  const urlSlug = (typeof qp === "function" ? qp("slug") : "");
+  const gSlug = window.DIGIY_GUARD?.getSlug?.() || "";
+  const s = window.DIGIY_GUARD?.getSession?.() || null;
+
+  CTX.slug = (urlSlug || gSlug || localStorage.getItem("DIGIY_SLUG") || "").trim();
+  CTX.owner_id = (s?.owner_id || localStorage.getItem("DIGIY_PRO_ID") || "").trim();
+
+  const pill = document.getElementById("pillCtx");
+  if(pill) pill.textContent = "slug: " + (CTX.slug || "—");
+
+  const pSlug = document.getElementById("pSlug");
+  const pOwner = document.getElementById("pOwner");
+  if(pSlug && !pSlug.value) pSlug.value = CTX.slug || "";
+  if(pOwner && !pOwner.value) pOwner.value = CTX.owner_id || "";
+}
+
+function isAuthedBA(){
+  if(CTX.owner_id) return true;
+  if(window.DIGIY_GUARD?.isAuth) return !!window.DIGIY_GUARD.isAuth();
+  const s = window.DIGIY_GUARD?.getSession?.();
+  return !!(s && s.owner_id);
+}
+
+function requireAuthBA(action){
+  if(isAuthedBA()) return action();
+
+  const next = encodeURIComponent(location.pathname + location.search + location.hash);
+  location.href = "./pin.html?next=" + next;
+}
+
+async function bootGuardBA(){
+  try{
+    setStatus("🔐 Vérification…");
+
+    if(window.DIGIY_GUARD?.boot){
+      const r = await window.DIGIY_GUARD.boot({ login: "./pin.html" });
+      if(r?.ok) setStatus("✅ Connecté");
+      else setStatus("ℹ️ Public");
+    }else{
+      setStatus("ℹ️ Public");
+    }
+
+    loadCtxBA();
+    setTimeout(hideStatus, 550);
+  }catch(e){
+    console.warn("GUARD BA public:", e);
+    setStatus("ℹ️ Public");
+    loadCtxBA();
+    setTimeout(hideStatus, 550);
+  }
+}
+
+// =============================
+// ACTIONS — SAFE RESOLVE (zéro scope bug)
+// =============================
+// On "résout" les fonctions au moment du clic, donc même si openPost/createDraft/payPublish
+// sont définies plus bas dans le fichier, ça marche.
+function wireBAActions(){
+  window.BA_OPEN_POST = ()=> (typeof openPost === "function" ? openPost() : console.warn("openPost() manquant"));
+  window.BA_CREATE_DRAFT = ()=> (typeof createDraft === "function" ? createDraft() : console.warn("createDraft() manquant"));
+  window.BA_PAY_PUBLISH = ()=> (typeof payPublish === "function" ? payPublish() : console.warn("payPublish() manquant"));
+}
+
+// =============================
 // BIND GUARD ACTIONS (SAFE)
 // =============================
 function bindGuardActionsBA(){
 
-  const btnOpen = $("btnOpenPost");
+  const btnOpen = document.getElementById("btnOpenPost");
   if(btnOpen){
     btnOpen.addEventListener("click", (e)=>{
       e.preventDefault();
       e.stopPropagation();
-      requireAuthBA(()=> window.BA_OPEN_POST && window.BA_OPEN_POST());
+      requireAuthBA(()=> window.BA_OPEN_POST());
     }, true);
   }
 
-  const btnDraft = $("btnCreateDraft");
+  const btnDraft = document.getElementById("btnCreateDraft");
   if(btnDraft){
     btnDraft.addEventListener("click", (e)=>{
       e.preventDefault();
       e.stopPropagation();
-      requireAuthBA(()=> window.BA_CREATE_DRAFT && window.BA_CREATE_DRAFT());
+      requireAuthBA(()=> window.BA_CREATE_DRAFT());
     }, true);
   }
 
-  const btnPay = $("btnPayPublish");
+  const btnPay = document.getElementById("btnPayPublish");
   if(btnPay){
     btnPay.addEventListener("click", (e)=>{
       e.preventDefault();
       e.stopPropagation();
-      requireAuthBA(()=> window.BA_PAY_PUBLISH && window.BA_PAY_PUBLISH());
+      requireAuthBA(()=> window.BA_PAY_PUBLISH());
     }, true);
   }
 }
 
-    const btnDraft = $("btnCreateDraft");
-    if(btnDraft){
-      btnDraft.onclick = ()=> requireAuthBA(()=> createDraft());
-    }
-
-    const btnPay = $("btnPayPublish");
-    if(btnPay){
-      btnPay.onclick = ()=> requireAuthBA(()=> payPublish());
-    }
-  }
 // =============================
 // EXPOSE ACTIONS (GLOBAL)
 // =============================
