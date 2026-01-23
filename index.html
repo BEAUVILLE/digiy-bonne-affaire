@@ -9,7 +9,7 @@
   <!-- Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <!-- Guard (optionnel) -->
-  <script src="./guard.js?v=ba-mix-3-report"></script>
+  <script src="./guard.js?v=ba-v2-pack-report"></script>
 
   <style>
     :root{
@@ -99,15 +99,15 @@
       border-radius:22px;border:1px solid rgba(148,163,184,0.6);
       padding:16px 16px 14px;
       box-shadow:0 18px 44px rgba(15,23,42,0.95);
-      display:flex;flex-direction:column;gap:8px;
+      display:flex;flex-direction:column;gap:10px;
     }
     .hero-title{font-size:26px;font-weight:900;color:var(--accent-main)}
     .hero-title span{color:var(--accent-green)}
     .hero-sub{
-      font-size:16px;color:#e5e7eb;max-width:760px;font-weight:500;line-height:1.6;
+      font-size:16px;color:#e5e7eb;max-width:820px;font-weight:500;line-height:1.6;
     }
     .hero-sub strong{font-weight:800;color:var(--accent-green)}
-    .hero-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:4px}
+    .hero-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:2px}
     .hero-tag{
       font-size:13px;padding:5px 11px;border-radius:999px;
       border:1px solid rgba(148,163,184,0.7);
@@ -116,13 +116,14 @@
     }
     .hero-tag strong{color:var(--accent-main);font-weight:800}
 
-    .hero-cta-row{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px}
+    .hero-cta-row{display:flex;flex-wrap:wrap;gap:8px}
     .hero-cta-btn{
       border:none;border-radius:999px;padding:10px 16px;
       font-size:14px;font-weight:900;cursor:pointer;
       display:inline-flex;align-items:center;gap:8px;text-decoration:none;
       white-space:nowrap;background:linear-gradient(135deg,#f97316,#ea580c);
       color:#111827;box-shadow:0 7px 18px rgba(249,115,22,0.55);
+      transition:all .25s;
     }
     .hero-cta-btn:hover{transform:translateY(-1px);box-shadow:0 11px 26px rgba(249,115,22,0.7)}
     .hero-cta-btn-secondary{
@@ -130,8 +131,67 @@
       text-decoration:none;display:inline-flex;align-items:center;gap:8px;cursor:pointer;
       background:rgba(15,23,42,0.98);color:#e5e7eb;border:1px solid rgba(148,163,184,0.8);
       white-space:nowrap;
+      transition:all .25s;
     }
-    .hero-cta-btn-secondary:hover{border-color:var(--accent-main)}
+    .hero-cta-btn-secondary:hover{border-color:var(--accent-main);transform:translateY(-1px)}
+    .toast{
+      padding:10px 12px;border-radius:14px;
+      border:1px solid rgba(148,163,184,0.45);
+      background:rgba(0,0,0,.22);
+      font-weight:900;font-size:12px;
+      min-height:18px;
+    }
+    .toast.ok{border-color:rgba(34,197,94,0.55)}
+    .toast.bad{border-color:rgba(249,115,115,0.55)}
+
+    /* ✅ Publication individuelle (non-pro) */
+    .solo{
+      margin-top:6px;
+      background:rgba(15,23,42,0.92);
+      border:1px solid rgba(148,163,184,0.55);
+      border-radius:18px;
+      padding:12px;
+      box-shadow:0 16px 38px rgba(15,23,42,0.75);
+      display:flex;flex-direction:column;gap:10px;
+    }
+    .soloTop{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:flex-start}
+    .soloTitle{font-size:15px;font-weight:1000;color:var(--accent-soft)}
+    .soloSub{font-size:12px;color:rgba(203,213,245,.92);font-weight:800;line-height:1.5;max-width:900px}
+    .soloGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+    @media(max-width:900px){.soloGrid{grid-template-columns:repeat(2,minmax(0,1fr));}}
+    @media(max-width:640px){.soloGrid{grid-template-columns:1fr;}}
+    .soloCard{
+      background:radial-gradient(circle at top,rgba(15,23,42,0.98),#020617);
+      border:1px solid rgba(148,163,184,0.65);
+      border-radius:16px;
+      padding:12px;
+      box-shadow:0 12px 28px rgba(15,23,42,0.9);
+      display:flex;flex-direction:column;gap:6px;
+    }
+    .soloCard.reco{
+      border-color:rgba(250,204,21,0.75);
+      box-shadow:0 16px 40px rgba(250,204,21,0.18);
+    }
+    .soloBadge{
+      align-self:flex-start;
+      font-size:11px;font-weight:1000;
+      padding:3px 8px;border-radius:999px;
+      border:1px solid rgba(148,163,184,0.65);
+      background:rgba(3,7,18,0.65);
+      color:rgba(203,213,245,.92);
+      letter-spacing:.05em;
+      text-transform:uppercase;
+    }
+    .soloName{font-size:14px;font-weight:1000;color:#e5e7eb}
+    .soloPrice{font-size:18px;font-weight:1000;color:var(--accent-green)}
+    .soloLine{font-size:12px;color:#e5e7eb;font-weight:700;line-height:1.35}
+    .soloLine::before{content:"•";color:var(--accent-main);margin-right:6px}
+    .soloNote{
+      font-size:11px;color:rgba(203,213,245,.88);
+      font-weight:800;line-height:1.45;
+      border-top:1px dashed rgba(148,163,184,.28);
+      padding-top:8px;
+    }
 
     /* FILTER BAR */
     .filters{
@@ -171,24 +231,14 @@
       color:#e5e7eb;border:1px solid rgba(148,163,184,0.9);
       font-size:13px;
     }
-    .btn-outline:hover{border-color:var(--accent-main)}
+    .btn-outline:hover{border-color:var(--accent-main);transform:translateY(-1px)}
     .pill{
       font-size:12px;padding:5px 10px;border-radius:999px;
       border:1px solid rgba(148,163,184,0.6);
       color:var(--muted);font-weight:800;background:rgba(3,7,18,0.75);
     }
-    .toast{
-      margin-top:10px;
-      padding:10px 12px;border-radius:14px;
-      border:1px solid rgba(148,163,184,0.45);
-      background:rgba(0,0,0,.22);
-      font-weight:900;font-size:12px;
-      min-height:18px;
-    }
-    .toast.ok{border-color:rgba(34,197,94,0.55)}
-    .toast.bad{border-color:rgba(249,115,115,0.55)}
 
-    /* PRICING */
+    /* PRICING PRO */
     .pricing{
       margin-top:4px;
       background:radial-gradient(circle at top right,rgba(34,197,94,0.12),rgba(3,7,18,0.98));
@@ -202,10 +252,7 @@
     .pricing-sub strong{color:var(--accent-main);font-weight:800}
     .pricing-grid{margin-top:8px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
     @media(max-width:900px){.pricing-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
-    @media(max-width:640px){
-      .app{border-radius:0;border:none;box-shadow:none}
-      .pricing-grid{grid-template-columns:1fr}
-    }
+    @media(max-width:640px){.pricing-grid{grid-template-columns:1fr}}
     .pricing-card{
       background:radial-gradient(circle at top,rgba(15,23,42,0.98),#020617);
       border-radius:18px;border:1px solid rgba(148,163,184,0.75);
@@ -247,7 +294,7 @@
       gap:10px;
       position:relative;
       overflow:hidden;
-      min-height: 430px;
+      min-height: 450px;
     }
     .shop-card::before{
       content:"";
@@ -344,7 +391,7 @@
       user-select:none;pointer-events:none;
     }
 
-    /* ✅ Badge confiance */
+    /* ✅ Badges listing */
     .trust-badge{
       display:inline-flex;align-items:center;gap:6px;
       padding:5px 9px;border-radius:999px;
@@ -352,6 +399,33 @@
       color:#bbf7d0;
       background:rgba(34,197,94,.16);
       border:1px solid rgba(34,197,94,.55);
+      white-space:nowrap;
+    }
+    .paid-badge{
+      display:inline-flex;align-items:center;gap:6px;
+      padding:5px 9px;border-radius:999px;
+      font-size:11px;font-weight:1000;
+      color:#fde68a;
+      background:rgba(250,204,21,.12);
+      border:1px solid rgba(250,204,21,.45);
+      white-space:nowrap;
+    }
+    .days-badge{
+      display:inline-flex;align-items:center;gap:6px;
+      padding:5px 9px;border-radius:999px;
+      font-size:11px;font-weight:1000;
+      color:#bae6fd;
+      background:rgba(56,189,248,.12);
+      border:1px solid rgba(56,189,248,.35);
+      white-space:nowrap;
+    }
+    .boost-badge{
+      display:inline-flex;align-items:center;gap:6px;
+      padding:5px 9px;border-radius:999px;
+      font-size:11px;font-weight:1000;
+      color:#fecaca;
+      background:rgba(249,115,115,.10);
+      border:1px solid rgba(249,115,115,.35);
       white-space:nowrap;
     }
 
@@ -447,22 +521,74 @@
         <div class="hero-title">
           DIGIY BONNE AFFAIRE <span>0% Commission</span>
         </div>
+
         <div class="hero-sub">
           Achète et vends entre particuliers, trouve des <strong>services terrain</strong>,
-          et des <strong>offres PRO</strong>.
-          Contact direct via WhatsApp / Appel. Publication payante = annonces propres.
+          et des <strong>offres PRO</strong>. Contact direct via WhatsApp / Appel.
+          <strong>Publication payante</strong> = annonces propres (anti-spam).
         </div>
+
         <div class="hero-tags">
           <div class="hero-tag"><strong>0% commission</strong> — Direct</div>
-          <div class="hero-tag">Occaz • Services • Pros</div>
+          <div class="hero-tag">Photo via WhatsApp (pas de stockage)</div>
           <div class="hero-tag">Annonce payante = anti-spam</div>
-          <div class="hero-tag">Pickup DIGIY (option)</div>
+          <div class="hero-tag">🚩 Signalement = panier propre</div>
         </div>
 
         <div class="hero-cta-row">
           <button class="hero-cta-btn" id="btnOpenPost">✍️ Publier une annonce</button>
           <a href="#section-pro" class="hero-cta-btn-secondary">🧰 Je suis PRO / Agence (abonnements)</a>
           <button class="hero-cta-btn-secondary" id="btnRefresh">🔄 Actualiser</button>
+        </div>
+
+        <!-- ✅ Vitrine non-pro -->
+        <div class="solo">
+          <div class="soloTop">
+            <div>
+              <div class="soloTitle">Publication individuelle (Particulier) — payante ✅</div>
+              <div class="soloSub">
+                Tu paies pour publier → ça bloque le spam, ça garde DIGIY propre, et ça met ta vente/service en vitrine.
+                <strong>0% commission</strong> sur tes ventes. Contact direct.
+              </div>
+            </div>
+            <div class="pill">Recommandé: <strong>Pack B (14 jours)</strong></div>
+          </div>
+
+          <div class="soloGrid">
+            <div class="soloCard">
+              <div class="soloBadge">PACK A</div>
+              <div class="soloName">500 FCFA</div>
+              <div class="soloPrice">7 jours</div>
+              <div class="soloLine">Annonce propre (anti-spam)</div>
+              <div class="soloLine">Visible en recherche</div>
+              <div class="soloLine">Contact WhatsApp/Appel</div>
+              <div class="soloNote">Idéal: vente rapide / petit service.</div>
+            </div>
+
+            <div class="soloCard reco">
+              <div class="soloBadge">PACK B — RECO</div>
+              <div class="soloName">1 000 FCFA</div>
+              <div class="soloPrice">14 jours</div>
+              <div class="soloLine">Meilleur équilibre durée/prix</div>
+              <div class="soloLine">Annonce propre + stable</div>
+              <div class="soloLine">Confiance (paiement)</div>
+              <div class="soloNote">Le plus simple à comprendre terrain: 2 semaines.</div>
+            </div>
+
+            <div class="soloCard">
+              <div class="soloBadge">PACK C</div>
+              <div class="soloName">2 000 FCFA</div>
+              <div class="soloPrice">30 jours</div>
+              <div class="soloLine">Vitrine longue durée</div>
+              <div class="soloLine">Bien pour biens chers</div>
+              <div class="soloLine">Idéal immobilier / auto</div>
+              <div class="soloNote">Pour vendeurs qui veulent du temps.</div>
+            </div>
+          </div>
+
+          <div class="help">
+            Sécurité terrain: demander photo/vidéo + infos avant décision. Pas d’acompte sans preuve.
+          </div>
         </div>
 
         <div class="toast" id="toastTop">Prêt.</div>
@@ -615,6 +741,17 @@
           <div class="help">WhatsApp (optionnel)</div>
           <input id="pWa" class="input" placeholder="+22177xxxxxxx" />
         </div>
+
+        <!-- ✅ PACKS publication individuelle -->
+        <div style="grid-column:1/-1">
+          <div class="help">Pack publication individuelle (payant) — <strong>Pack B pré-sélectionné</strong></div>
+          <select id="pPlan" class="select" style="width:100%">
+            <option value="A">Pack A — 500 FCFA / 7 jours</option>
+            <option value="B" selected>Pack B — 1 000 FCFA / 14 jours (RECO)</option>
+            <option value="C">Pack C — 2 000 FCFA / 30 jours</option>
+          </select>
+          <div class="help" id="planHint">📌 Reco DIGIY : 1 000 FCFA / 14 jours — meilleur équilibre.</div>
+        </div>
       </div>
 
       <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
@@ -623,509 +760,129 @@
       </div>
 
       <div class="toast" id="toastPost">Prêt.</div>
-      <div class="help">Paiement simulé pour l’instant (on branchera Wave après).</div>
+      <div class="help">
+        Photo non stockée : utilise “📷 Demander photo” via WhatsApp. Paiement Wave sera branché après.
+      </div>
     </div>
   </div>
 
-  <!-- MODAL REPORT -->
-  <div class="modal" id="reportModal">
-    <div class="modalBox">
-      <div class="modalTop">
-        <div class="modalTitle">🚩 Signaler une annonce</div>
-        <button class="xBtn" id="btnCloseReport">✖ Fermer</button>
-      </div>
-
-      <div class="help" id="reportCtx">Annonce: —</div>
-
-      <div style="margin-top:10px" class="grid2">
-        <div style="grid-column:1/-1">
-          <div class="help">Raison</div>
-          <select id="rReason" class="select" style="width:100%">
-            <option value="arnaque">⚠️ Suspicion d’arnaque</option>
-            <option value="faux_produit">🧨 Faux produit / tromperie</option>
-            <option value="contenu_inapproprie">🚫 Contenu inapproprié</option>
-            <option value="prix_abusif">💸 Prix abusif / incohérent</option>
-            <option value="spam">🧹 Spam / doublons</option>
-            <option value="autre">❓ Autre</option>
-          </select>
-        </div>
-
-        <div style="grid-column:1/-1">
-          <div class="help">Détails (optionnel)</div>
-          <textarea id="rDetails" class="textarea" style="width:100%;min-height:110px"
-            placeholder="Explique vite fait (ex: vendeur refuse vidéo, demande acompte, numéro bizarre...)."></textarea>
-        </div>
-      </div>
-
-      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
-        <button class="btn btn-outline" id="btnCopyReport" style="flex:1">📋 Copier le signalement</button>
-        <button class="btn btn-main" id="btnSendReport" style="flex:1">📲 Envoyer au support</button>
-      </div>
-
-      <div class="toast" id="toastReport">Prêt.</div>
-      <div class="help">Objectif : garder DIGIY propre. Merci 🙏</div>
+<!-- MODAL REPORT -->
+<div class="modal" id="reportModal">
+  <div class="modalBox">
+    <div class="modalTop">
+      <div class="modalTitle">🚩 Signaler une annonce</div>
+      <button class="xBtn" id="btnCloseReport">✖ Fermer</button>
     </div>
+
+    <div class="help" id="reportCtx">Annonce : —</div>
+
+    <div style="margin-top:10px" class="grid2">
+      <div style="grid-column:1/-1">
+        <div class="help">Raison</div>
+        <select id="rReason" class="select" style="width:100%">
+          <option value="arnaque">⚠️ Suspicion d’arnaque</option>
+          <option value="faux_produit">🧨 Faux produit / tromperie</option>
+          <option value="contenu">🚫 Contenu inapproprié</option>
+          <option value="prix">💸 Prix incohérent</option>
+          <option value="spam">🧹 Spam / doublon</option>
+          <option value="autre">❓ Autre</option>
+        </select>
+      </div>
+
+      <div style="grid-column:1/-1">
+        <div class="help">Détails (optionnel)</div>
+        <textarea id="rDetails" class="textarea"
+          style="width:100%;min-height:110px"
+          placeholder="Explique brièvement le problème (refus photo, acompte suspect, numéro bizarre…)."></textarea>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+      <button class="btn btn-outline" id="btnCopyReport" style="flex:1">📋 Copier</button>
+      <button class="btn btn-main" id="btnSendReport" style="flex:1">📲 Envoyer au support</button>
+    </div>
+
+    <div class="toast" id="toastReport">Prêt.</div>
+    <div class="help">Merci d’aider à garder DIGIY propre 🙏</div>
   </div>
+</div>
 
-  <script>
-  (function(){
-    // =============================
-    // SUPABASE
-    // =============================
-    const SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
-    const SUPABASE_ANON_KEY =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
-    const sb = window.supabase?.createClient ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
+<script>
+(function(){
 
-    const $ = (id)=>document.getElementById(id);
-    const esc = (s)=>String(s||"")
-      .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
-      .replaceAll('"',"&quot;").replaceAll("'","&#039;");
-    const safeJson = (s)=>{ try{ return JSON.parse(s);}catch(_){return null;} };
+  /* =============================
+     REPORT LOGIC
+  ============================= */
+  const SUPPORT_WA = "+221771342889";
+  let REPORT = {};
 
-    function toast(id, msg, kind){
-      const el = $(id); if(!el) return;
-      el.textContent = msg || "";
-      el.classList.remove("ok","bad");
-      if(kind) el.classList.add(kind);
+  const $ = (id)=>document.getElementById(id);
+
+  function waLink(phone, msg){
+    const p = String(phone||"").replace(/[^\d]/g,"");
+    return "https://wa.me/" + p + "?text=" + encodeURIComponent(msg);
+  }
+
+  function openReport(it){
+    REPORT = it || {};
+    $("reportCtx").textContent =
+      `Annonce : ${it.title || "—"} • ${it.location || "—"} • slug: ${it.slug || "—"}`;
+    $("rReason").value = "arnaque";
+    $("rDetails").value = "";
+    $("reportModal").style.display = "flex";
+  }
+
+  function closeReport(){
+    $("reportModal").style.display = "none";
+  }
+
+  function buildReportText(){
+    return (
+      "🚩 SIGNALEMENT DIGIY BONNE AFFAIRE\n" +
+      "Raison: " + $("rReason").value + "\n" +
+      ($("rDetails").value ? "Détails: " + $("rDetails").value + "\n" : "") +
+      "—\n" +
+      "Annonce: " + (REPORT.title || "") + "\n" +
+      "Zone: " + (REPORT.location || "") + "\n" +
+      "Slug: " + (REPORT.slug || "") + "\n" +
+      "ID: " + (REPORT.id || "") + "\n" +
+      "Page: " + location.href
+    );
+  }
+
+  $("btnCloseReport").onclick = closeReport;
+  $("reportModal").onclick = (e)=>{ if(e.target.id==="reportModal") closeReport(); };
+
+  $("btnCopyReport").onclick = async ()=>{
+    try{
+      await navigator.clipboard.writeText(buildReportText());
+      $("toastReport").textContent = "✅ Copié";
+    }catch(e){
+      $("toastReport").textContent = "❌ Copie impossible";
     }
-    function qp(k){
-      try{ return (new URLSearchParams(location.search).get(k) || "").trim(); }catch(_){ return ""; }
-    }
-    function money(x){
-      const n = Number(x||0);
-      if(!isFinite(n) || n<=0) return "";
-      return Math.round(n).toLocaleString("fr-FR") + " XOF";
-    }
-    function waLink(phone, msg){
-      const p = String(phone||"").replace(/\s+/g,"").replace(/[^\d+]/g,"");
-      const text = encodeURIComponent(msg||"Salut, je viens de DIGIY Bonne Affaire.");
-      return "https://wa.me/" + p.replace("+","") + "?text=" + text;
-    }
+  };
 
-    // =============================
-    // REPORT (signalement -> WhatsApp Support)
-    // =============================
-    const SUPPORT_WA = "+221771342889";
-    let REPORT = { id:"", slug:"", title:"", location:"", category:"" };
+  $("btnSendReport").onclick = ()=>{
+    window.open(waLink(SUPPORT_WA, buildReportText()), "_blank");
+    closeReport();
+  };
 
-    function openReport(it){
-      REPORT = {
-        id: String(it.id||""),
-        slug: String(it.slug||""),
-        title: String(it.title||""),
-        location: String(it.location||""),
-        category: String(it.category||"")
-      };
-      $("reportCtx").textContent =
-        `Annonce: ${REPORT.title} • ${REPORT.location||"—"} • slug: ${REPORT.slug} • id: ${REPORT.id.slice(0,8)}…`;
-      $("rReason").value = "arnaque";
-      $("rDetails").value = "";
-      $("reportModal").style.display = "flex";
-      toast("toastReport","Prêt.","");
-    }
-
-    function closeReport(){
-      $("reportModal").style.display = "none";
-    }
-
-    function buildReportText(){
-      const reason = $("rReason").value;
-      const details = ($("rDetails").value || "").trim();
-      return (
-        `🚩 SIGNALEMENT DIGIY BONNE AFFAIRE\n` +
-        `Raison: ${reason}\n` +
-        (details ? `Détails: ${details}\n` : "") +
-        `---\n` +
-        `Annonce: ${REPORT.title}\n` +
-        `Catégorie: ${REPORT.category}\n` +
-        `Zone: ${REPORT.location}\n` +
-        `Slug: ${REPORT.slug}\n` +
-        `Ad ID: ${REPORT.id}\n` +
-        `Page: ${location.href}\n`
-      );
-    }
-
-    async function copyReport(){
-      const text = buildReportText();
-      try{
-        await navigator.clipboard.writeText(text);
-        toast("toastReport","✅ Copié. Tu peux coller où tu veux.","ok");
-      }catch(_){
-        toast("toastReport","Copie impossible (navigateur).","bad");
-      }
-    }
-
-    function sendReport(){
-      const k = "DIGIY_BA_REPORT_LAST";
-      const last = Number(localStorage.getItem(k) || "0");
-      if(Date.now() - last < 20000){
-        toast("toastReport","⏳ Patiente 20s avant un autre signalement.","bad");
-        return;
-      }
-      localStorage.setItem(k, String(Date.now()));
-      const link = waLink(SUPPORT_WA, buildReportText());
-      window.open(link, "_blank", "noopener");
-      toast("toastReport","✅ Ouverture WhatsApp support…","ok");
-      setTimeout(closeReport, 400);
-    }
-
-    // =============================
-    // GUARD STATUS
-    // =============================
-    function setStatus(t){ const el = $("guard_status"); if(el) el.textContent = t; }
-    function hideStatus(){ const el = $("guard_status"); if(el) el.style.display="none"; }
-
-    async function bootGuard(){
-      try{
-        setStatus("🔐 Vérification…");
-        if(window.DIGIY_GUARD?.boot){
-          const r = await window.DIGIY_GUARD.boot({ login: "./pin.html" });
-          if(r?.ok) setStatus("✅ OK");
-          else setStatus("ℹ️ Mode public");
-        }else{
-          setStatus("ℹ️ Mode public");
-        }
-        setTimeout(hideStatus, 600);
-      }catch(e){
-        console.error(e);
-        setStatus("ℹ️ Mode public");
-        setTimeout(hideStatus, 600);
-      }
-    }
-
-    // =============================
-    // CONTEXT
-    // =============================
-    const CTX = { slug:"", owner_id:"" };
-    function loadCtx(){
-      const urlSlug = qp("slug");
-      const gSlug = window.DIGIY_GUARD?.getSlug?.() || "";
-      const s = window.DIGIY_GUARD?.getSession?.() || null;
-
-      CTX.slug = (urlSlug || gSlug || localStorage.getItem("DIGIY_SLUG") || "").trim();
-      CTX.owner_id = (s?.owner_id || localStorage.getItem("DIGIY_PRO_ID") || "").trim();
-
-      $("pillCtx").textContent = "slug: " + (CTX.slug || "—");
-
-      if(!$("pSlug").value) $("pSlug").value = CTX.slug || "";
-      if(!$("pOwner").value) $("pOwner").value = CTX.owner_id || "";
-    }
-
-    // =============================
-    // MODAL POST
-    // =============================
-    function openPost(){
-      $("postModal").style.display="flex";
-      loadCtx();
-    }
-    function closePost(){
-      $("postModal").style.display="none";
-    }
-    $("btnOpenPost").onclick = openPost;
-    $("btnClosePost").onclick = closePost;
-    $("postModal").addEventListener("click", (e)=>{
-      if(e.target && e.target.id === "postModal") closePost();
-    });
-
-    // =============================
-    // CLOSE REPORT MODAL
-    // =============================
-    $("btnCloseReport").onclick = closeReport;
-    $("reportModal").addEventListener("click", (e)=>{
-      if(e.target && e.target.id === "reportModal") closeReport();
-    });
-    $("btnCopyReport").onclick = copyReport;
-    $("btnSendReport").onclick = sendReport;
-
-    // =============================
-    // LIST ADS (RPC ba_list_ads)
-    // =============================
-    let ALL = [];
-
-    function matchQuery(item, q){
-      q = (q||"").trim().toLowerCase();
-      if(!q) return true;
-      const t = (item.title||"").toLowerCase();
-      const loc = (item.location||"").toLowerCase();
-      const slug = (item.slug||"").toLowerCase();
-      return t.includes(q) || loc.includes(q) || slug.includes(q);
-    }
-
-    function render(items){
-      const grid = $("adsGrid");
-      grid.innerHTML = "";
-
-      if(!items || items.length===0){
-        grid.innerHTML = `<div style="grid-column:1/-1" class="toast">Aucune annonce pour ce filtre.</div>`;
-        return;
-      }
-
-      for(const it of items){
-        const cat =
-          it.category==="occaz" ? "Immobilier / Occaz" :
-          it.category==="service" ? "Service terrain" :
-          it.category==="pro" ? "Offre Pro" : "Annonce";
-
-        const catIco =
-          it.category==="occaz" ? "♻️" :
-          it.category==="service" ? "🛠️" :
-          it.category==="pro" ? "🏪" : "⭐";
-
-        const price = money(it.price);
-        const msg = `Salut, je suis intéressé par: ${it.title} (DIGIY BONNE AFFAIRE, slug: ${it.slug}).`;
-
-        const phone = (it.phone || "").trim();
-        const wa = (it.whatsapp || it.phone || "").trim();
-
-        const photoAskMsg =
-          `Salut 👋 Je viens de DIGIY BONNE AFFAIRE.\n` +
-          `Peux-tu m’envoyer la photo (et si possible une petite vidéo) de : ${it.title} ?\n` +
-          `Zone: ${it.location||"—"}\n` +
-          `Merci 🙏`;
-        const waPhotoLink = wa ? waLink(wa, photoAskMsg) : "";
-
-        const isIdentified = !!(it.owner_id || it.phone);
-        const trustHtml = isIdentified ? `<span class="trust-badge">🔐 Utilisateur identifié</span>` : ``;
-
-        const photoHtml = `
-          <div class="auto-photo">
-            <div class="deal-badge">🔥 BONNE AFFAIRE</div>
-            <div class="ico">${catIco}</div>
-            <div class="big">${esc(it.title||"Annonce")}</div>
-            <div class="small">
-              <span>📍 ${esc(it.location||"—")}</span>
-              <span>💰 ${esc(price||"—")}</span>
-            </div>
-          </div>
-        `;
-
-        const card = document.createElement("article");
-        card.className = "shop-card";
-        card.innerHTML = `
-          <div class="shop-head">
-            <div>
-              <div class="shop-name">${esc(it.title || "Annonce")}</div>
-              <div class="shop-type">${esc(cat)} • ${esc(it.location || "—")}</div>
-            </div>
-            <div class="shop-price">${price || "—"}</div>
-          </div>
-
-          <div class="shop-body">
-            ${photoHtml}
-
-            <p class="shop-desc">
-              ${esc(it.description || "Contact direct. Offre terrain — répond vite sur WhatsApp/Appel.")}
-            </p>
-
-            <div class="help">
-              🔎 Demandez photo / vidéo et infos avant toute décision. Transaction directe entre utilisateurs.
-            </div>
-
-            <div class="shop-meta">
-              <span>slug: <strong>${esc(it.slug||"")}</strong></span>
-              <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">
-                ${trustHtml}
-                <div class="shop-badge">0% Com DIGIY</div>
-              </div>
-            </div>
-
-            <div class="shop-actions">
-              <a class="btn btn-contact" href="${waLink(wa || phone, msg)}" target="_blank" rel="noopener">
-                💬 WhatsApp
-              </a>
-
-              ${waPhotoLink ? `
-                <a class="btn btn-photo" href="${waPhotoLink}" target="_blank" rel="noopener">
-                  📷 Demander photo
-                </a>
-              ` : ``}
-
-              <a class="btn btn-call" href="tel:${esc(phone)}">
-                📞 Appeler
-              </a>
-
-              <button class="btn btn-report" data-report="${esc(it.id)}">🚩 Signaler</button>
-
-              <button class="btn btn-pickup" data-pick="${esc(it.id)}">
-                ${it.pickup_enabled ? "🚚 Pickup DIGIY" : "🚫 Pickup"}
-              </button>
-            </div>
-          </div>
-        `;
-        grid.appendChild(card);
-      }
-
-      grid.querySelectorAll("[data-pick]").forEach(btn=>{
-        btn.onclick = ()=>{
-          if(btn.textContent.includes("🚫")){
-            alert("Pickup non activé sur cette annonce.");
-            return;
-          }
-          alert("Pickup DIGIY (placeholder) — prochain wagon: création mission DRIVER/FRET.");
-        };
-      });
-
-      grid.querySelectorAll("[data-report]").forEach(btn=>{
-        btn.onclick = ()=>{
-          const id = btn.getAttribute("data-report");
-          const it = (items || []).find(x => String(x.id) === String(id));
-          if(!it) return alert("Annonce introuvable.");
-          openReport(it);
-        };
-      });
-    }
-
-    async function refresh(){
-      if(!sb){
-        toast("toastTop","Supabase non prêt (script bloqué?)","bad");
-        return;
-      }
-      toast("toastTop","Chargement…","");
-      const cat = $("fCategory").value || null;
-      const loc = $("fLocation").value || null;
-
-      const { data, error } = await sb.rpc("ba_list_ads", { p_category: cat, p_location: loc });
-      if(error){
-        toast("toastTop", error.message, "bad");
-        return;
-      }
-      const res = (typeof data === "string") ? safeJson(data) : data;
-      if(!res?.ok){
-        toast("toastTop", res?.reason || "Refus", "bad");
-        return;
-      }
-
-      ALL = res.items || [];
-      applyFilters();
-      toast("toastTop", "✅ " + ALL.length + " annonce(s) chargée(s)", "ok");
-    }
-
-    function applyFilters(){
-      const q = ($("fQuery").value || "").trim();
-      const list = ALL.filter(it => matchQuery(it, q));
-      render(list);
-    }
-
-    $("btnRefresh").onclick = refresh;
-    $("fCategory").onchange = refresh;
-    $("fLocation").onchange = refresh;
-    $("fQuery").addEventListener("input", ()=>applyFilters());
-    $("btnReset").onclick = ()=>{
-      $("fCategory").value = "";
-      $("fLocation").value = "";
-      $("fQuery").value = "";
-      refresh();
+  /* =============================
+     PUBLICATION INDIVIDUELLE PAYANTE
+     MODE 1 — PACK B PAR DÉFAUT
+  ============================= */
+  document.querySelectorAll("[data-pack]").forEach(btn=>{
+    btn.onclick = ()=>{
+      const pack = btn.getAttribute("data-pack");
+      const url = "https://beauville.github.io/commencer-a-payer/?pack=" + pack;
+      window.location.href = url;
     };
+  });
 
-    // =============================
-    // POST (RPC ba_create_ad + ba_publish_ad)
-    // =============================
-    let LAST_AD_ID = null;
+  console.log("✅ DIGIY BONNE AFFAIRE READY — paiement B par défaut");
 
-    function readPost(){
-      return {
-        slug: ($("pSlug").value || CTX.slug || "").trim(),
-        owner_id: ($("pOwner").value || CTX.owner_id || "").trim(),
-        category: $("pCategory").value,
-        location: $("pLocation").value,
-        title: ($("pTitle").value || "").trim(),
-        description: ($("pDesc").value || "").trim(),
-        price: ($("pPrice").value || "").trim(),
-        pickup: ($("pPickup").value === "true"),
-        phone: ($("pPhone").value || "").trim(),
-        whatsapp: ($("pWa").value || "").trim()
-      };
-    }
+})();
+</script>
 
-    function validatePost(d){
-      if(!d.slug) return "Slug requis (ou ouvre via ?slug=...)";
-      if(!d.owner_id) return "owner_id requis (connecte via GO PIN ou colle ton owner_id)";
-      if(!d.title) return "Titre requis";
-      if(!d.phone) return "Téléphone requis";
-      if(!d.category) return "Catégorie requise";
-      return "";
-    }
-
-    async function createDraft(){
-      if(!sb) return toast("toastPost","Supabase non prêt","bad");
-      const d = readPost();
-      const v = validatePost(d);
-      if(v) return toast("toastPost", v, "bad");
-
-      toast("toastPost","Création draft…","");
-      const priceNum = d.price ? Number(d.price) : null;
-      const { data, error } = await sb.rpc("ba_create_ad", {
-        p_owner_id: d.owner_id,
-        p_slug: d.slug,
-        p_category: d.category,
-        p_title: d.title,
-        p_description: d.description,
-        p_price: (isFinite(priceNum) ? priceNum : null),
-        p_phone: d.phone,
-        p_location: d.location,
-        p_pickup: d.pickup
-      });
-
-      if(error) return toast("toastPost", error.message, "bad");
-      const res = (typeof data === "string") ? safeJson(data) : data;
-      if(!res?.ok) return toast("toastPost", res?.reason || "Refus", "bad");
-
-      LAST_AD_ID = res.ad_id;
-      toast("toastPost","✅ Draft créé: " + String(LAST_AD_ID).slice(0,8) + "…", "ok");
-    }
-
-    async function payPublish(){
-      if(!sb) return toast("toastPost","Supabase non prêt","bad");
-
-      if(!LAST_AD_ID){
-        await createDraft();
-        if(!LAST_AD_ID) return;
-      }
-
-      const d = readPost();
-      const amount = 500;              // tarif terrain (à régler)
-      const method = "wave";           // simulé
-      const reference = "SIMU_" + Date.now();
-
-      toast("toastPost","Publication (paiement simulé)…","");
-      const { data, error } = await sb.rpc("ba_publish_ad", {
-        p_owner_id: d.owner_id,
-        p_ad_id: LAST_AD_ID,
-        p_amount: amount,
-        p_method: method,
-        p_reference: reference
-      });
-
-      if(error) return toast("toastPost", error.message, "bad");
-      const res = (typeof data === "string") ? safeJson(data) : data;
-      if(!res?.ok) return toast("toastPost", res?.reason || "Refus", "bad");
-
-      toast("toastPost","✅ Publié ! (paiement simulé)","ok");
-
-      $("pTitle").value = "";
-      $("pDesc").value = "";
-      $("pPrice").value = "";
-      LAST_AD_ID = null;
-
-      closePost();
-      setTimeout(refresh, 250);
-    }
-
-    $("btnCreateDraft").onclick = createDraft;
-    $("btnPayPublish").onclick = payPublish;
-
-    // =============================
-    // INIT
-    // =============================
-    (async ()=>{
-      await bootGuard();
-      loadCtx();
-      await refresh();
-      console.log("🦅 BA MIX READY", { slug: CTX.slug, owner_id: CTX.owner_id });
-    })();
-
-  })();
-  </script>
 </body>
 </html>
