@@ -295,10 +295,7 @@
         <div class="pill" id="pillSlug">slug: —</div>
         <div class="pill" id="pillOwner">owner: —</div>
 
-        <!-- ✅ Liens slug-safe appliqués au boot -->
         <a class="btn btn-ghost" id="btnBackAds" href="./index.html">← Retour annonces</a>
-        <a class="btn btn-ghost" id="btnGoPublic" href="./index.html">🏪 Vitrine</a>
-
         <button class="btn btn-main" id="btnNew">➕ Nouvelle annonce</button>
         <button class="btn btn-ghost" id="btnRefresh">🔄 Actualiser</button>
         <button class="btn btn-bad" id="btnLogout">⛔ Logout</button>
@@ -326,8 +323,8 @@
         </div>
         <div class="kpi">
           <div class="lab">Expire bientôt</div>
-          <div class="val" id="kpiExpSoon">0</div>
-          <div class="hint">Non activé (pas de date)</div>
+          <div class="val" id="kpiExpSoon">—</div>
+          <div class="hint">≤ 3 jours (si dates dispo)</div>
         </div>
       </div>
 
@@ -362,7 +359,6 @@
   <div class="bottomNav">
     <div class="bar">
       <a class="btn btn-ghost" id="mBackAds" href="./index.html">← Annonces</a>
-      <a class="btn btn-ghost" id="mGoPublic" href="./index.html">🏪</a>
       <button class="btn btn-main" id="mNew">➕ Publier</button>
       <button class="btn btn-ghost" id="mRefresh">🔄</button>
     </div>
@@ -396,16 +392,25 @@
       if(kind) el.classList.add(kind);
     }
 
-    // ✅ money() n'ajoute plus la devise en dur
     function money(x){
       const n = Number(x||0);
       if(!isFinite(n) || n<=0) return "";
-      return Math.round(n).toLocaleString("fr-FR");
+      return Math.round(n).toLocaleString("fr-FR") + " XOF";
     }
 
     function waLink(phone, msg){
       const p = String(phone||"").replace(/[^\d]/g,"");
       return "https://wa.me/" + p + "?text=" + encodeURIComponent(msg||"");
+    }
+
+    function safeDate(x){
+      const d = new Date(x);
+      return isNaN(d.getTime()) ? null : d;
+    }
+
+    function daysBetween(a,b){
+      const ms = b.getTime() - a.getTime();
+      return Math.ceil(ms / (1000*60*60*24));
     }
 
     // ==============
@@ -427,13 +432,14 @@
     async function boot(){
       toast("🔐 Vérification…", "");
 
-      // Boot guard
+      // 1) Boot guard if exists
       try{
         if(window.DIGIY_GUARD?.boot){
           await window.DIGIY_GUARD.boot({ login: "./pin.html" });
         }
       }catch(_){}
 
+      // 2) Pull session
       const sess = window.DIGIY_GUARD?.getSession ? window.DIGIY_GUARD.getSession() : null;
 
       CTX.owner_id = (sess?.owner_id || localStorage.getItem("DIGIY_PRO_ID") || "").trim();
@@ -449,19 +455,13 @@
         return false;
       }
 
-      // ✅ links slug-safe
-      const links = [
-        ["btnBackAds","./index.html"],
-        ["btnGoPublic","./index.html"],
-        ["mBackAds","./index.html"],
-        ["mGoPublic","./index.html"]
-      ];
-
+      // Back link slug-safe
+      const back = $("btnBackAds");
+      const mback = $("mBackAds");
       if(window.DIGIY_GUARD?.withSlug){
-        for(const [id, href] of links){
-          const el = $(id);
-          if(el) el.href = window.DIGIY_GUARD.withSlug(href);
-        }
+        const href = window.DIGIY_GUARD.withSlug("./index.html");
+        if(back) back.href = href;
+        if(mback) mback.href = href;
       }
 
       toast("✅ Connecté. Chargement cockpit…", "ok");
@@ -504,12 +504,28 @@
       return { ok:true, data };
     }
 
+    function computeStatsFromList(items){
+      const total = items.length;
+      const active = items.filter(x=>String(x.status||"").toLowerCase()==="active").length;
+      const draft = items.filter(x=>String(x.status||"").toLowerCase()==="draft").length;
+
+      const soon = items.filter(x=>{
+        const ex = x.expires_at || x.expiresAt || x.expire_at || x.end_at;
+        const d = safeDate(ex);
+        if(!d) return false;
+        const left = daysBetween(new Date(), d);
+        return left >= 0 && left <= 3;
+      }).length;
+
+      return { total, active, draft, exp_soon: soon };
+    }
+
     function setKpi(stats){
       const a = $("kpiTotal"), b = $("kpiActive"), c = $("kpiDraft"), d = $("kpiExpSoon");
       if(a) a.textContent = String(stats.total ?? "—");
       if(b) b.textContent = String(stats.active ?? "—");
       if(c) c.textContent = String(stats.draft ?? "—");
-      if(d) d.textContent = String(stats.exp_soon ?? 0);
+      if(d) d.textContent = String(stats.exp_soon ?? "—");
     }
 
     // ==============
@@ -517,11 +533,11 @@
     // ==============
     function statusTag(st){
       const s = String(st||"").toLowerCase();
-      if(s==="active") return `<span class="tag ok">✅ active</span>`;
-      if(s==="draft") return `<span class="tag">🧱 draft</span>`;
-      if(s==="paused") return `<span class="tag">⏸️ pause</span>`;
-      if(s==="expired") return `<span class="tag bad">⌛ expirée</span>`;
-      return `<span class="tag">• ${esc(s||"—")}</span>`;
+      if(s==="active") return <span class="tag ok">✅ active</span>;
+      if(s==="draft") return <span class="tag">🧱 draft</span>;
+      if(s==="paused") return <span class="tag">⏸️ pause</span>;
+      if(s==="expired") return <span class="tag bad">⌛ expirée</span>;
+      return <span class="tag">• ${esc(s||"—")}</span>;
     }
 
     function render(items){
@@ -529,37 +545,40 @@
       if(!el) return;
 
       if(!items || items.length===0){
-        el.innerHTML = `
+        el.innerHTML = 
           <div class="toast" style="grid-column:1/-1">
             Aucune annonce trouvée. Clique <strong>➕ Nouvelle annonce</strong> pour publier.
           </div>
-        `;
+        ;
         return;
       }
 
       el.innerHTML = "";
 
       for(const it of items){
-        const title = it.title || "Annonce";
+        const title = it.title || it.titre || "Annonce";
         const slug  = it.slug || CTX.slug || "";
-        const cat   = it.category || "—";
-        const loc   = it.location || "—";
-        const cur   = it.currency || "XOF";
-        const pTxt  = money(it.price || 0);
-        const price = pTxt ? (pTxt + " " + cur) : "—";
-
+        const cat   = it.category || it.categorie || "—";
+        const loc   = it.location || it.zone || "—";
+        const cur = it.currency || "XOF";
+        const price = money(it.price || 0) + " " + cur;
         const st    = it.status || "—";
-        const phone = it.phone || CTX.phone || "";
-        const wa    = it.whatsapp || phone || "";
+        const phone = it.phone || it.telephone || CTX.phone || "";
+        const wa    = it.whatsapp || it.wa || phone || "";
 
-        const desc  = (it.description || "").trim();
-        const id    = it.id || "";
+        const desc  = (it.description || it.desc || "").trim();
 
-        const msg = `Salut, je viens de DIGIY BONNE AFFAIRE. Je suis intéressé par: ${title} (slug: ${slug}).`;
+        const exRaw = it.expires_at || it.expiresAt || it.expire_at || it.end_at || "";
+        const exD = safeDate(exRaw);
+        const exTxt = exD ? exD.toLocaleDateString("fr-FR") : "";
+
+        const msg = Salut, je viens de DIGIY BONNE AFFAIRE. Je suis intéressé par: ${title} (slug: ${slug}).;
+
+        const id = it.id || it.ad_id || it.uuid || "";
 
         const card = document.createElement("div");
         card.className = "card";
-        card.innerHTML = `
+        card.innerHTML = 
           <div class="cTop">
             <div>
               <div class="cTitle">${esc(title)}</div>
@@ -568,6 +587,7 @@
                 <span class="tag">📍 ${esc(loc)}</span>
                 <span class="tag">💰 ${esc(price)}</span>
                 ${statusTag(st)}
+                ${exTxt ? <span class="tag">⌛ ${esc(exTxt)}</span> : `}
               </div>
             </div>
             <div class="cBadge">${esc(String(id||"").slice(0,8) || "—")}</div>
@@ -582,12 +602,12 @@
             <button class="btn btn-ghost btn-small" data-act="toggle" data-id="${esc(id)}" data-status="${esc(st)}">⚙️ Pause/Activer</button>
             <button class="btn btn-bad btn-small" data-act="delete" data-id="${esc(id)}">🗑️ Supprimer</button>
           </div>
-        `;
+        ;
 
         el.appendChild(card);
       }
 
-      // actions
+      // bind actions
       el.querySelectorAll("button[data-act]").forEach(btn=>{
         btn.addEventListener("click", async ()=>{
           const act = btn.getAttribute("data-act");
@@ -595,7 +615,7 @@
           const curStatus = btn.getAttribute("data-status") || "";
 
           if(act==="copy"){
-            const found = (items||[]).find(x => String(x.id||"")===String(id));
+            const found = items.find(x => String(x.id||x.ad_id||x.uuid||"")===String(id));
             const payload = found ? JSON.stringify(found, null, 2) : ("Annonce: "+id);
             try{
               await navigator.clipboard.writeText(payload);
@@ -661,8 +681,8 @@
 
       const out = (ALL || []).filter(it=>{
         const s = String(it.status||"").toLowerCase();
-        const c = String(it.category||"").toLowerCase();
-        const hay = (String(it.title||"")+" "+String(it.slug||"")+" "+String(it.location||"")).toLowerCase();
+        const c = String(it.category||it.categorie||"").toLowerCase();
+        const hay = (String(it.title||it.titre||"")+" "+String(it.slug||"")+" "+String(it.location||it.zone||"")).toLowerCase();
 
         const okS = !st || s===st;
         const okC = !cat || c===cat;
@@ -671,6 +691,9 @@
       });
 
       render(out);
+
+      // KPI reste global ALL (stable)
+      setKpi(computeStatsFromList(ALL));
 
       if(q || st || cat) toast("🔎 Filtre actif — " + out.length + " annonce(s).", "");
       else toast("✅ Cockpit chargé — " + ALL.length + " annonce(s).", "ok");
@@ -684,25 +707,41 @@
       if(!sb){
         toast("Supabase non prêt.", "bad");
         ALL = [];
-        setKpi({ total:"—", active:"—", draft:"—", exp_soon:0 });
+        setKpi({ total:"—", active:"—", draft:"—", exp_soon:"—" });
         render([]);
         return;
       }
 
       toast("⏳ Chargement de tes annonces…", "");
 
-      // list
+      // 1) try dedicated pro list
+      let mine = null;
+
       const r1 = await callRpc(RPC.listMine, { p_owner_id: CTX.owner_id });
       if(r1.ok){
-        ALL = (r1.data && r1.data.items) ? r1.data.items : (Array.isArray(r1.data) ? r1.data : []);
-      } else {
-        ALL = [];
+        mine = (r1.data && r1.data.items) ? r1.data.items : (Array.isArray(r1.data) ? r1.data : []);
+      }else{
+        // 2) fallback: public list + filter by owner_id if present
+        const r2 = await callRpc("ba_list_ads", { p_category: null, p_location: null });
+        if(r2.ok){
+          const items = (r2.data && r2.data.items) ? r2.data.items : (Array.isArray(r2.data) ? r2.data : []);
+          mine = items.filter(x => String(x.owner_id||"") === String(CTX.owner_id));
+        }else{
+          mine = [];
+        }
       }
 
-      // stats
+      ALL = mine || [];
+
+      // stats (si RPC existe)
       const rS = await callRpc(RPC.stats, { p_owner_id: CTX.owner_id });
-      if(rS.ok && rS.data && typeof rS.data === "object") setKpi(rS.data);
-      else setKpi({ total: ALL.length, active: ALL.filter(x=>String(x.status||"").toLowerCase()==="active").length, draft: ALL.filter(x=>String(x.status||"").toLowerCase()==="draft").length, exp_soon: 0 });
+      if(rS.ok && rS.data && typeof rS.data === "object"){
+        const st = rS.data;
+        if(st.total!=null || st.active!=null || st.draft!=null || st.exp_soon!=null) setKpi(st);
+        else setKpi(computeStatsFromList(ALL));
+      }else{
+        setKpi(computeStatsFromList(ALL));
+      }
 
       applyFilters();
     }
@@ -728,35 +767,46 @@
         location.href = u.toString();
       };
 
-      $("btnNew") && ($("btnNew").onclick = goNew);
-      $("mNew") && ($("mNew").onclick = goNew);
+      const btnNew = $("btnNew"), mNew = $("mNew");
+      const btnRefresh = $("btnRefresh"), mRefresh = $("mRefresh");
+      const btnLogout = $("btnLogout");
+      const btnReset = $("btnReset");
+      const fStatus = $("fStatus");
+      const fCategory = $("fCategory");
+      const q = $("q");
 
-      $("btnRefresh") && ($("btnRefresh").onclick = ()=> refresh());
-      $("mRefresh") && ($("mRefresh").onclick = ()=> refresh());
+      if(btnNew) btnNew.onclick = goNew;
+      if(mNew) mNew.onclick = goNew;
 
-      $("btnLogout") && ($("btnLogout").onclick = ()=>{
+      if(btnRefresh) btnRefresh.onclick = ()=> refresh();
+      if(mRefresh) mRefresh.onclick = ()=> refresh();
+
+      if(btnLogout) btnLogout.onclick = ()=>{
         try{
           if(window.DIGIY_GUARD?.logout) window.DIGIY_GUARD.logout("./pin.html");
           else location.href = "./pin.html";
         }catch(_){
           location.href = "./pin.html";
         }
-      });
+      };
 
-      $("btnReset") && ($("btnReset").onclick = ()=>{
-        $("fStatus") && ($("fStatus").value = "");
-        $("fCategory") && ($("fCategory").value = "");
-        $("q") && ($("q").value = "");
-        applyFilters();
+      if(btnReset) btnReset.onclick = ()=>{
+        if(fStatus) fStatus.value = "";
+        if(fCategory) fCategory.value = "";
+        if(q) q.value = "";
+        render(ALL);
+        setKpi(computeStatsFromList(ALL));
         toast("🧹 Filtres reset.", "");
-      });
+      };
 
-      $("fStatus") && ($("fStatus").onchange = applyFilters);
-      $("fCategory") && ($("fCategory").onchange = applyFilters);
-      $("q") && $("q").addEventListener("input", debounce(applyFilters, 120));
+      if(fStatus) fStatus.onchange = applyFilters;
+      if(fCategory) fCategory.onchange = applyFilters;
+      if(q) q.addEventListener("input", debounce(applyFilters, 120));
     }
 
+    // ==============
     // INIT
+    // ==============
     document.addEventListener("DOMContentLoaded", async ()=>{
       const ok = await boot();
       if(!ok) return;
