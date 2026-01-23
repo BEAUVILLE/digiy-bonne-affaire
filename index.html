@@ -1,894 +1,892 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="utf-8">
-    <title>DIGIY BONNE AFFAIRE — Particulier à Particulier (0% Com)</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="description" content="DIGIY BONNE AFFAIRE — Achat, Vente, Échange de particulier à particulier sans aucune commission.">
+  <meta charset="utf-8">
+  <title>DIGIY BONNE AFFAIRE — Occaz • Services • Pros (0% Com)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
+  <meta name="description" content="DIGIY BONNE AFFAIRE — Achat, Vente, Échange : Occaz, Services, Pros. 0% commission. Paiement direct.">
 
-    <style>
-        :root{
-            --bg:#020617;
-            --bg-soft:#020818;
-            --card:#030712;
-            --accent-main:#f97316; /* Orange Vif pour l'urgence/Affaire */
-            --accent-soft:#facc15; /* Jaune Or */
-            --accent-green:#22c55e; /* Vert Vif (0% Com) */
-            --ink:#f9fafb;
-            --muted:#cbd5f5;
-            --line:#1f2937;
-            --shadow-soft:0 20px 45px rgba(15,23,42,0.9);
-        }
-        *{
-            box-sizing:border-box;
-            margin:0;
-            padding:0;
-            font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui,sans-serif;
-        }
-        body{
-            min-height:100vh;
-            background:
-                radial-gradient(circle at top,rgba(249,115,22,0.16),transparent 60%),
-                radial-gradient(circle at bottom,rgba(34,197,94,0.16),transparent 55%),
-                #020617;
-            color:var(--ink);
-            display:flex;
-            justify-content:center;
-            padding:10px;
-            font-size:16px;
-        }
-        .app{
-            width:100%;
-            max-width:1100px;
-            min-height:100vh;
-            background:linear-gradient(135deg,#020617 0%,#020818 50%,#020617 100%);
-            border-radius:24px;
-            border:1px solid rgba(148,163,184,0.25);
-            box-shadow:var(--shadow-soft);
-            padding:16px 16px 22px;
-            display:flex;
-            flex-direction:column;
-            position:relative;
-            overflow:hidden;
-        }
-        .app::before{
-            content:"";
-            position:absolute;
-            inset:-40%;
-            background:
-                radial-gradient(circle at 0% 0%,rgba(249,115,22,0.14),transparent 55%),
-                radial-gradient(circle at 100% 100%,rgba(34,197,94,0.14),transparent 45%);
-            opacity:0.8;
-            pointer-events:none;
-        }
-        header{
-            position:relative;
-            z-index:2;
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            gap:10px;
-            margin-bottom:12px;
-        }
-        .brand{
-            display:flex;
-            align-items:center;
-            gap:10px;
-        }
-        .brand-logo{
-            width:42px;
-            height:42px;
-            border-radius:14px;
-            background:radial-gradient(circle at 30% 0%,#f97316,#ea580c);
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            font-size:24px;
-            box-shadow:0 12px 30px rgba(249,115,22,0.65);
-        }
-        .brand-text-title{
-            font-size:20px;
-            font-weight:900;
-            letter-spacing:0.09em;
-            text-transform:uppercase;
-            color:var(--accent-main);
-        }
-        .brand-text-sub{
-            font-size:14px;
-            color:var(--muted);
-            font-weight:600;
-        }
-        .back-link{
-            font-size:13px;
-            color:var(--muted);
-            text-decoration:none;
-            background:rgba(15,23,42,0.9);
-            border-radius:999px;
-            border:1px solid rgba(148,163,184,0.6);
-            padding:8px 14px;
-            display:inline-flex;
-            align-items:center;
-            gap:6px;
-            z-index:2;
-            position:relative;
-            font-weight:700;
-        }
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- Guard (optionnel) -->
+  <script src="./guard.js?v=ba-mix-1"></script>
 
-        main{
-            position:relative;
-            z-index:2;
-            flex:1;
-            display:flex;
-            flex-direction:column;
-            gap:14px;
-        }
+  <style>
+    :root{
+      --bg:#020617;
+      --bg-soft:#020818;
+      --card:#030712;
+      --accent-main:#f97316;
+      --accent-soft:#facc15;
+      --accent-green:#22c55e;
+      --ink:#f9fafb;
+      --muted:#cbd5f5;
+      --line:#1f2937;
+      --shadow-soft:0 20px 45px rgba(15,23,42,0.9);
+    }
+    *{
+      box-sizing:border-box;margin:0;padding:0;
+      font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui,sans-serif;
+    }
+    body{
+      min-height:100vh;
+      background:
+        radial-gradient(circle at top,rgba(249,115,22,0.16),transparent 60%),
+        radial-gradient(circle at bottom,rgba(34,197,94,0.16),transparent 55%),
+        #020617;
+      color:var(--ink);
+      display:flex;
+      justify-content:center;
+      padding:10px;
+      font-size:16px;
+    }
+    .app{
+      width:100%;
+      max-width:1100px;
+      min-height:100vh;
+      background:linear-gradient(135deg,#020617 0%,#020818 50%,#020617 100%);
+      border-radius:24px;
+      border:1px solid rgba(148,163,184,0.25);
+      box-shadow:var(--shadow-soft);
+      padding:16px 16px 22px;
+      display:flex;
+      flex-direction:column;
+      position:relative;
+      overflow:hidden;
+    }
+    .app::before{
+      content:"";
+      position:absolute;
+      inset:-40%;
+      background:
+        radial-gradient(circle at 0% 0%,rgba(249,115,22,0.14),transparent 55%),
+        radial-gradient(circle at 100% 100%,rgba(34,197,94,0.14),transparent 45%);
+      opacity:0.8;
+      pointer-events:none;
+    }
 
-        .hero{
-            background:radial-gradient(circle at top left,rgba(249,115,22,0.18),rgba(3,7,18,0.96));
-            border-radius:22px;
-            border:1px solid rgba(148,163,184,0.6);
-            padding:16px 16px 14px;
-            box-shadow:0 18px 44px rgba(15,23,42,0.95);
-            display:flex;
-            flex-direction:column;
-            gap:8px;
-        }
-        .hero-title{
-            font-size:26px;
-            font-weight:900;
-            color:var(--accent-main);
-        }
-        .hero-title span{
-             color:var(--accent-green);
-        }
-        .hero-sub{
-            font-size:16px;
-            color:#e5e7eb;
-            max-width:620px;
-            font-weight:500;
-            line-height:1.6;
-        }
-        .hero-sub strong{
-            font-weight:800;
-            color:var(--accent-green);
-        }
-        .hero-tags{
-            display:flex;
-            flex-wrap:wrap;
-            gap:7px;
-            margin-top:4px;
-        }
-        .hero-tag{
-            font-size:13px;
-            padding:5px 11px;
-            border-radius:999px;
-            border:1px solid rgba(148,163,184,0.7);
-            background:rgba(15,23,42,0.95);
-            color:#e5e7eb;
-            font-weight:600;
-        }
-        .hero-tag strong{
-            color:var(--accent-main);
-            font-weight:800;
-        }
+    header{
+      position:relative;z-index:2;
+      display:flex;justify-content:space-between;align-items:center;
+      gap:10px;margin-bottom:12px;flex-wrap:wrap;
+    }
+    .brand{display:flex;align-items:center;gap:10px}
+    .brand-logo{
+      width:42px;height:42px;border-radius:14px;
+      background:radial-gradient(circle at 30% 0%,#f97316,#ea580c);
+      display:flex;align-items:center;justify-content:center;
+      font-size:24px;box-shadow:0 12px 30px rgba(249,115,22,0.65);
+    }
+    .brand-text-title{
+      font-size:18px;font-weight:900;letter-spacing:0.09em;text-transform:uppercase;
+      color:var(--accent-main);
+    }
+    .brand-text-sub{font-size:13px;color:var(--muted);font-weight:600}
 
-        /* CTA Hero */
-        .hero-cta-row{
-            margin-top:10px;
-            display:flex;
-            flex-wrap:wrap;
-            gap:8px;
-        }
-        .hero-cta-btn{
-            border:none;
-            border-radius:999px;
-            padding:10px 16px;
-            font-size:14px;
-            font-weight:900;
-            cursor:pointer;
-            display:inline-flex;
-            align-items:center;
-            gap:8px;
-            text-decoration:none;
-            white-space:nowrap;
-            background:linear-gradient(135deg,#f97316,#ea580c);
-            color:#111827;
-            box-shadow:0 7px 18px rgba(249,115,22,0.55);
-        }
-        .hero-cta-btn:hover{
-            transform:translateY(-1px);
-            box-shadow:0 11px 26px rgba(249,115,22,0.7);
-        }
-        .hero-cta-btn-secondary{
-            border-radius:999px;
-            padding:10px 16px;
-            font-size:13px;
-            font-weight:700;
-            text-decoration:none;
-            display:inline-flex;
-            align-items:center;
-            gap:8px;
-            cursor:pointer;
-            background:rgba(15,23,42,0.98);
-            color:#e5e7eb;
-            border:1px solid rgba(148,163,184,0.8);
-        }
-        .hero-cta-btn-secondary:hover{
-            border-color:var(--accent-main);
-        }
+    .back-link{
+      font-size:13px;color:var(--muted);text-decoration:none;
+      background:rgba(15,23,42,0.9);
+      border-radius:999px;border:1px solid rgba(148,163,184,0.6);
+      padding:8px 14px;display:inline-flex;align-items:center;gap:6px;
+      z-index:2;position:relative;font-weight:700;
+      white-space:nowrap;
+    }
 
-        /* SECTION PRICING PRO */
-        .pricing{
-            margin-top:16px;
-            background:radial-gradient(circle at top right,rgba(34,197,94,0.12),rgba(3,7,18,0.98));
-            border-radius:22px;
-            border:1px solid rgba(148,163,184,0.7);
-            padding:14px 14px 16px;
-            box-shadow:0 16px 38px rgba(15,23,42,0.9);
-            display:flex;
-            flex-direction:column;
-            gap:10px;
-        }
-        .pricing-header{
-            display:flex;
-            flex-direction:column;
-            gap:4px;
-        }
-        .pricing-title{
-            font-size:20px;
-            font-weight:900;
-            color:var(--accent-soft);
-        }
-        .pricing-sub{
-            font-size:14px;
-            color:#e5e7eb;
-            max-width:620px;
-            line-height:1.5;
-        }
-        .pricing-sub strong{
-            color:var(--accent-main);
-            font-weight:800;
-        }
-        .pricing-grid{
-            margin-top:8px;
-            display:grid;
-            grid-template-columns:repeat(3,minmax(0,1fr));
-            gap:10px;
-        }
-        @media(max-width:900px){
-            .pricing-grid{
-                grid-template-columns:repeat(2,minmax(0,1fr));
-            }
-        }
-        @media(max-width:640px){
-            .pricing-grid{
-                grid-template-columns:1fr;
-            }
-        }
-        .pricing-card{
-            position:relative;
-            background:radial-gradient(circle at top,rgba(15,23,42,0.98),#020617);
-            border-radius:18px;
-            border:1px solid rgba(148,163,184,0.75);
-            padding:12px 12px 14px;
-            display:flex;
-            flex-direction:column;
-            gap:6px;
-            box-shadow:0 12px 30px rgba(15,23,42,0.9);
-        }
-        .pricing-card.highlight{
-            border-color:var(--accent-main);
-            box-shadow:0 16px 40px rgba(249,115,22,0.6);
-        }
-        .pricing-badge{
-            font-size:11px;
-            align-self:flex-start;
-            padding:3px 9px;
-            border-radius:999px;
-            background:rgba(15,23,42,0.98);
-            border:1px solid rgba(148,163,184,0.8);
-            color:var(--muted);
-            font-weight:700;
-            text-transform:uppercase;
-            letter-spacing:0.06em;
-        }
-        .pricing-card.highlight .pricing-badge{
-            border-color:var(--accent-main);
-            color:var(--accent-main);
-        }
-        .pricing-name{
-            font-size:17px;
-            font-weight:800;
-            color:var(--accent-soft);
-        }
-        .pricing-price{
-            font-size:22px;
-            font-weight:900;
-            color:var(--accent-green);
-        }
-        .pricing-price span{
-            font-size:12px;
-            font-weight:600;
-            color:var(--muted);
-            margin-left:4px;
-        }
-        .pricing-line{
-            font-size:13px;
-            color:#e5e7eb;
-            display:flex;
-            align-items:flex-start;
-            gap:5px;
-            margin-top:2px;
-        }
-        .pricing-line::before{
-            content:"•";
-            color:var(--accent-main);
-            margin-top:1px;
-        }
-        .pricing-cta{
-            margin-top:8px;
-            display:flex;
-            gap:6px;
-            flex-wrap:wrap;
-        }
+    main{position:relative;z-index:2;flex:1;display:flex;flex-direction:column;gap:14px}
 
-        /* --- CARDS & GRID ANNONCES --- */
+    .hero{
+      background:radial-gradient(circle at top left,rgba(249,115,22,0.18),rgba(3,7,18,0.96));
+      border-radius:22px;border:1px solid rgba(148,163,184,0.6);
+      padding:16px 16px 14px;
+      box-shadow:0 18px 44px rgba(15,23,42,0.95);
+      display:flex;flex-direction:column;gap:8px;
+    }
+    .hero-title{font-size:26px;font-weight:900;color:var(--accent-main)}
+    .hero-title span{color:var(--accent-green)}
+    .hero-sub{
+      font-size:16px;color:#e5e7eb;max-width:760px;font-weight:500;line-height:1.6;
+    }
+    .hero-sub strong{font-weight:800;color:var(--accent-green)}
+    .hero-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:4px}
+    .hero-tag{
+      font-size:13px;padding:5px 11px;border-radius:999px;
+      border:1px solid rgba(148,163,184,0.7);
+      background:rgba(15,23,42,0.95);
+      color:#e5e7eb;font-weight:600;
+    }
+    .hero-tag strong{color:var(--accent-main);font-weight:800}
 
-        .grid{
-            margin-top:14px;
-            display:grid;
-            grid-template-columns:repeat(3,minmax(0,1fr));
-            gap:14px;
-        }
-        @media(max-width:900px){
-            .grid{
-                grid-template-columns:repeat(2,minmax(0,1fr));
-            }
-        }
-        @media(max-width:640px){
-            .app{
-                border-radius:0;
-                border:none;
-                box-shadow:none;
-            }
-            .grid{
-                grid-template-columns:1fr;
-                gap:20px;
-            }
-        }
+    .hero-cta-row{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px}
+    .hero-cta-btn{
+      border:none;border-radius:999px;padding:10px 16px;
+      font-size:14px;font-weight:900;cursor:pointer;
+      display:inline-flex;align-items:center;gap:8px;text-decoration:none;
+      white-space:nowrap;background:linear-gradient(135deg,#f97316,#ea580c);
+      color:#111827;box-shadow:0 7px 18px rgba(249,115,22,0.55);
+    }
+    .hero-cta-btn:hover{transform:translateY(-1px);box-shadow:0 11px 26px rgba(249,115,22,0.7)}
+    .hero-cta-btn-secondary{
+      border-radius:999px;padding:10px 16px;font-size:13px;font-weight:800;
+      text-decoration:none;display:inline-flex;align-items:center;gap:8px;cursor:pointer;
+      background:rgba(15,23,42,0.98);color:#e5e7eb;border:1px solid rgba(148,163,184,0.8);
+      white-space:nowrap;
+    }
+    .hero-cta-btn-secondary:hover{border-color:var(--accent-main)}
 
-        .shop-card{
-            background:radial-gradient(circle at top,rgba(15,23,42,0.98),#020617);
-            border-radius:24px;
-            border:1px solid rgba(148,163,184,0.7);
-            padding:12px 12px 14px;
-            box-shadow:0 14px 34px rgba(15,23,42,0.95);
-            display:flex;
-            flex-direction:column;
-            gap:10px;
-            position:relative;
-            overflow:hidden;
-        }
-        .shop-card::before{
-            content:"";
-            position:absolute;
-            inset:-40%;
-            background:radial-gradient(circle at top,rgba(249,115,22,0.08),transparent 55%);
-            opacity:0.8;
-            pointer-events:none;
-        }
-        .shop-head{
-            position:relative;
-            z-index:2;
-            display:flex;
-            justify-content:space-between;
-            align-items:flex-start;
-            gap:8px;
-        }
-        .shop-name{
-            font-size:22px;
-            font-weight:900;
-            color:var(--accent-main);
-        }
-        .shop-type{
-            font-size:15px;
-            color:var(--accent-soft);
-            font-weight:600;
-        }
-        .shop-price{
-            font-size:24px;
-            font-weight:900;
-            color:var(--accent-green);
-        }
-        .shop-badge{
-            font-size:12px;
-            padding:5px 9px;
-            border-radius:999px;
-            border:1px solid rgba(34,197,94,0.9);
-            color:var(--accent-green);
-            background:rgba(15,23,42,0.98);
-            white-space:nowrap;
-            font-weight:700;
-        }
-        .shop-body{
-            position:relative;
-            z-index:2;
-            display:flex;
-            flex-direction:column;
-            gap:8px;
-        }
-        .shop-desc{
-            font-size:15px;
-            color:#f3f4f6;
-            font-weight:500;
-            line-height:1.6;
-        }
-        .shop-photo{
-            margin-top:0px;
-            border-radius:16px;
-            overflow:hidden;
-            max-height:220px;
-            height:220px;
-            border:2px solid rgba(249,115,22,0.85);
-            order:-1;
-        }
-        .shop-photo img{
-            width:100%;
-            height:100%;
-            object-fit:cover;
-            display:block;
-        }
-        .shop-meta{
-            margin-top:6px;
-            font-size:14px;
-            color:#e5e7eb;
-            font-weight:500;
-            display:flex;
-            justify-content:space-between;
-        }
+    /* FILTER BAR */
+    .filters{
+      background:rgba(15,23,42,0.92);
+      border:1px solid rgba(148,163,184,0.55);
+      border-radius:18px;
+      padding:12px;
+      display:flex;gap:10px;flex-wrap:wrap;align-items:center;
+      box-shadow:0 16px 38px rgba(15,23,42,0.75);
+    }
+    .input, .select, .textarea{
+      border-radius:14px;
+      border:1px solid rgba(148,163,184,0.55);
+      padding:10px 12px;
+      background:rgba(3,7,18,0.85);
+      color:var(--ink);
+      font-weight:800;
+      outline:none;
+    }
+    .select{min-width:180px}
+    .input{min-width:220px;flex:1}
+    .btn{
+      border:none;border-radius:999px;padding:10px 14px;
+      font-size:14px;font-weight:900;cursor:pointer;
+      display:inline-flex;align-items:center;gap:6px;text-decoration:none;
+      white-space:nowrap;transition:all 0.25s;
+      justify-content:center;
+    }
+    .btn-main{
+      background:linear-gradient(135deg,#f97316,#ea580c);
+      color:#111827;
+      box-shadow:0 7px 18px rgba(249,115,22,0.55);
+    }
+    .btn-main:hover{transform:translateY(-1px);box-shadow:0 11px 26px rgba(249,115,22,0.7)}
+    .btn-outline{
+      background:rgba(15,23,42,0.98);
+      color:#e5e7eb;border:1px solid rgba(148,163,184,0.9);
+      font-size:13px;
+    }
+    .btn-outline:hover{border-color:var(--accent-main)}
+    .pill{
+      font-size:12px;padding:5px 10px;border-radius:999px;
+      border:1px solid rgba(148,163,184,0.6);
+      color:var(--muted);font-weight:800;background:rgba(3,7,18,0.75);
+    }
+    .toast{
+      margin-top:10px;
+      padding:10px 12px;border-radius:14px;
+      border:1px solid rgba(148,163,184,0.45);
+      background:rgba(0,0,0,.22);
+      font-weight:900;font-size:12px;
+      min-height:18px;
+    }
+    .toast.ok{border-color:rgba(34,197,94,0.55)}
+    .toast.bad{border-color:rgba(249,115,115,0.55)}
 
-        .shop-actions{
-            margin-top:10px;
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            gap:10px;
-            font-size:11px;
-            color:var(--muted);
-            flex-wrap:wrap;
-        }
-        .btn{
-            border:none;
-            border-radius:999px;
-            padding:10px 14px;
-            font-size:14px;
-            font-weight:900;
-            cursor:pointer;
-            display:inline-flex;
-            align-items:center;
-            gap:6px;
-            text-decoration:none;
-            white-space:nowrap;
-            transition:all 0.25s;
-            flex-grow:1;
-            justify-content:center;
-        }
-        .btn-contact{
-            background:linear-gradient(135deg,#f97316,#ea580c);
-            color:#111827;
-            box-shadow:0 7px 18px rgba(249,115,22,0.55);
-        }
-        .btn-contact:hover{
-            transform:translateY(-1px);
-            box-shadow:0 11px 26px rgba(249,115,22,0.7);
-        }
-        .btn-call{
-            background:rgba(34,197,94,0.2);
-            color:#bbf7d0;
-            border:1px solid rgba(34,197,94,0.85);
-        }
-        .btn-call:hover{
-            border-color:#22c55e;
-        }
+    /* PRICING */
+    .pricing{
+      margin-top:4px;
+      background:radial-gradient(circle at top right,rgba(34,197,94,0.12),rgba(3,7,18,0.98));
+      border-radius:22px;border:1px solid rgba(148,163,184,0.7);
+      padding:14px 14px 16px;
+      box-shadow:0 16px 38px rgba(15,23,42,0.9);
+      display:flex;flex-direction:column;gap:10px;
+    }
+    .pricing-title{font-size:20px;font-weight:900;color:var(--accent-soft)}
+    .pricing-sub{font-size:14px;color:#e5e7eb;max-width:760px;line-height:1.5}
+    .pricing-sub strong{color:var(--accent-main);font-weight:800}
+    .pricing-grid{margin-top:8px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+    @media(max-width:900px){.pricing-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
+    @media(max-width:640px){
+      .app{border-radius:0;border:none;box-shadow:none}
+      .pricing-grid{grid-template-columns:1fr}
+    }
+    .pricing-card{
+      background:radial-gradient(circle at top,rgba(15,23,42,0.98),#020617);
+      border-radius:18px;border:1px solid rgba(148,163,184,0.75);
+      padding:12px 12px 14px;display:flex;flex-direction:column;gap:6px;
+      box-shadow:0 12px 30px rgba(15,23,42,0.9);
+    }
+    .pricing-card.highlight{border-color:var(--accent-main);box-shadow:0 16px 40px rgba(249,115,22,0.6)}
+    .pricing-badge{
+      font-size:11px;align-self:flex-start;padding:3px 9px;border-radius:999px;
+      background:rgba(15,23,42,0.98);
+      border:1px solid rgba(148,163,184,0.8);color:var(--muted);
+      font-weight:800;text-transform:uppercase;letter-spacing:0.06em;
+    }
+    .pricing-name{font-size:17px;font-weight:900;color:var(--accent-soft)}
+    .pricing-price{font-size:22px;font-weight:900;color:var(--accent-green)}
+    .pricing-price span{font-size:12px;font-weight:700;color:var(--muted);margin-left:4px}
+    .pricing-line{font-size:13px;color:#e5e7eb;display:flex;gap:5px;line-height:1.35}
+    .pricing-line::before{content:"•";color:var(--accent-main);margin-top:1px}
+    .pricing-cta{margin-top:8px;display:flex;gap:6px;flex-wrap:wrap}
 
-        /* Boutons pricing */
-        .btn-pricing-main{
-            background:linear-gradient(135deg,#f97316,#ea580c);
-            color:#111827;
-            box-shadow:0 6px 16px rgba(249,115,22,0.55);
-            font-size:13px;
-        }
-        .btn-pricing-outline{
-            background:rgba(15,23,42,0.98);
-            color:#e5e7eb;
-            border:1px solid rgba(148,163,184,0.9);
-            font-size:12px;
-        }
+    /* GRID ADS */
+    .grid{
+      margin-top:10px;
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:14px;
+    }
+    @media(max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
+    @media(max-width:640px){.grid{grid-template-columns:1fr;gap:20px;}}
 
-        footer{
-            position:relative;
-            z-index:2;
-            margin-top:16px;
-            font-size:12px;
-            color:var(--muted);
-            display:flex;
-            justify-content:space-between;
-            flex-wrap:wrap;
-            gap:6px;
-            font-weight:600;
-            line-height:1.4;
-        }
-        footer span{
-            color:var(--accent-main);
-            font-weight:800;
-        }
-    </style>
+    .shop-card{
+      background:radial-gradient(circle at top,rgba(15,23,42,0.98),#020617);
+      border-radius:24px;
+      border:1px solid rgba(148,163,184,0.7);
+      padding:12px 12px 14px;
+      box-shadow:0 14px 34px rgba(15,23,42,0.95);
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      position:relative;
+      overflow:hidden;
+      min-height: 410px;
+    }
+    .shop-card::before{
+      content:"";
+      position:absolute;
+      inset:-40%;
+      background:radial-gradient(circle at top,rgba(249,115,22,0.08),transparent 55%);
+      opacity:0.8;
+      pointer-events:none;
+    }
+    .shop-head{position:relative;z-index:2;display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
+    .shop-name{font-size:20px;font-weight:900;color:var(--accent-main)}
+    .shop-type{font-size:14px;color:var(--accent-soft);font-weight:700}
+    .shop-price{font-size:20px;font-weight:900;color:var(--accent-green);text-align:right}
+    .shop-body{position:relative;z-index:2;display:flex;flex-direction:column;gap:8px}
+    .shop-desc{font-size:14px;color:#f3f4f6;font-weight:600;line-height:1.6}
+    .shop-photo{
+      border-radius:16px;overflow:hidden;
+      max-height:220px;height:220px;border:2px solid rgba(249,115,22,0.85);
+      order:-1;background:rgba(3,7,18,.55);
+      display:grid;place-items:center;
+    }
+    .shop-photo img{width:100%;height:100%;object-fit:cover;display:block}
+    .shop-photo .ph{font-weight:1000;color:rgba(203,213,245,.85);font-size:13px}
+    .shop-meta{
+      margin-top:6px;font-size:13px;color:#e5e7eb;font-weight:600;
+      display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;
+    }
+    .shop-badge{
+      font-size:12px;padding:5px 9px;border-radius:999px;
+      border:1px solid rgba(34,197,94,0.9);
+      color:var(--accent-green);
+      background:rgba(15,23,42,0.98);
+      white-space:nowrap;
+      font-weight:800;
+    }
+    .shop-actions{
+      margin-top:10px;
+      display:flex;justify-content:space-between;align-items:center;gap:10px;
+      flex-wrap:wrap;
+    }
+    .btn-contact{
+      background:linear-gradient(135deg,#f97316,#ea580c);
+      color:#111827;
+      box-shadow:0 7px 18px rgba(249,115,22,0.55);
+      flex:1;
+    }
+    .btn-call{
+      background:rgba(34,197,94,0.2);
+      color:#bbf7d0;
+      border:1px solid rgba(34,197,94,0.85);
+      flex:1;
+    }
+    .btn-pickup{
+      background:rgba(56,189,248,0.18);
+      color:#bae6fd;
+      border:1px solid rgba(56,189,248,0.55);
+      flex:1;
+    }
+    footer{
+      position:relative;z-index:2;margin-top:16px;
+      font-size:12px;color:var(--muted);
+      display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;
+      font-weight:700;line-height:1.4;
+    }
+    footer span{color:var(--accent-main);font-weight:900}
+
+    #guard_status{
+      position:fixed;top:14px;right:14px;z-index:9999;
+      background:rgba(0,0,0,.82);border:1px solid rgba(255,255,255,.08);
+      color:#fff;padding:10px 12px;border-radius:12px;font-weight:1000;font-size:12px;
+    }
+
+    /* MODAL */
+    .modal{
+      position:fixed;inset:0;display:none;align-items:center;justify-content:center;
+      background:rgba(0,0,0,.55);z-index:2000;padding:12px;
+    }
+    .modalBox{
+      width:100%;max-width:760px;
+      border-radius:22px;
+      border:1px solid rgba(148,163,184,0.55);
+      background:rgba(3,7,18,0.96);
+      box-shadow:0 22px 70px rgba(0,0,0,.55);
+      padding:14px;
+    }
+    .modalTop{
+      display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px;
+    }
+    .modalTitle{font-size:16px;font-weight:1000;color:var(--accent-soft)}
+    .xBtn{
+      border:none;border-radius:999px;padding:10px 14px;
+      font-weight:1000;cursor:pointer;background:rgba(15,23,42,0.98);
+      color:#e5e7eb;border:1px solid rgba(148,163,184,0.8);
+    }
+    .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+    @media(max-width:720px){.grid2{grid-template-columns:1fr}}
+    .help{font-size:12px;color:rgba(203,213,245,.85);font-weight:700;margin-top:6px}
+  </style>
 </head>
-<body>
-<div class="app">
-    <header>
-        <div class="brand">
-            <div class="brand-logo">💰</div>
-            <div>
-                <div class="brand-text-title">DIGIY BONNE AFFAIRE</div>
-                <div class="brand-text-sub">PàP: Vente, Échange, Occasion</div>
-            </div>
-        </div>
 
-        <!-- Retour HUB -->
+<body>
+  <div id="guard_status">🔐 Boot…</div>
+
+  <div class="app">
+    <header>
+      <div class="brand">
+        <div class="brand-logo">💰</div>
+        <div>
+          <div class="brand-text-title">DIGIY BONNE AFFAIRE</div>
+          <div class="brand-text-sub">Occaz • Services • Pros — 0% commission</div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:flex-end">
+        <div class="pill" id="pillCtx">slug: —</div>
         <a href="https://beauville.github.io/mon-espace-digiy/" class="back-link">
-            <span>←</span> Retour DIGIY HUB
+          <span>←</span> Retour DIGIY HUB
         </a>
+      </div>
     </header>
 
     <main>
-        <section class="hero">
-            <div class="hero-title">
-                DIGIY BONNE AFFAIRE <span>0% Commission</span>
+      <section class="hero">
+        <div class="hero-title">
+          DIGIY BONNE AFFAIRE <span>0% Commission</span>
+        </div>
+        <div class="hero-sub">
+          Achète et vends entre particuliers, trouve des <strong>services terrain</strong>,
+          et des <strong>offres PRO</strong>.
+          Contact direct via WhatsApp / Appel. Publication payante = annonces propres.
+        </div>
+        <div class="hero-tags">
+          <div class="hero-tag"><strong>0% commission</strong> — Direct</div>
+          <div class="hero-tag">Occaz • Services • Pros</div>
+          <div class="hero-tag">Annonce payante = anti-spam</div>
+          <div class="hero-tag">Pickup DIGIY (option)</div>
+        </div>
+
+        <div class="hero-cta-row">
+          <button class="hero-cta-btn" id="btnOpenPost">✍️ Publier une annonce</button>
+          <a href="#section-pro" class="hero-cta-btn-secondary">🧰 Je suis PRO / Agence (abonnements)</a>
+          <button class="hero-cta-btn-secondary" id="btnRefresh">🔄 Actualiser</button>
+        </div>
+
+        <div class="toast" id="toastTop">Prêt.</div>
+      </section>
+
+      <section class="filters">
+        <select id="fCategory" class="select">
+          <option value="">Toutes catégories</option>
+          <option value="occaz">♻️ Occaz</option>
+          <option value="service">🛠️ Services</option>
+          <option value="pro">🏪 Pros</option>
+        </select>
+
+        <select id="fLocation" class="select">
+          <option value="">Toutes zones</option>
+          <option>Dakar</option><option>Pikine</option><option>Guédiawaye</option><option>Rufisque</option>
+          <option>Thiès</option><option>Mbour</option><option>Saly</option><option>Saint-Louis</option>
+        </select>
+
+        <input id="fQuery" class="input" placeholder="Recherche… (titre / mot clé)" />
+        <button class="btn btn-outline" id="btnReset">🧹 Reset</button>
+      </section>
+
+      <!-- PRICING PRO (inchangé, tes liens) -->
+      <section class="pricing" id="section-pro">
+        <div class="pricing-title">Abonnements DIGIY BONNE AFFAIRE PRO</div>
+        <p class="pricing-sub">
+          Pour vendeurs réguliers (autos, terrains, agences, pros) : 0% commission sur tes ventes,
+          tu paies seulement ton abonnement. <strong>Propre, stable, durable.</strong>
+        </p>
+
+        <div class="pricing-grid">
+          <article class="pricing-card">
+            <div class="pricing-badge">STARTER</div>
+            <div class="pricing-name">Pack Découverte</div>
+            <div class="pricing-price">9 900 F CFA <span>/ mois</span></div>
+            <div class="pricing-line">Jusqu’à 10 annonces actives.</div>
+            <div class="pricing-line">Mise en avant simple.</div>
+            <div class="pricing-line">Support WhatsApp (ouvrable).</div>
+            <div class="pricing-cta">
+              <a href="https://beauville.github.io/inscription-digiy/?module=bonne_affaire&plan=starter" class="btn btn-main">📲 Démarrer</a>
+              <a href="https://wa.me/221771342889?text=Bonjour%20DIGIY,%20d%C3%A9tails%20Pack%20D%C3%A9couverte%20BONNE%20AFFAIRE." target="_blank" rel="noopener" class="btn btn-outline">Détails</a>
             </div>
-            <div class="hero-sub">
-                Achetez et vendez entre particuliers :
-                <strong>Voitures, Terrains, Objets, Services</strong>.
-                Contactez le vendeur <strong>directement</strong> via WhatsApp ou Appel.
+          </article>
+
+          <article class="pricing-card highlight">
+            <div class="pricing-badge">LE PLUS CHOISI</div>
+            <div class="pricing-name">Pack Business</div>
+            <div class="pricing-price">20 000 F CFA <span>/ mois</span></div>
+            <div class="pricing-line">Jusqu’à 30 annonces actives.</div>
+            <div class="pricing-line">3 boost / mois.</div>
+            <div class="pricing-line">Badge confiance + stats.</div>
+            <div class="pricing-cta">
+              <a href="https://beauville.github.io/inscription-digiy/?module=bonne_affaire&plan=business" class="btn btn-main">🚀 Passer Business</a>
+              <a href="https://wa.me/221771342889?text=Bonjour%20DIGIY,%20d%C3%A9tails%20Pack%20Business%20BONNE%20AFFAIRE." target="_blank" rel="noopener" class="btn btn-outline">Contacter</a>
             </div>
-            <div class="hero-tags">
-                <div class="hero-tag"><strong>0% commission</strong> — PàP</div>
-                <div class="hero-tag">Annonces V.O. vérifiées</div>
-                <div class="hero-tag">Paiement direct au vendeur</div>
-                <div class="hero-tag">Voitures et biens immobiliers</div>
+          </article>
+
+          <article class="pricing-card">
+            <div class="pricing-badge">PREMIUM</div>
+            <div class="pricing-name">Pack Expert</div>
+            <div class="pricing-price">28 000 F CFA <span>/ mois</span></div>
+            <div class="pricing-line">Annonces illimitées / mois.</div>
+            <div class="pricing-line">Mise en avant continue.</div>
+            <div class="pricing-line">Support prioritaire.</div>
+            <div class="pricing-cta">
+              <a href="https://beauville.github.io/inscription-digiy/?module=bonne_affaire&plan=premium" class="btn btn-main">👑 Devenir Premium</a>
+              <a href="https://wa.me/221771342889?text=Bonjour%20DIGIY,%20d%C3%A9tails%20Pack%20Premium%20BONNE%20AFFAIRE." target="_blank" rel="noopener" class="btn btn-outline">Parler</a>
             </div>
+          </article>
+        </div>
+      </section>
 
-            <!-- CTA Particulier + PRO -->
-            <div class="hero-cta-row">
-                <!-- Particulier : par annonce (WhatsApp pour l’instant) -->
-                <a href="https://wa.me/221771342889?text=Bonjour%20DIGIY,%20je%20veux%20poser%20une%20annonce%20(PARTICULIER)%20sur%20BONNE%20AFFAIRE."
-                   target="_blank" rel="noopener"
-                   class="hero-cta-btn">
-                    ✍️ Poser une annonce (Particulier)
-                </a>
+      <!-- LISTING DYNAMIQUE -->
+      <section class="grid" id="adsGrid">
+        <!-- rempli par JS -->
+      </section>
 
-                <!-- PRO / Agence : scroll vers section abonnements -->
-                <a href="#section-pro" class="hero-cta-btn-secondary">
-                    🧰 Je suis PRO / Agence (abonnements)
-                </a>
-            </div>
-        </section>
-
-        <!-- SECTION ABONNEMENTS PRO -->
-        <section class="pricing" id="section-pro">
-            <div class="pricing-header">
-                <div class="pricing-title">Abonnements DIGIY BONNE AFFAIRE PRO</div>
-                <p class="pricing-sub">
-                    Pour les vendeurs réguliers (autos, terrains, agences, pros) :
-                    choisis ton pack mensuel. <strong>0% commission</strong> sur les ventes,
-                    tu paies seulement ton abonnement.
-                </p>
-            </div>
-
-            <div class="pricing-grid">
-                <!-- Pack 1 : 9 900 -->
-                <article class="pricing-card">
-                    <div class="pricing-badge">STARTER</div>
-                    <div class="pricing-name">Pack Découverte</div>
-                    <div class="pricing-price">
-                        9 900 F CFA <span>/ mois</span>
-                    </div>
-                    <div class="pricing-line">Jusqu’à 10 annonces actives en même temps.</div>
-                    <div class="pricing-line">Mise en avant simple dans la liste.</div>
-                    <div class="pricing-line">0% de commission sur tes ventes.</div>
-                    <div class="pricing-line">Support WhatsApp en horaires ouvrables.</div>
-                    <div class="pricing-cta">
-                        <a href="https://beauville.github.io/inscription-digiy/?module=bonne_affaire&plan=starter"
-                           class="btn btn-pricing-main">
-                            📲 Démarrer à 9 900 F
-                        </a>
-                        <a href="https://wa.me/221771342889?text=Bonjour%20DIGIY,%20je%20veux%20plus%20de%20d%C3%A9tails%20sur%20le%20Pack%20D%C3%A9couverte%20BONNE%20AFFAIRE."
-                           target="_blank" rel="noopener"
-                           class="btn btn-pricing-outline">
-                            Voir plus de détails
-                        </a>
-                    </div>
-                </article>
-
-                <!-- Pack 2 : 20 000 -->
-                <article class="pricing-card highlight">
-                    <div class="pricing-badge">LE PLUS CHOISI</div>
-                    <div class="pricing-name">Pack Business</div>
-                    <div class="pricing-price">
-                        20 000 F CFA <span>/ mois</span>
-                    </div>
-                    <div class="pricing-line">Jusqu’à 30 annonces actives.</div>
-                    <div class="pricing-line">3 annonces boostées / mois (remontée régulière).</div>
-                    <div class="pricing-line">Badge “Vendeur de Confiance DIGIY”.</div>
-                    <div class="pricing-line">Statistiques simples (vues / clics WhatsApp).</div>
-                    <div class="pricing-cta">
-                        <a href="https://beauville.github.io/inscription-digiy/?module=bonne_affaire&plan=business"
-                           class="btn btn-pricing-main">
-                            🚀 Passer en Business (20 000 F)
-                        </a>
-                        <a href="https://wa.me/221771342889?text=Bonjour%20DIGIY,%20je%20veux%20plus%20de%20d%C3%A9tails%20sur%20le%20Pack%20Business%20BONNE%20AFFAIRE."
-                           target="_blank" rel="noopener"
-                           class="btn btn-pricing-outline">
-                            Contacter l’équipe DIGIY
-                        </a>
-                    </div>
-                </article>
-
-                <!-- Pack 3 : 28 000 -->
-                <article class="pricing-card">
-                    <div class="pricing-badge">PREMIUM</div>
-                    <div class="pricing-name">Pack Expert</div>
-                    <div class="pricing-price">
-                        28 000 F CFA <span>/ mois</span>
-                    </div>
-                    <div class="pricing-line">Annonces illimitées sur le mois.</div>
-                    <div class="pricing-line">Mise en avant continue pour tes meilleures offres.</div>
-                    <div class="pricing-line">Présence prioritaire sur la page locale.</div>
-                    <div class="pricing-line">Badge “Boutique Premium DIGIY”.</div>
-                    <div class="pricing-line">Support prioritaire + ajustement personnalisé.</div>
-                    <div class="pricing-cta">
-                        <a href="https://beauville.github.io/inscription-digiy/?module=bonne_affaire&plan=premium"
-                           class="btn btn-pricing-main">
-                            👑 Devenir Premium (28 000 F)
-                        </a>
-                        <a href="https://wa.me/221771342889?text=Bonjour%20DIGIY,%20je%20veux%20plus%20de%20d%C3%A9tails%20sur%20le%20Pack%20Premium%20BONNE%20AFFAIRE."
-                           target="_blank" rel="noopener"
-                           class="btn btn-pricing-outline">
-                            Parler à un conseiller
-                        </a>
-                    </div>
-                </article>
-            </div>
-        </section>
-
-        <!-- ANNONCES EXISTANTES -->
-        <section class="grid">
-
-            <article class="shop-card">
-                <div class="shop-head">
-                    <div>
-                        <div class="shop-name">Terrain Titré 300m²</div>
-                        <div class="shop-type">Immobilier • Saly Nord</div>
-                    </div>
-                    <div class="shop-price">15.000.000 XOF</div>
-                </div>
-                <div class="shop-body">
-                    <div class="shop-photo">
-                        <img src="https://images.unsplash.com/photo-1549488344-ec853f58a5e3?auto=format&fit=crop&w=800&q=80"
-                            alt="Parcelle de terrain délimitée sous le soleil">
-                    </div>
-                    <p class="shop-desc">
-                        Parcelle de 300 m² dans une zone en forte expansion à Saly Nord.
-                        Titre foncier individuel disponible. Accès facile à la route nationale.
-                    </p>
-                    <div class="shop-meta">
-                        <span>Publié il y a 2 jours</span>
-                        <div class="shop-badge">0% Com DIGIY</div>
-                    </div>
-                    <div class="shop-actions">
-                        <a class="btn btn-contact"
-                            href="https://wa.me/221770001122?text=Bonjour,%20je%20suis%20int%C3%A9ress%C3%A9%20par%20le%20Terrain%20de%20300m%C2%B2%20(DIGIY%20BONNE%20AFFAIRE)."
-                            target="_blank" rel="noopener">
-                            💬 Contacter Vendeur (WhatsApp)
-                        </a>
-                        <a class="btn btn-call" href="tel:+221770001122">
-                            📞 Appeler le Propriétaire
-                        </a>
-                    </div>
-                </div>
-            </article>
-
-            <article class="shop-card">
-                <div class="shop-head">
-                    <div>
-                        <div class="shop-name">Toyota Corolla 2018</div>
-                        <div class="shop-type">Véhicule • Berline • Dakar</div>
-                    </div>
-                    <div class="shop-price">7.200.000 XOF</div>
-                </div>
-                <div class="shop-body">
-                     <div class="shop-photo">
-                        <img src="https://images.unsplash.com/photo-1583091000699-b1d03c62174c?auto=format&fit=crop&w=800&q=80"
-                            alt="Voiture berline Toyota Corolla grise">
-                    </div>
-                    <p class="shop-desc">
-                        Très bon état général, climatisation fonctionnelle, faible kilométrage
-                        (75 000 km). Toutes options. Papiers à jour.
-                    </p>
-                    <div class="shop-meta">
-                        <span>Mise en ligne aujourd'hui</span>
-                        <div class="shop-badge">0% Com DIGIY</div>
-                    </div>
-                    <div class="shop-actions">
-                        <a class="btn btn-contact"
-                            href="https://wa.me/221771112233?text=Bonjour,%20je%20suis%20int%C3%A9ress%C3%A9%20par%20la%20Toyota%20Corolla%202018%20(DIGIY%20BONNE%20AFFAIRE)."
-                            target="_blank" rel="noopener">
-                            💬 Contacter Vendeur (WhatsApp)
-                        </a>
-                        <a class="btn btn-call" href="tel:+221771112233">
-                            📞 Appeler le Propriétaire
-                        </a>
-                    </div>
-                </div>
-            </article>
-
-            <article class="shop-card">
-                <div class="shop-head">
-                    <div>
-                        <div class="shop-name">Moto Scooter Neuf</div>
-                        <div class="shop-type">Deux Roues • 125cc • Thiès</div>
-                    </div>
-                    <div class="shop-price">450.000 XOF</div>
-                </div>
-                <div class="shop-body">
-                    <div class="shop-photo">
-                        <img src="https://images.unsplash.com/photo-1558981403-c5f9899a280b?auto=format&fit=crop&w=800&q=80"
-                            alt="Moto scooter noir garée en ville">
-                    </div>
-                    <p class="shop-desc">
-                        Scooter de marque YAMAHA 125cc. Moins de 1000 km, état neuf.
-                        Échange possible contre une petite voiture avec rajout.
-                    </p>
-                    <div class="shop-meta">
-                        <span>Annonce vérifiée</span>
-                        <div class="shop-badge">0% Com DIGIY</div>
-                    </div>
-                    <div class="shop-actions">
-                        <a class="btn btn-contact"
-                            href="https://wa.me/221772223344?text=Bonjour,%20je%20suis%20int%C3%A9ress%C3%A9%20par%20le%20Scooter%20125cc%20(DIGIY%20BONNE%20AFFAIRE)."
-                            target="_blank" rel="noopener">
-                            💬 Contacter le Vendeur (WhatsApp)
-                        </a>
-                        <a class="btn btn-call" href="tel:+221772223344">
-                            📞 Appeler le Propriétaire
-                        </a>
-                    </div>
-                </div>
-            </article>
-            
-            <article class="shop-card">
-                <div class="shop-head">
-                    <div>
-                        <div class="shop-name">Terrain 150m² Viabilisé</div>
-                        <div class="shop-type">Immobilier • Mbour Centre</div>
-                    </div>
-                    <div class="shop-price">4.500.000 XOF</div>
-                </div>
-                <div class="shop-body">
-                     <div class="shop-photo">
-                        <img src="https://images.unsplash.com/photo-1516245258810-b91b5c2d1b7d?auto=format&fit=crop&w=800&q=80"
-                            alt="Vue aérienne de parcelles de construction">
-                    </div>
-                    <p class="shop-desc">
-                        Petite parcelle idéale pour maison de ville. Eau et électricité à proximité.
-                        Zone déjà habitée. Prix négociable.
-                    </p>
-                    <div class="shop-meta">
-                        <span>Urgent !</span>
-                        <div class="shop-badge">0% Com DIGIY</div>
-                    </div>
-                    <div class="shop-actions">
-                        <a class="btn btn-contact"
-                            href="https://wa.me/221773334455?text=Bonjour,%20je%20suis%20int%C3%A9ress%C3%A9%20par%20le%20Terrain%20de%20150m%C2%B2%20%C3%A0%20Mbour%20(DIGIY%20BONNE%20AFFAIRE)."
-                            target="_blank" rel="noopener">
-                            💬 Contacter le Vendeur (WhatsApp)
-                        </a>
-                        <a class="btn btn-call" href="tel:+221773334455">
-                            📞 Appeler le Propriétaire
-                        </a>
-                    </div>
-                </div>
-            </article>
-
-            <article class="shop-card">
-                <div class="shop-head">
-                    <div>
-                        <div class="shop-name">Peugeot 206</div>
-                        <div class="shop-type">Véhicule • Citadine • Vendu en l'état</div>
-                    </div>
-                    <div class="shop-price">900.000 XOF</div>
-                </div>
-                <div class="shop-body">
-                    <div class="shop-photo">
-                        <img src="https://images.unsplash.com/photo-1532581622352-78b6630f5a43?auto=format&fit=crop&w=800&q=80"
-                            alt="Petite voiture citadine rouge">
-                    </div>
-                    <p class="shop-desc">
-                        Voiture ancienne, fiable pour la ville. Quelques retouches de carrosserie
-                        à prévoir. Idéale pour jeune conducteur ou livraison.
-                    </p>
-                    <div class="shop-meta">
-                        <span>Faible consommation</span>
-                        <div class="shop-badge">0% Com DIGIY</div>
-                    </div>
-                    <div class="shop-actions">
-                        <a class="btn btn-contact"
-                            href="https://wa.me/221774445566?text=Bonjour,%20je%20suis%20int%C3%A9ress%C3%A9%20par%20la%20Peugeot%20206%20(DIGIY%20BONNE%20AFFAIRE)."
-                            target="_blank" rel="noopener">
-                            💬 Contacter le Vendeur (WhatsApp)
-                        </a>
-                        <a class="btn btn-call" href="tel:+221774445566">
-                            📞 Appeler le Vendeur
-                        </a>
-                    </div>
-                </div>
-            </article>
-
-            <article class="shop-card">
-                <div class="shop-head">
-                    <div>
-                        <div class="shop-name">Lot Matériel Hôtelier</div>
-                        <div class="shop-type">Équipement Pro • Tout Dakar</div>
-                    </div>
-                    <div class="shop-price">3.500.000 XOF (Négociable)</div>
-                </div>
-                <div class="shop-body">
-                    <div class="shop-photo">
-                        <img src="https://images.unsplash.com/photo-1556910651-789a77764f69?auto=format&fit=crop&w=800&q=80"
-                            alt="Équipement de cuisine professionnelle en inox">
-                    </div>
-                    <p class="shop-desc">
-                        Cède un lot complet (four, frigo, ustensiles, tables) suite à la fermeture
-                        d'un restaurant. Équipement en très bon état.
-                    </p>
-                    <div class="shop-meta">
-                        <span>Échange possible contre voiture</span>
-                        <div class="shop-badge">0% Com DIGIY</div>
-                    </div>
-                    <div class="shop-actions">
-                        <a class="btn btn-contact"
-                            href="https://wa.me/221775556677?text=Bonjour,%20je%20suis%20int%C3%A9ress%C3%A9%20par%20le%20Lot%20Mat%C3%A9riel%20H%C3%B4telier%20(DIGIY%20BONNE%20AFFAIRE)."
-                            target="_blank" rel="noopener">
-                            💬 Contacter le Vendeur (WhatsApp)
-                        </a>
-                        <a class="btn btn-call" href="tel:+221775556677">
-                            📞 Appeler le Vendeur
-                        </a>
-                    </div>
-                </div>
-            </article>
-
-        </section>
     </main>
 
     <footer>
-        <div>DIGIY BONNE AFFAIRE • <span>Super App DIGIYLYFE</span> — Sénégal → Afrique</div>
-        <div>Transactions PàP sans commission • Vos annonces en ligne directement.</div>
-        <div style="width:100%; margin-top:4px; font-size:11px; color:#a8b1c2;">
-            DIGIYLYFE met seulement en relation vendeurs et acheteurs. Vérifiez documents et état des biens avant tout paiement.
-        </div>
+      <div>DIGIY BONNE AFFAIRE • <span>Super App DIGIYLYFE</span> — Sénégal → Afrique</div>
+      <div>Transactions directes • 0% commission • annonces propres.</div>
+      <div style="width:100%; margin-top:4px; font-size:11px; color:#a8b1c2;">
+        DIGIYLYFE met en relation vendeurs et acheteurs. Vérifiez documents et état des biens avant tout paiement.
+      </div>
     </footer>
-</div>
+  </div>
 
-<script>
-    function openWa(phone, message){
-        const txt = encodeURIComponent(message || "");
-        const clean = phone.replace(/\s+/g,"");
-        window.open(
-            "https://wa.me/" + clean.replace("+","") + (txt ? ("?text=" + txt) : ""),
-            "_blank"
-        );
+  <!-- MODAL POST -->
+  <div class="modal" id="postModal">
+    <div class="modalBox">
+      <div class="modalTop">
+        <div class="modalTitle">✍️ Publier une annonce (Occaz • Service • Pro)</div>
+        <button class="xBtn" id="btnClosePost">✖ Fermer</button>
+      </div>
+
+      <div class="grid2">
+        <div>
+          <div class="help">Slug boutique / profil (auto si GO PIN)</div>
+          <input id="pSlug" class="input" placeholder="slug (ex: chez-astou-boutique)" />
+        </div>
+        <div>
+          <div class="help">Owner ID (auto si GO PIN)</div>
+          <input id="pOwner" class="input" placeholder="owner_id (uuid)" />
+        </div>
+
+        <div>
+          <div class="help">Catégorie</div>
+          <select id="pCategory" class="select" style="width:100%">
+            <option value="occaz">♻️ Occaz</option>
+            <option value="service">🛠️ Service</option>
+            <option value="pro">🏪 Pro</option>
+          </select>
+        </div>
+
+        <div>
+          <div class="help">Zone</div>
+          <select id="pLocation" class="select" style="width:100%">
+            <option>Dakar</option><option>Pikine</option><option>Guédiawaye</option><option>Rufisque</option>
+            <option>Thiès</option><option>Mbour</option><option>Saly</option><option>Saint-Louis</option>
+          </select>
+        </div>
+
+        <div style="grid-column:1/-1">
+          <div class="help">Titre</div>
+          <input id="pTitle" class="input" placeholder="Ex: iPhone 12 128Go / Plombier dispo / Lot quincaillerie promo" />
+        </div>
+
+        <div style="grid-column:1/-1">
+          <div class="help">Description</div>
+          <textarea id="pDesc" class="textarea" style="width:100%;min-height:110px" placeholder="Décris simple et vrai."></textarea>
+        </div>
+
+        <div>
+          <div class="help">Prix FCFA (optionnel pour services)</div>
+          <input id="pPrice" class="input" inputmode="numeric" placeholder="ex: 25000" />
+        </div>
+
+        <div>
+          <div class="help">Pickup DIGIY (option)</div>
+          <select id="pPickup" class="select" style="width:100%">
+            <option value="false">🚫 Non</option>
+            <option value="true">🚚 Oui</option>
+          </select>
+        </div>
+
+        <div>
+          <div class="help">Téléphone</div>
+          <input id="pPhone" class="input" placeholder="+22177xxxxxxx" />
+        </div>
+        <div>
+          <div class="help">WhatsApp (optionnel)</div>
+          <input id="pWa" class="input" placeholder="+22177xxxxxxx" />
+        </div>
+      </div>
+
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+        <button class="btn btn-outline" id="btnCreateDraft" style="flex:1">🧱 Créer (draft)</button>
+        <button class="btn btn-main" id="btnPayPublish" style="flex:1">💸 Payer & Publier</button>
+      </div>
+
+      <div class="toast" id="toastPost">Prêt.</div>
+      <div class="help">Paiement simulé pour l’instant (on branchera Wave après).</div>
+    </div>
+  </div>
+
+  <script>
+  (function(){
+    // =============================
+    // SUPABASE
+    // =============================
+    const SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
+    const SUPABASE_ANON_KEY =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
+    const sb = window.supabase?.createClient ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
+
+    const $ = (id)=>document.getElementById(id);
+    const esc = (s)=>String(s||"")
+      .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;").replaceAll("'","&#039;");
+    const safeJson = (s)=>{ try{ return JSON.parse(s);}catch(_){return null;} };
+
+    function toast(id, msg, kind){
+      const el = $(id); if(!el) return;
+      el.textContent = msg || "";
+      el.classList.remove("ok","bad");
+      if(kind) el.classList.add(kind);
     }
-</script>
+    function qp(k){
+      try{ return (new URLSearchParams(location.search).get(k) || "").trim(); }catch(_){ return ""; }
+    }
+    function money(x){
+      const n = Number(x||0);
+      if(!isFinite(n) || n<=0) return "";
+      return Math.round(n).toLocaleString("fr-FR") + " XOF";
+    }
+    function waLink(phone, msg){
+      const p = String(phone||"").replace(/\s+/g,"").replace(/[^\d+]/g,"");
+      const text = encodeURIComponent(msg||"Salut, je viens de DIGIY Bonne Affaire.");
+      return "https://wa.me/" + p.replace("+","") + "?text=" + text;
+    }
+
+    // =============================
+    // GUARD STATUS
+    // =============================
+    function setStatus(t){ const el = $("guard_status"); if(el) el.textContent = t; }
+    function hideStatus(){ const el = $("guard_status"); if(el) el.style.display="none"; }
+
+    async function bootGuard(){
+      try{
+        setStatus("🔐 Vérification…");
+        if(window.DIGIY_GUARD?.boot){
+          const r = await window.DIGIY_GUARD.boot({ login: "./pin.html" });
+          if(r?.ok) setStatus("✅ OK");
+          else setStatus("ℹ️ Mode public");
+        }else{
+          setStatus("ℹ️ Mode public");
+        }
+        setTimeout(hideStatus, 600);
+      }catch(e){
+        console.error(e);
+        setStatus("ℹ️ Mode public");
+        setTimeout(hideStatus, 600);
+      }
+    }
+
+    // =============================
+    // CONTEXT
+    // =============================
+    const CTX = { slug:"", owner_id:"" };
+    function loadCtx(){
+      const urlSlug = qp("slug");
+      const gSlug = window.DIGIY_GUARD?.getSlug?.() || "";
+      const s = window.DIGIY_GUARD?.getSession?.() || null;
+
+      CTX.slug = (urlSlug || gSlug || localStorage.getItem("DIGIY_SLUG") || "").trim();
+      CTX.owner_id = (s?.owner_id || localStorage.getItem("DIGIY_PRO_ID") || "").trim();
+
+      $("pillCtx").textContent = "slug: " + (CTX.slug || "—");
+
+      if(!$("pSlug").value) $("pSlug").value = CTX.slug || "";
+      if(!$("pOwner").value) $("pOwner").value = CTX.owner_id || "";
+    }
+
+    // =============================
+    // MODAL POST
+    // =============================
+    function openPost(){
+      $("postModal").style.display="flex";
+      loadCtx();
+    }
+    function closePost(){
+      $("postModal").style.display="none";
+    }
+    $("btnOpenPost").onclick = openPost;
+    $("btnClosePost").onclick = closePost;
+    $("postModal").addEventListener("click", (e)=>{
+      if(e.target && e.target.id === "postModal") closePost();
+    });
+
+    // =============================
+    // LIST ADS (RPC ba_list_ads)
+    // =============================
+    let ALL = [];
+
+    function matchQuery(item, q){
+      q = (q||"").trim().toLowerCase();
+      if(!q) return true;
+      const t = (item.title||"").toLowerCase();
+      const loc = (item.location||"").toLowerCase();
+      const slug = (item.slug||"").toLowerCase();
+      return t.includes(q) || loc.includes(q) || slug.includes(q);
+    }
+
+    function render(items){
+      const grid = $("adsGrid");
+      grid.innerHTML = "";
+
+      if(!items || items.length===0){
+        grid.innerHTML = `<div style="grid-column:1/-1" class="toast">Aucune annonce pour ce filtre.</div>`;
+        return;
+      }
+
+      for(const it of items){
+        const cat =
+          it.category==="occaz" ? "Immobilier / Occaz" :
+          it.category==="service" ? "Service terrain" :
+          it.category==="pro" ? "Offre Pro" : "Annonce";
+
+        const price = money(it.price);
+        const msg = `Salut, je suis intéressé par: ${it.title} (DIGIY BONNE AFFAIRE, slug: ${it.slug}).`;
+        const phone = it.phone || "";
+
+        const card = document.createElement("article");
+        card.className = "shop-card";
+        card.innerHTML = `
+          <div class="shop-head">
+            <div>
+              <div class="shop-name">${esc(it.title || "Annonce")}</div>
+              <div class="shop-type">${esc(cat)} • ${esc(it.location || "—")}</div>
+            </div>
+            <div class="shop-price">${price || "—"}</div>
+          </div>
+
+          <div class="shop-body">
+            <div class="shop-photo">
+              <div class="ph">📷 Photo (à brancher Storage)</div>
+            </div>
+
+            <p class="shop-desc">
+              ${esc("Contact direct. Détails à venir (description complète bientôt).")}
+            </p>
+
+            <div class="shop-meta">
+              <span>slug: <strong>${esc(it.slug||"")}</strong></span>
+              <div class="shop-badge">0% Com DIGIY</div>
+            </div>
+
+            <div class="shop-actions">
+              <a class="btn btn-contact" href="${waLink(phone, msg)}" target="_blank" rel="noopener">
+                💬 WhatsApp
+              </a>
+              <a class="btn btn-call" href="tel:${esc(phone)}">
+                📞 Appeler
+              </a>
+              <button class="btn btn-pickup" data-pick="${esc(it.id)}">
+                ${it.pickup_enabled ? "🚚 Pickup DIGIY" : "🚫 Pickup"}
+              </button>
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      }
+
+      grid.querySelectorAll("[data-pick]").forEach(btn=>{
+        btn.onclick = ()=>{
+          if(btn.textContent.includes("🚫")){
+            alert("Pickup non activé sur cette annonce.");
+            return;
+          }
+          alert("Pickup DIGIY (placeholder) — prochain wagon: création mission DRIVER/FRET.");
+        };
+      });
+    }
+
+    async function refresh(){
+      if(!sb){
+        toast("toastTop","Supabase non prêt (script bloqué?)","bad");
+        return;
+      }
+      toast("toastTop","Chargement…","");
+      const cat = $("fCategory").value || null;
+      const loc = $("fLocation").value || null;
+
+      const { data, error } = await sb.rpc("ba_list_ads", { p_category: cat, p_location: loc });
+      if(error){
+        toast("toastTop", error.message, "bad");
+        return;
+      }
+      const res = (typeof data === "string") ? safeJson(data) : data;
+      if(!res?.ok){
+        toast("toastTop", res?.reason || "Refus", "bad");
+        return;
+      }
+
+      ALL = res.items || [];
+      applyFilters();
+      toast("toastTop", "✅ " + ALL.length + " annonce(s) chargée(s)", "ok");
+    }
+
+    function applyFilters(){
+      const q = ($("fQuery").value || "").trim();
+      const list = ALL.filter(it => matchQuery(it, q));
+      render(list);
+    }
+
+    $("btnRefresh").onclick = refresh;
+    $("fCategory").onchange = refresh;
+    $("fLocation").onchange = refresh;
+    $("fQuery").addEventListener("input", ()=>applyFilters());
+    $("btnReset").onclick = ()=>{
+      $("fCategory").value = "";
+      $("fLocation").value = "";
+      $("fQuery").value = "";
+      refresh();
+    };
+
+    // =============================
+    // POST (RPC ba_create_ad + ba_publish_ad)
+    // =============================
+    let LAST_AD_ID = null;
+
+    function readPost(){
+      return {
+        slug: ($("pSlug").value || CTX.slug || "").trim(),
+        owner_id: ($("pOwner").value || CTX.owner_id || "").trim(),
+        category: $("pCategory").value,
+        location: $("pLocation").value,
+        title: ($("pTitle").value || "").trim(),
+        description: ($("pDesc").value || "").trim(),
+        price: ($("pPrice").value || "").trim(),
+        pickup: ($("pPickup").value === "true"),
+        phone: ($("pPhone").value || "").trim(),
+        whatsapp: ($("pWa").value || "").trim()
+      };
+    }
+
+    function validatePost(d){
+      if(!d.slug) return "Slug requis (ou ouvre via ?slug=...)";
+      if(!d.owner_id) return "owner_id requis (connecte via GO PIN ou colle ton owner_id)";
+      if(!d.title) return "Titre requis";
+      if(!d.phone) return "Téléphone requis";
+      if(!d.category) return "Catégorie requise";
+      return "";
+    }
+
+    async function createDraft(){
+      if(!sb) return toast("toastPost","Supabase non prêt","bad");
+      const d = readPost();
+      const v = validatePost(d);
+      if(v) return toast("toastPost", v, "bad");
+
+      toast("toastPost","Création draft…","");
+      const priceNum = d.price ? Number(d.price) : null;
+      const { data, error } = await sb.rpc("ba_create_ad", {
+        p_owner_id: d.owner_id,
+        p_slug: d.slug,
+        p_category: d.category,
+        p_title: d.title,
+        p_description: d.description,
+        p_price: (isFinite(priceNum) ? priceNum : null),
+        p_phone: d.phone,
+        p_location: d.location,
+        p_pickup: d.pickup
+      });
+
+      if(error) return toast("toastPost", error.message, "bad");
+      const res = (typeof data === "string") ? safeJson(data) : data;
+      if(!res?.ok) return toast("toastPost", res?.reason || "Refus", "bad");
+
+      LAST_AD_ID = res.ad_id;
+      toast("toastPost","✅ Draft créé: " + String(LAST_AD_ID).slice(0,8) + "…", "ok");
+    }
+
+    async function payPublish(){
+      if(!sb) return toast("toastPost","Supabase non prêt","bad");
+
+      if(!LAST_AD_ID){
+        await createDraft();
+        if(!LAST_AD_ID) return;
+      }
+
+      const d = readPost();
+      const amount = 500;              // tarif terrain (à régler)
+      const method = "wave";           // simulé
+      const reference = "SIMU_" + Date.now();
+
+      toast("toastPost","Publication (paiement simulé)…","");
+      const { data, error } = await sb.rpc("ba_publish_ad", {
+        p_owner_id: d.owner_id,
+        p_ad_id: LAST_AD_ID,
+        p_amount: amount,
+        p_method: method,
+        p_reference: reference
+      });
+
+      if(error) return toast("toastPost", error.message, "bad");
+      const res = (typeof data === "string") ? safeJson(data) : data;
+      if(!res?.ok) return toast("toastPost", res?.reason || "Refus", "bad");
+
+      toast("toastPost","✅ Publié ! (paiement simulé)","ok");
+
+      // reset form léger
+      $("pTitle").value = "";
+      $("pDesc").value = "";
+      $("pPrice").value = "";
+      LAST_AD_ID = null;
+
+      closePost();
+      setTimeout(refresh, 250);
+    }
+
+    $("btnCreateDraft").onclick = createDraft;
+    $("btnPayPublish").onclick = payPublish;
+
+    // =============================
+    // INIT
+    // =============================
+    (async ()=>{
+      await bootGuard();
+      loadCtx();
+      await refresh();
+      console.log("🦅 BA MIX READY", { slug: CTX.slug, owner_id: CTX.owner_id });
+    })();
+
+  })();
+  </script>
 </body>
 </html>
