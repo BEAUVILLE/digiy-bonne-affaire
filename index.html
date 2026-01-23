@@ -1,604 +1,396 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8">
-  <title>DIGIY BONNE AFFAIRE — Occaz • Services • Pros (0% Com)</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
-  <meta name="description" content="DIGIY BONNE AFFAIRE — Achat, Vente, Échange : Occaz, Services, Pros. 0% commission. Paiement direct.">
+  <meta charset="utf-8" />
+  <title>DIGIY BONNE AFFAIRE — Cockpit PRO</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no" />
+  <meta name="theme-color" content="#0b1020" />
+  <meta name="description" content="Cockpit PRO DIGIY BONNE AFFAIRE — Mes annonces, stats, actions. 0% commission." />
 
   <!-- Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <!-- Guard (optionnel) -->
-  <script src="./guard.js?v=ba-mix-4-full"></script>
+  <!-- Guard BONNE AFFAIRE -->
+  <script src="./guard.js?v=ba-guard"></script>
 
   <style>
     :root{
       --bg:#020617;
-      --bg-soft:#020818;
-      --card:#030712;
-      --accent-main:#f97316;
-      --accent-soft:#facc15;
-      --accent-green:#22c55e;
+      --bg2:#020818;
+      --card:#0b1020;
+      --card2:#030712;
+      --line:rgba(148,163,184,.22);
       --ink:#f9fafb;
       --muted:#cbd5f5;
-      --line:#1f2937;
-      --shadow-soft:0 20px 45px rgba(15,23,42,0.9);
+      --accent:#f97316;
+      --accent2:#facc15;
+      --ok:#22c55e;
+      --bad:#fb7185;
+      --shadow:0 20px 55px rgba(0,0,0,.55);
+      --shadow2:0 12px 30px rgba(15,23,42,.9);
+      --radius:22px;
     }
-    *{
-      box-sizing:border-box;margin:0;padding:0;
-      font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui,sans-serif;
-    }
+    *{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,Segoe UI,Roboto}
     body{
       min-height:100vh;
       background:
-        radial-gradient(circle at top,rgba(249,115,22,0.16),transparent 60%),
-        radial-gradient(circle at bottom,rgba(34,197,94,0.16),transparent 55%),
-        #020617;
+        radial-gradient(circle at top, rgba(249,115,22,.16), transparent 55%),
+        radial-gradient(circle at bottom, rgba(34,197,94,.12), transparent 55%),
+        linear-gradient(135deg,var(--bg),var(--bg2));
       color:var(--ink);
+      padding:12px;
       display:flex;
       justify-content:center;
-      padding:10px;
-      font-size:16px;
     }
+    a{color:inherit}
     .app{
       width:100%;
       max-width:1100px;
-      min-height:100vh;
-      background:linear-gradient(135deg,#020617 0%,#020818 50%,#020617 100%);
-      border-radius:24px;
-      border:1px solid rgba(148,163,184,0.25);
-      box-shadow:var(--shadow-soft);
-      padding:16px 16px 22px;
-      display:flex;
-      flex-direction:column;
-      position:relative;
+      background:rgba(2,6,23,.35);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
       overflow:hidden;
+      position:relative;
     }
     .app::before{
       content:"";
-      position:absolute;
-      inset:-40%;
+      position:absolute;inset:-40%;
       background:
-        radial-gradient(circle at 0% 0%,rgba(249,115,22,0.14),transparent 55%),
-        radial-gradient(circle at 100% 100%,rgba(34,197,94,0.14),transparent 45%);
-      opacity:0.8;
+        radial-gradient(circle at 0% 0%,rgba(249,115,22,.12),transparent 55%),
+        radial-gradient(circle at 100% 100%,rgba(34,197,94,.10),transparent 45%);
+      opacity:.9;
       pointer-events:none;
     }
 
-    header{
+    /* TOPBAR */
+    .topbar{
       position:relative;z-index:2;
-      display:flex;justify-content:space-between;align-items:center;
-      gap:10px;margin-bottom:12px;flex-wrap:wrap;
+      padding:14px;
+      display:flex;
+      gap:10px;
+      justify-content:space-between;
+      align-items:center;
+      flex-wrap:wrap;
+      border-bottom:1px solid var(--line);
+      background:rgba(11,16,32,.78);
+      backdrop-filter: blur(8px);
     }
-    .brand{display:flex;align-items:center;gap:10px}
-    .brand-logo{
+    .brand{display:flex;gap:10px;align-items:center}
+    .logo{
       width:42px;height:42px;border-radius:14px;
-      background:radial-gradient(circle at 30% 0%,#f97316,#ea580c);
-      display:flex;align-items:center;justify-content:center;
-      font-size:24px;box-shadow:0 12px 30px rgba(249,115,22,0.65);
+      display:grid;place-items:center;
+      background:linear-gradient(135deg,var(--accent),#ea580c);
+      color:#111827;font-weight:1000;
+      box-shadow:0 12px 28px rgba(249,115,22,.55);
+      font-size:20px;
     }
-    .brand-text-title{
-      font-size:18px;font-weight:900;letter-spacing:0.09em;text-transform:uppercase;
-      color:var(--accent-main);
+    .bt{display:flex;flex-direction:column;gap:2px}
+    .title{
+      font-weight:1000;letter-spacing:.06em;
+      text-transform:uppercase;
+      color:var(--accent);
+      font-size:14px;
     }
-    .brand-text-sub{font-size:13px;color:var(--muted);font-weight:600}
-
-    .back-link{
-      font-size:13px;color:var(--muted);text-decoration:none;
-      background:rgba(15,23,42,0.9);
-      border-radius:999px;border:1px solid rgba(148,163,184,0.6);
-      padding:8px 14px;display:inline-flex;align-items:center;gap:6px;
-      z-index:2;position:relative;font-weight:800;
-      white-space:nowrap;
-      transition:all .2s ease;
-    }
-    .back-link:hover{border-color:rgba(249,115,22,.75);transform:translateY(-1px)}
-
-    main{position:relative;z-index:2;flex:1;display:flex;flex-direction:column;gap:14px}
-
-    .hero{
-      background:radial-gradient(circle at top left,rgba(249,115,22,0.18),rgba(3,7,18,0.96));
-      border-radius:22px;border:1px solid rgba(148,163,184,0.6);
-      padding:16px 16px 14px;
-      box-shadow:0 18px 44px rgba(15,23,42,0.95);
-      display:flex;flex-direction:column;gap:8px;
-    }
-    .hero-title{font-size:26px;font-weight:900;color:var(--accent-main)}
-    .hero-title span{color:var(--accent-green)}
-    .hero-sub{
-      font-size:16px;color:#e5e7eb;max-width:760px;font-weight:500;line-height:1.6;
-    }
-    .hero-sub strong{font-weight:800;color:var(--accent-green)}
-    .hero-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:4px}
-    .hero-tag{
-      font-size:13px;padding:5px 11px;border-radius:999px;
-      border:1px solid rgba(148,163,184,0.7);
-      background:rgba(15,23,42,0.95);
-      color:#e5e7eb;font-weight:600;
-    }
-    .hero-tag strong{color:var(--accent-main);font-weight:800}
-
-    .hero-cta-row{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px}
-    .hero-cta-btn{
-      border:none;border-radius:999px;padding:10px 16px;
-      font-size:14px;font-weight:900;cursor:pointer;
-      display:inline-flex;align-items:center;gap:8px;text-decoration:none;
-      white-space:nowrap;background:linear-gradient(135deg,#f97316,#ea580c);
-      color:#111827;box-shadow:0 7px 18px rgba(249,115,22,0.55);
-      transition:all .2s ease;
-    }
-    .hero-cta-btn:hover{transform:translateY(-1px);box-shadow:0 11px 26px rgba(249,115,22,0.7)}
-    .hero-cta-btn-secondary{
-      border-radius:999px;padding:10px 16px;font-size:13px;font-weight:900;
-      text-decoration:none;display:inline-flex;align-items:center;gap:8px;cursor:pointer;
-      background:rgba(15,23,42,0.98);color:#e5e7eb;border:1px solid rgba(148,163,184,0.8);
-      white-space:nowrap;
-      transition:all .2s ease;
-    }
-    .hero-cta-btn-secondary:hover{border-color:var(--accent-main);transform:translateY(-1px)}
-
-    /* FILTER BAR */
-    .filters{
-      background:rgba(15,23,42,0.92);
-      border:1px solid rgba(148,163,184,0.55);
-      border-radius:18px;
-      padding:12px;
-      display:flex;gap:10px;flex-wrap:wrap;align-items:center;
-      box-shadow:0 16px 38px rgba(15,23,42,0.75);
-    }
-    .input, .select, .textarea{
-      border-radius:14px;
-      border:1px solid rgba(148,163,184,0.55);
-      padding:10px 12px;
-      background:rgba(3,7,18,0.85);
-      color:var(--ink);
+    .sub{color:var(--muted);font-weight:800;font-size:12px}
+    .right{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+    .pill{
+      font-size:12px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,.28);
+      background:rgba(2,6,23,.55);
+      color:var(--muted);
       font-weight:900;
-      outline:none;
+      white-space:nowrap;
     }
-    .select{min-width:180px}
-    .input{min-width:220px;flex:1}
     .btn{
-      border:none;border-radius:999px;padding:10px 14px;
-      font-size:14px;font-weight:1000;cursor:pointer;
-      display:inline-flex;align-items:center;gap:6px;text-decoration:none;
-      white-space:nowrap;transition:all 0.25s;
+      border:none;
+      border-radius:999px;
+      padding:10px 14px;
+      font-weight:1000;
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      white-space:nowrap;
+      transition:transform .18s, box-shadow .18s, border-color .18s;
       justify-content:center;
+      text-decoration:none;
       user-select:none;
     }
     .btn-main{
-      background:linear-gradient(135deg,#f97316,#ea580c);
+      background:linear-gradient(135deg,var(--accent),#ea580c);
       color:#111827;
-      box-shadow:0 7px 18px rgba(249,115,22,0.55);
+      box-shadow:0 10px 22px rgba(249,115,22,.45);
     }
-    .btn-main:hover{transform:translateY(-1px);box-shadow:0 11px 26px rgba(249,115,22,0.7)}
-    .btn-outline{
-      background:rgba(15,23,42,0.98);
-      color:#e5e7eb;border:1px solid rgba(148,163,184,0.9);
-      font-size:13px;
+    .btn-main:hover{transform:translateY(-1px);box-shadow:0 14px 28px rgba(249,115,22,.62)}
+    .btn-ghost{
+      background:rgba(2,6,23,.55);
+      color:var(--ink);
+      border:1px solid rgba(148,163,184,.35);
     }
-    .btn-outline:hover{border-color:var(--accent-main);transform:translateY(-1px)}
-    .pill{
-      font-size:12px;padding:5px 10px;border-radius:999px;
-      border:1px solid rgba(148,163,184,0.6);
-      color:var(--muted);font-weight:900;background:rgba(3,7,18,0.75);
+    .btn-ghost:hover{border-color:rgba(249,115,22,.65)}
+    .btn-ok{
+      background:rgba(34,197,94,.15);
+      border:1px solid rgba(34,197,94,.55);
+      color:#bbf7d0;
     }
+    .btn-bad{
+      background:rgba(251,113,133,.12);
+      border:1px solid rgba(251,113,133,.45);
+      color:#fecaca;
+    }
+
+    /* CONTENT */
+    .content{position:relative;z-index:2;padding:14px;display:flex;flex-direction:column;gap:12px}
     .toast{
-      margin-top:10px;
-      padding:10px 12px;border-radius:14px;
-      border:1px solid rgba(148,163,184,0.45);
-      background:rgba(0,0,0,.22);
-      font-weight:1000;font-size:12px;
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid rgba(148,163,184,.25);
+      background:rgba(0,0,0,.20);
+      font-weight:900;
+      font-size:12px;
       min-height:18px;
     }
-    .toast.ok{border-color:rgba(34,197,94,0.55)}
-    .toast.bad{border-color:rgba(249,115,115,0.55)}
-
-    /* PRICING */
-    .pricing{
-      margin-top:4px;
-      background:radial-gradient(circle at top right,rgba(34,197,94,0.12),rgba(3,7,18,0.98));
-      border-radius:22px;border:1px solid rgba(148,163,184,0.7);
-      padding:14px 14px 16px;
-      box-shadow:0 16px 38px rgba(15,23,42,0.9);
-      display:flex;flex-direction:column;gap:10px;
-    }
-    .pricing-title{font-size:20px;font-weight:1000;color:var(--accent-soft)}
-    .pricing-sub{font-size:14px;color:#e5e7eb;max-width:760px;line-height:1.5}
-    .pricing-sub strong{color:var(--accent-main);font-weight:1000}
-    .pricing-grid{margin-top:8px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
-    @media(max-width:900px){.pricing-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
-    @media(max-width:640px){
-      .app{border-radius:0;border:none;box-shadow:none}
-      .pricing-grid{grid-template-columns:1fr}
-    }
-    .pricing-card{
-      background:radial-gradient(circle at top,rgba(15,23,42,0.98),#020617);
-      border-radius:18px;border:1px solid rgba(148,163,184,0.75);
-      padding:12px 12px 14px;display:flex;flex-direction:column;gap:6px;
-      box-shadow:0 12px 30px rgba(15,23,42,0.9);
-    }
-    .pricing-card.highlight{border-color:var(--accent-main);box-shadow:0 16px 40px rgba(249,115,22,0.6)}
-    .pricing-badge{
-      font-size:11px;align-self:flex-start;padding:3px 9px;border-radius:999px;
-      background:rgba(15,23,42,0.98);
-      border:1px solid rgba(148,163,184,0.8);color:var(--muted);
-      font-weight:1000;text-transform:uppercase;letter-spacing:0.06em;
-    }
-    .pricing-name{font-size:17px;font-weight:1000;color:var(--accent-soft)}
-    .pricing-price{font-size:22px;font-weight:1000;color:var(--accent-green)}
-    .pricing-price span{font-size:12px;font-weight:900;color:var(--muted);margin-left:4px}
-    .pricing-line{font-size:13px;color:#e5e7eb;display:flex;gap:5px;line-height:1.35}
-    .pricing-line::before{content:"•";color:var(--accent-main);margin-top:1px}
-    .pricing-cta{margin-top:8px;display:flex;gap:6px;flex-wrap:wrap}
-
-    /* GRID ADS */
+    .toast.ok{border-color:rgba(34,197,94,.45)}
+    .toast.bad{border-color:rgba(251,113,133,.45)}
     .grid{
-      margin-top:10px;
       display:grid;
-      grid-template-columns:repeat(3,minmax(0,1fr));
-      gap:14px;
-    }
-    @media(max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
-    @media(max-width:640px){.grid{grid-template-columns:1fr;gap:20px;}}
-
-    .shop-card{
-      background:radial-gradient(circle at top,rgba(15,23,42,0.98),#020617);
-      border-radius:24px;
-      border:1px solid rgba(148,163,184,0.7);
-      padding:12px 12px 14px;
-      box-shadow:0 14px 34px rgba(15,23,42,0.95);
-      display:flex;
-      flex-direction:column;
+      grid-template-columns:repeat(4,minmax(0,1fr));
       gap:10px;
+    }
+    @media(max-width:980px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
+    @media(max-width:520px){.grid{grid-template-columns:1fr;}}
+    .kpi{
+      background:rgba(3,7,18,.82);
+      border:1px solid rgba(148,163,184,.24);
+      border-radius:18px;
+      padding:12px;
+      box-shadow:var(--shadow2);
       position:relative;
       overflow:hidden;
-      min-height: 430px;
     }
-    .shop-card::before{
+    .kpi::before{
       content:"";
-      position:absolute;
-      inset:-40%;
-      background:radial-gradient(circle at top,rgba(249,115,22,0.08),transparent 55%);
-      opacity:0.8;
+      position:absolute;inset:-60%;
+      background:radial-gradient(circle at 25% 0%, rgba(249,115,22,.10), transparent 55%);
       pointer-events:none;
+      opacity:.9;
     }
-    .shop-head{position:relative;z-index:2;display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
-    .shop-name{font-size:20px;font-weight:1000;color:var(--accent-main)}
-    .shop-type{font-size:14px;color:var(--accent-soft);font-weight:900}
-    .shop-price{font-size:20px;font-weight:1000;color:var(--accent-green);text-align:right}
-    .shop-body{position:relative;z-index:2;display:flex;flex-direction:column;gap:8px}
-    .shop-desc{font-size:14px;color:#f3f4f6;font-weight:700;line-height:1.6}
+    .kpi .lab{color:var(--muted);font-weight:900;font-size:12px;position:relative;z-index:2}
+    .kpi .val{font-size:26px;font-weight:1000;margin-top:6px;color:var(--ink);position:relative;z-index:2}
+    .kpi .hint{margin-top:6px;color:rgba(203,213,245,.9);font-weight:800;font-size:12px;position:relative;z-index:2}
 
-    .auto-photo{
-      height:220px;border-radius:16px;overflow:hidden;
-      border:2px solid rgba(249,115,22,0.85);
-      position:relative;
-      background:
-        radial-gradient(circle at 25% 0%, rgba(250,204,21,.16), transparent 55%),
-        radial-gradient(circle at 100% 100%, rgba(34,197,94,.14), transparent 50%),
-        rgba(3,7,18,.55);
-      display:flex;flex-direction:column;justify-content:flex-end;
-      padding:14px;
-      box-shadow:0 12px 26px rgba(0,0,0,.35);
-    }
-    .auto-photo .big{font-weight:1000;font-size:18px;line-height:1.15;color:#f9fafb;text-shadow:0 10px 22px rgba(0,0,0,.55)}
-    .auto-photo .small{
-      margin-top:6px;
-      font-weight:1000;font-size:12px;color:rgba(203,213,245,.92);
-      display:flex;gap:10px;flex-wrap:wrap;align-items:center;
-    }
-    .auto-photo .ico{
-      position:absolute;top:12px;right:12px;
-      width:40px;height:40px;border-radius:14px;
-      display:grid;place-items:center;
-      background:rgba(0,0,0,.35);
-      border:1px solid rgba(148,163,184,.25);
-      font-size:20px;
-    }
-
-    .shop-meta{
-      margin-top:6px;font-size:13px;color:#e5e7eb;font-weight:800;
-      display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;
-    }
-    .shop-badge{
-      font-size:12px;padding:5px 9px;border-radius:999px;
-      border:1px solid rgba(34,197,94,0.9);
-      color:var(--accent-green);
-      background:rgba(15,23,42,0.98);
-      white-space:nowrap;
-      font-weight:1000;
-    }
-
-    .shop-actions{
-      margin-top:10px;
-      display:flex;justify-content:space-between;align-items:center;gap:10px;
-      flex-wrap:wrap;
-    }
-    .btn-contact{
-      background:linear-gradient(135deg,#f97316,#ea580c);
-      color:#111827;
-      box-shadow:0 7px 18px rgba(249,115,22,0.55);
-      flex:1;
-    }
-    .btn-call{
-      background:rgba(34,197,94,0.2);
-      color:#bbf7d0;
-      border:1px solid rgba(34,197,94,0.85);
-      flex:1;
-    }
-
-    footer{
-      position:relative;z-index:2;margin-top:16px;
-      font-size:12px;color:var(--muted);
-      display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;
-      font-weight:800;line-height:1.4;
-    }
-    footer span{color:var(--accent-main);font-weight:1000}
-
-    #guard_status{
-      position:fixed;top:14px;right:14px;z-index:9999;
-      background:rgba(0,0,0,.82);border:1px solid rgba(255,255,255,.08);
-      color:#fff;padding:10px 12px;border-radius:12px;font-weight:1000;font-size:12px;
-    }
-
-    /* MODAL */
-    .modal{
-      position:fixed;inset:0;display:none;align-items:center;justify-content:center;
-      background:rgba(0,0,0,.55);z-index:2000;padding:12px;
-    }
-    .modalBox{
-      width:100%;max-width:760px;
+    .panel{
+      background:rgba(11,16,32,.72);
+      border:1px solid rgba(148,163,184,.22);
       border-radius:22px;
-      border:1px solid rgba(148,163,184,0.55);
-      background:rgba(3,7,18,0.96);
-      box-shadow:0 22px 70px rgba(0,0,0,.55);
-      padding:14px;
+      padding:12px;
+      box-shadow:var(--shadow2);
     }
-    .modalTop{
-      display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px;
+    .panelTop{
+      display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px
     }
-    .modalTitle{font-size:16px;font-weight:1000;color:var(--accent-soft)}
-    .xBtn{
-      border:none;border-radius:999px;padding:10px 14px;
-      font-weight:1000;cursor:pointer;background:rgba(15,23,42,0.98);
-      color:#e5e7eb;border:1px solid rgba(148,163,184,0.8);
+    .panelTitle{
+      font-size:14px;font-weight:1000;color:var(--accent2);
+      letter-spacing:.02em;
     }
-    .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-    @media(max-width:720px){.grid2{grid-template-columns:1fr}}
-    .help{font-size:12px;color:rgba(203,213,245,.85);font-weight:800;margin-top:6px}
-
-    /* ===== FAB RETOUR (mobile terrain) ===== */
-    #fabBack{
-      position:fixed;
-      bottom:18px;
-      left:18px;
-      z-index:9999;
-      background:linear-gradient(135deg,#facc15,#f97316);
-      color:#111827;
-      border:none;
-      font-weight:1000;
-      font-size:18px;
-      width:54px;
-      height:54px;
+    .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:flex-end}
+    .input,.select{
+      background:rgba(2,6,23,.72);
+      border:1px solid rgba(148,163,184,.35);
+      color:var(--ink);
+      border-radius:14px;
+      padding:10px 12px;
+      font-weight:900;
+      outline:none;
+      min-width:180px;
+    }
+    .input{flex:1;min-width:220px}
+    .list{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:10px;
+    }
+    @media(max-width:900px){.list{grid-template-columns:1fr;}}
+    .card{
+      background:radial-gradient(circle at top,rgba(15,23,42,.95),rgba(2,6,23,.85));
+      border:1px solid rgba(148,163,184,.22);
+      border-radius:22px;
+      padding:12px;
+      box-shadow:0 12px 30px rgba(0,0,0,.35);
+      position:relative;
+      overflow:hidden;
+      min-height:170px;
+    }
+    .card::before{
+      content:"";
+      position:absolute;inset:-60%;
+      background:radial-gradient(circle at 0% 0%, rgba(249,115,22,.08), transparent 55%);
+      pointer-events:none;
+      opacity:.9;
+    }
+    .cTop{position:relative;z-index:2;display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+    .cTitle{font-weight:1000;font-size:16px;color:var(--accent)}
+    .cBadge{
+      font-size:11px;font-weight:1000;
+      padding:5px 9px;border-radius:999px;
+      border:1px solid rgba(148,163,184,.28);
+      background:rgba(2,6,23,.55);
+      color:var(--muted);
+      white-space:nowrap;
+    }
+    .cMeta{position:relative;z-index:2;margin-top:8px;color:#e5e7eb;font-weight:800;font-size:12px;display:flex;gap:8px;flex-wrap:wrap}
+    .tag{
+      border:1px solid rgba(148,163,184,.25);
       border-radius:999px;
-      box-shadow:0 14px 30px rgba(0,0,0,.55);
-      cursor:pointer;
-      display:none; /* activé par JS si besoin */
-      user-select:none;
+      padding:5px 9px;
+      background:rgba(2,6,23,.55);
+      color:rgba(203,213,245,.92);
     }
-    #fabBack:active{transform:scale(.98)}
+    .tag.ok{border-color:rgba(34,197,94,.45);color:#bbf7d0;background:rgba(34,197,94,.10)}
+    .tag.bad{border-color:rgba(251,113,133,.38);color:#fecaca;background:rgba(251,113,133,.08)}
+    .cDesc{position:relative;z-index:2;margin-top:8px;color:#f3f4f6;font-weight:700;font-size:13px;line-height:1.5}
+    .cBtns{position:relative;z-index:2;margin-top:10px;display:flex;gap:8px;flex-wrap:wrap}
+    .btn-small{padding:9px 12px;font-size:12px}
+
+    /* FIXED bottom nav (mobile) */
+    .bottomNav{
+      position:fixed;
+      left:12px; right:12px; bottom:12px;
+      z-index:9999;
+      display:none;
+    }
+    .bottomNav .bar{
+      max-width:1100px;margin:0 auto;
+      background:rgba(11,16,32,.78);
+      backdrop-filter: blur(10px);
+      border:1px solid rgba(148,163,184,.22);
+      border-radius:18px;
+      box-shadow:0 18px 55px rgba(0,0,0,.55);
+      padding:8px;
+      display:flex;
+      gap:8px;
+    }
+    .bottomNav .bar .btn{flex:1;padding:12px 12px}
+    @media(max-width:720px){
+      body{padding-bottom:86px}
+      .bottomNav{display:block}
+    }
   </style>
 </head>
 
 <body>
-  <div id="guard_status">🔐 Boot…</div>
-
-  <!-- FAB mobile -->
-  <button id="fabBack" title="Retour">⬅️</button>
-
-  <div class="app">
-    <header>
+  <div class="app" id="app">
+    <div class="topbar">
       <div class="brand">
-        <div class="brand-logo">💰</div>
-        <div>
-          <div class="brand-text-title">DIGIY BONNE AFFAIRE</div>
-          <div class="brand-text-sub">Occaz • Services • Pros — 0% commission</div>
+        <div class="logo">🧭</div>
+        <div class="bt">
+          <div class="title">DIGIY BONNE AFFAIRE — COCKPIT PRO</div>
+          <div class="sub">Mes annonces • Stats • Actions terrain • 0% commission</div>
         </div>
       </div>
 
-      <!-- ✅ NAV RETOUR PROPRE + SLUG SAFE -->
-      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:flex-end">
-        <a href="#" class="back-link" id="btnBack">← Retour</a>
-        <a href="#" class="back-link" id="btnHome">🏠 Accueil</a>
-        <div class="pill" id="pillCtx">slug: —</div>
-        <a href="https://beauville.github.io/mon-espace-digiy/" class="back-link" id="btnHub">
-          🌀 HUB
-        </a>
+      <div class="right">
+        <div class="pill" id="pillSlug">slug: —</div>
+        <div class="pill" id="pillOwner">owner: —</div>
+
+        <a class="btn btn-ghost" id="btnBackAds" href="./index.html">← Retour annonces</a>
+        <button class="btn btn-main" id="btnNew">➕ Nouvelle annonce</button>
+        <button class="btn btn-ghost" id="btnRefresh">🔄 Actualiser</button>
+        <button class="btn btn-bad" id="btnLogout">⛔ Logout</button>
       </div>
-    </header>
+    </div>
 
-    <main>
-      <section class="hero" id="top">
-        <div class="hero-title">
-          DIGIY BONNE AFFAIRE <span>0% Commission</span>
+    <div class="content">
+      <div class="toast" id="toast">🔐 Boot…</div>
+
+      <div class="grid">
+        <div class="kpi">
+          <div class="lab">Annonces totales</div>
+          <div class="val" id="kpiTotal">—</div>
+          <div class="hint">Toutes tes annonces (PRO)</div>
         </div>
-        <div class="hero-sub">
-          Achète et vends entre particuliers, trouve des <strong>services terrain</strong>,
-          et des <strong>offres PRO</strong>.
-          Contact direct via WhatsApp / Appel. Publication payante = annonces propres (anti-spam).
+        <div class="kpi">
+          <div class="lab">Actives</div>
+          <div class="val" id="kpiActive">—</div>
+          <div class="hint">Visibles dans la vitrine</div>
         </div>
-        <div class="hero-tags">
-          <div class="hero-tag"><strong>0% commission</strong> — Direct</div>
-          <div class="hero-tag">Photo via WhatsApp (pas de stockage)</div>
-          <div class="hero-tag">Annonce payante = anti-spam</div>
-          <div class="hero-tag"><strong>🚩 Signalement</strong> = panier propre</div>
+        <div class="kpi">
+          <div class="lab">En brouillon</div>
+          <div class="val" id="kpiDraft">—</div>
+          <div class="hint">À publier (paiement/validation)</div>
         </div>
-
-        <div class="hero-cta-row">
-          <button class="hero-cta-btn" id="btnOpenPost">✍️ Publier une annonce</button>
-          <a href="#section-pro" class="hero-cta-btn-secondary">🧰 Je suis PRO / Agence</a>
-          <a href="#adsGrid" class="hero-cta-btn-secondary">👀 Voir les annonces</a>
-          <button class="hero-cta-btn-secondary" id="btnRefresh">🔄 Actualiser</button>
+        <div class="kpi">
+          <div class="lab">Expire bientôt</div>
+          <div class="val" id="kpiExpSoon">—</div>
+          <div class="hint">≤ 3 jours (si dates dispo)</div>
         </div>
-
-        <div class="toast" id="toastTop">Prêt.</div>
-      </section>
-
-      <!-- ✅ VITRINE PARTICULIER (A/B/C) -->
-      <section class="pricing" id="section-particulier">
-        <div class="pricing-title">Publication individuelle (Particulier) — payante ✅</div>
-        <p class="pricing-sub">
-          Tu paies pour publier → ça bloque le spam, ça garde DIGIY propre, et ça met ta vente/service en vitrine.
-          <strong>0% commission</strong> sur tes ventes. Contact direct.
-        </p>
-
-        <div class="pill" style="align-self:flex-start">Recommandé: Pack <strong>B</strong> (14 jours)</div>
-
-        <div class="pricing-grid">
-          <article class="pricing-card">
-            <div class="pricing-badge">PACK A</div>
-            <div class="pricing-name">500 FCFA</div>
-            <div class="pricing-price">7 jours <span>vitrine</span></div>
-            <div class="pricing-line">Annonce propre (anti-spam)</div>
-            <div class="pricing-line">Visible en recherche</div>
-            <div class="pricing-line">Contact WhatsApp / Appel</div>
-            <div class="pricing-line">Idéal : vente rapide / petit service</div>
-            <div class="pricing-cta">
-              <button class="btn btn-main" data-pack="A" id="btnPackA">💸 Payer Pack A</button>
-              <a class="btn btn-outline" href="#adsGrid">Voir annonces</a>
-            </div>
-          </article>
-
-          <article class="pricing-card highlight">
-            <div class="pricing-badge">PACK B — RECO</div>
-            <div class="pricing-name">1 000 FCFA</div>
-            <div class="pricing-price">14 jours <span>vitrine</span></div>
-            <div class="pricing-line">Meilleur équilibre durée/prix</div>
-            <div class="pricing-line">Annonce propre + stable</div>
-            <div class="pricing-line">Confiance (paiement)</div>
-            <div class="pricing-line">Terrain : “2 semaines”, simple</div>
-            <div class="pricing-cta">
-              <button class="btn btn-main" data-pack="B" id="btnPackB">⭐ Payer Pack B</button>
-              <a class="btn btn-outline" href="#adsGrid">Voir annonces</a>
-            </div>
-          </article>
-
-          <article class="pricing-card">
-            <div class="pricing-badge">PACK C</div>
-            <div class="pricing-name">2 000 FCFA</div>
-            <div class="pricing-price">30 jours <span>vitrine</span></div>
-            <div class="pricing-line">Vitrine longue durée</div>
-            <div class="pricing-line">Bien pour biens chers</div>
-            <div class="pricing-line">Idéal immobilier / auto</div>
-            <div class="pricing-line">Pour vendeurs qui veulent du temps</div>
-            <div class="pricing-cta">
-              <button class="btn btn-main" data-pack="C" id="btnPackC">👑 Payer Pack C</button>
-              <a class="btn btn-outline" href="#adsGrid">Voir annonces</a>
-            </div>
-          </article>
-        </div>
-
-        <div class="help">
-          Sécurité terrain: demander photo/vidéo + infos avant décision. Pas d’acompte sans preuve.
-        </div>
-      </section>
-
-      <section class="filters" id="filters">
-        <select id="fCategory" class="select">
-          <option value="">Toutes catégories</option>
-          <option value="occaz">♻️ Occaz</option>
-          <option value="service">🛠️ Services</option>
-          <option value="pro">🏪 Pros</option>
-        </select>
-
-        <select id="fLocation" class="select">
-          <option value="">Toutes zones</option>
-          <option>Dakar</option><option>Pikine</option><option>Guédiawaye</option><option>Rufisque</option>
-          <option>Thiès</option><option>Mbour</option><option>Saly</option><option>Saint-Louis</option>
-        </select>
-
-        <input id="fQuery" class="input" placeholder="Recherche… (titre / mot clé)" />
-        <button class="btn btn-outline" id="btnReset">🧹 Reset</button>
-      </section>
-
-      <!-- PRICING PRO -->
-      <section class="pricing" id="section-pro">
-        <div class="pricing-title">Abonnements DIGIY BONNE AFFAIRE PRO</div>
-        <p class="pricing-sub">
-          Pour vendeurs réguliers (autos, terrains, agences, pros) : 0% commission sur tes ventes,
-          tu paies seulement ton abonnement. <strong>Propre, stable, durable.</strong>
-        </p>
-
-        <div class="pricing-grid">
-          <article class="pricing-card">
-            <div class="pricing-badge">STARTER</div>
-            <div class="pricing-name">Pack Découverte</div>
-            <div class="pricing-price">9 900 F CFA <span>/ mois</span></div>
-            <div class="pricing-line">Jusqu’à 10 annonces actives.</div>
-            <div class="pricing-line">Mise en avant simple.</div>
-            <div class="pricing-line">Support WhatsApp.</div>
-            <div class="pricing-cta">
-              <a href="https://beauville.github.io/inscription-digiy/?module=bonne_affaire&plan=starter" class="btn btn-main">📲 Démarrer</a>
-              <a href="https://wa.me/221771342889?text=Bonjour%20DIGIY,%20d%C3%A9tails%20Pack%20D%C3%A9couverte%20BONNE%20AFFAIRE." target="_blank" rel="noopener" class="btn btn-outline">Détails</a>
-            </div>
-          </article>
-
-          <article class="pricing-card highlight">
-            <div class="pricing-badge">LE PLUS CHOISI</div>
-            <div class="pricing-name">Pack Business</div>
-            <div class="pricing-price">20 000 F CFA <span>/ mois</span></div>
-            <div class="pricing-line">Jusqu’à 30 annonces actives.</div>
-            <div class="pricing-line">3 boost / mois.</div>
-            <div class="pricing-line">Badge confiance + stats.</div>
-            <div class="pricing-cta">
-              <a href="https://beauville.github.io/inscription-digiy/?module=bonne_affaire&plan=business" class="btn btn-main">🚀 Passer Business</a>
-              <a href="https://wa.me/221771342889?text=Bonjour%20DIGIY,%20d%C3%A9tails%20Pack%20Business%20BONNE%20AFFAIRE." target="_blank" rel="noopener" class="btn btn-outline">Contacter</a>
-            </div>
-          </article>
-
-          <article class="pricing-card">
-            <div class="pricing-badge">PREMIUM</div>
-            <div class="pricing-name">Pack Expert</div>
-            <div class="pricing-price">28 000 F CFA <span>/ mois</span></div>
-            <div class="pricing-line">Annonces illimitées / mois.</div>
-            <div class="pricing-line">Mise en avant continue.</div>
-            <div class="pricing-line">Support prioritaire.</div>
-            <div class="pricing-cta">
-              <a href="https://beauville.github.io/inscription-digiy/?module=bonne_affaire&plan=premium" class="btn btn-main">👑 Devenir Premium</a>
-              <a href="https://wa.me/221771342889?text=Bonjour%20DIGIY,%20d%C3%A9tails%20Pack%20Premium%20BONNE%20AFFAIRE." target="_blank" rel="noopener" class="btn btn-outline">Parler</a>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <!-- LISTING DYNAMIQUE -->
-      <section class="grid" id="adsGrid"></section>
-    </main>
-
-    <footer>
-      <div>DIGIY BONNE AFFAIRE • <span>Super App DIGIYLYFE</span> — Sénégal → Afrique</div>
-      <div>0% commission • contact direct • annonces propres</div>
-      <div style="width:100%; margin-top:4px; font-size:11px; color:#a8b1c2;">
-        DIGIY BONNE AFFAIRE facilite la mise en relation. Vérifications, preuves et paiements sont réalisés directement entre utilisateurs.
       </div>
-    </footer>
+
+      <div class="panel">
+        <div class="panelTop">
+          <div class="panelTitle">Mes annonces</div>
+          <div class="row">
+            <select class="select" id="fStatus">
+              <option value="">Tous statuts</option>
+              <option value="active">✅ Actives</option>
+              <option value="draft">🧱 Draft</option>
+              <option value="paused">⏸️ Pause</option>
+              <option value="expired">⌛ Expirées</option>
+            </select>
+            <select class="select" id="fCategory">
+              <option value="">Toutes catégories</option>
+              <option value="occaz">♻️ Occaz</option>
+              <option value="service">🛠️ Service</option>
+              <option value="pro">🏪 Pro</option>
+            </select>
+            <input class="input" id="q" placeholder="Recherche… (titre / slug / zone)" />
+            <button class="btn btn-ghost btn-small" id="btnReset">🧹 Reset</button>
+          </div>
+        </div>
+
+        <div class="list" id="list"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- bottom mobile nav -->
+  <div class="bottomNav">
+    <div class="bar">
+      <a class="btn btn-ghost" id="mBackAds" href="./index.html">← Annonces</a>
+      <button class="btn btn-main" id="mNew">➕ Publier</button>
+      <button class="btn btn-ghost" id="mRefresh">🔄</button>
+    </div>
   </div>
 
   <script>
   (function(){
     "use strict";
 
-    // =============================
-    // HELPERS
-    // =============================
     const $ = (id)=>document.getElementById(id);
 
-    const esc = (s)=>String(s||"")
-      .replaceAll("&","&amp;")
-      .replaceAll("<","&lt;")
-      .replaceAll(">","&gt;")
-      .replaceAll('"',"&quot;")
-      .replaceAll("'","&#039;");
+    function qp(k){
+      try{ return (new URLSearchParams(location.search).get(k) || "").trim(); }
+      catch(_){ return ""; }
+    }
+
+    function esc(s){
+      return String(s||"")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    function toast(msg, kind){
+      const el = $("toast");
+      if(!el) return;
+      el.textContent = msg || "";
+      el.classList.remove("ok","bad");
+      if(kind) el.classList.add(kind);
+    }
 
     function money(x){
       const n = Number(x||0);
@@ -606,381 +398,422 @@
       return Math.round(n).toLocaleString("fr-FR") + " XOF";
     }
 
-    function toastTop(msg, kind){
-      const el = $("toastTop"); if(!el) return;
-      el.textContent = msg || "";
-      el.classList.remove("ok","bad");
-      if(kind) el.classList.add(kind);
-    }
-
     function waLink(phone, msg){
       const p = String(phone||"").replace(/[^\d]/g,"");
       return "https://wa.me/" + p + "?text=" + encodeURIComponent(msg||"");
     }
 
-    function qp(k){
-      try{ return (new URLSearchParams(location.search).get(k) || "").trim(); }
-      catch(_){ return ""; }
+    function safeDate(x){
+      const d = new Date(x);
+      return isNaN(d.getTime()) ? null : d;
     }
 
-    function withSlug(url){
-      const slug = (window.DIGIY_GUARD?.getSlug?.() || qp("slug") || "").trim();
-      try{
-        const u = new URL(url, location.href);
-        if(slug) u.searchParams.set("slug", slug);
-        return u.toString();
-      }catch(_){
-        if(!slug) return url;
-        return url + (url.includes("?") ? "&" : "?") + "slug=" + encodeURIComponent(slug);
-      }
+    function daysBetween(a,b){
+      const ms = b.getTime() - a.getTime();
+      return Math.ceil(ms / (1000*60*60*24));
     }
 
-    // =============================
+    // ==============
     // CONTEXT
-    // =============================
-    const CTX = (window.BA_CTX = window.BA_CTX || { slug:"", owner_id:"" });
+    // ==============
+    const CTX = { slug:"", owner_id:"", phone:"", title:"" };
 
-    function loadCtx(){
-      const urlSlug = qp("slug");
-      const gSlug = window.DIGIY_GUARD?.getSlug?.() || "";
-      const s = window.DIGIY_GUARD?.getSession?.() || null;
-
-      CTX.slug = (urlSlug || gSlug || localStorage.getItem("DIGIY_SLUG") || "").trim();
-      CTX.owner_id = (s?.owner_id || localStorage.getItem("DIGIY_PRO_ID") || "").trim();
-
-      const pill = $("pillCtx");
-      if(pill) pill.textContent = "slug: " + (CTX.slug || "—");
+    function setPills(){
+      const ps = $("pillSlug"), po = $("pillOwner");
+      if(ps) ps.textContent = "slug: " + (CTX.slug || "—");
+      if(po) po.textContent = "owner: " + (CTX.owner_id ? (CTX.owner_id.slice(0,8)+"…") : "—");
     }
 
-    // =============================
-    // GUARD BOOT (public safe)
-    // =============================
+    function requireAuthOrGoPin(){
+      const next = encodeURIComponent(location.pathname + location.search + location.hash);
+      location.href = "./pin.html?next=" + next;
+    }
+
     async function boot(){
-      const status = $("guard_status");
-      const setStatus = (t)=>{ if(status) status.textContent = t; };
-      const hideStatus = ()=>{ if(status) status.style.display="none"; };
+      toast("🔐 Vérification…", "");
 
+      // 1) Boot guard if exists
       try{
-        setStatus("🔐 Vérification…");
         if(window.DIGIY_GUARD?.boot){
-          const r = await window.DIGIY_GUARD.boot({ login:"./pin.html" });
-          setStatus(r?.ok ? "✅ Connecté" : "ℹ️ Public");
-        }else{
-          setStatus("ℹ️ Public");
+          await window.DIGIY_GUARD.boot({ login: "./pin.html" });
         }
-      }catch(e){
-        console.warn("GUARD boot:", e);
-        setStatus("ℹ️ Public");
-      }
-      loadCtx();
-      setTimeout(hideStatus, 550);
-    }
+      }catch(_){}
 
-    // =============================
-    // RETOUR / HOME / HUB (slug safe)
-    // =============================
-    function wireNav(){
-      // Home (même page) -> top + slug
-      const home = $("btnHome");
-      if(home) home.href = withSlug("./index.html#top");
+      // 2) Pull session
+      const sess = window.DIGIY_GUARD?.getSession ? window.DIGIY_GUARD.getSession() : null;
 
-      // HUB (garde slug si tu veux)
-      const hub = $("btnHub");
-      if(hub) hub.href = withSlug("https://beauville.github.io/mon-espace-digiy/");
+      CTX.owner_id = (sess?.owner_id || localStorage.getItem("DIGIY_PRO_ID") || "").trim();
+      CTX.slug     = (qp("slug") || (window.DIGIY_GUARD?.getSlug ? window.DIGIY_GUARD.getSlug() : "") || localStorage.getItem("DIGIY_SLUG") || "").trim();
+      CTX.phone    = (sess?.phone || localStorage.getItem("DIGIY_PHONE") || "").trim();
+      CTX.title    = (sess?.title || localStorage.getItem("DIGIY_TITLE") || "").trim();
 
-      // Retour intelligent:
-      // - si history existe -> back
-      // - sinon -> HUB
-      const back = $("btnBack");
-      if(back){
-        back.onclick = (e)=>{
-          e.preventDefault();
-          if(history.length > 1) history.back();
-          else location.href = withSlug("https://beauville.github.io/mon-espace-digiy/");
-        };
+      setPills();
+
+      if(!CTX.owner_id){
+        toast("⛔ Accès PRO requis — redirection GO PIN…", "bad");
+        setTimeout(requireAuthOrGoPin, 250);
+        return false;
       }
 
-      // FAB retour (mobile terrain)
-      const fab = $("fabBack");
-      if(fab){
-        fab.style.display = "grid";
-        fab.onclick = ()=>{
-          if(history.length > 1) history.back();
-          else location.href = withSlug("https://beauville.github.io/mon-espace-digiy/");
-        };
-      }
-    }
-
-    // =============================
-    // PAY REDIRECT (Particulier A/B/C)
-    // =============================
-    function goPayBA(pack){
-      const p = (pack || "B").toUpperCase();
-      const u = new URL("https://beauville.github.io/commencer-a-payer/", location.href);
-      u.searchParams.set("module", "bonne_affaire");
-      u.searchParams.set("pack", p);
-      if(CTX.slug) u.searchParams.set("slug", CTX.slug);
-      u.searchParams.set("next", location.pathname + location.search + "#adsGrid");
-      location.href = u.toString();
-    }
-
-    // =============================
-    // BUTTONS (tous raccords)
-    // =============================
-    function bindButtons(){
-      // Publier -> paiement pack B
-      const btnOpen = $("btnOpenPost");
-      if(btnOpen) btnOpen.onclick = (e)=>{ e.preventDefault(); goPayBA("B"); };
-
-      // Packs A/B/C
-      const btnA = $("btnPackA"), btnB = $("btnPackB"), btnC = $("btnPackC");
-      if(btnA) btnA.onclick = (e)=>{ e.preventDefault(); goPayBA("A"); };
-      if(btnB) btnB.onclick = (e)=>{ e.preventDefault(); goPayBA("B"); };
-      if(btnC) btnC.onclick = (e)=>{ e.preventDefault(); goPayBA("C"); };
-
-      // refresh
-      const btnRefresh = $("btnRefresh");
-      if(btnRefresh) btnRefresh.onclick = ()=> refresh();
-
-      // reset
-      const btnReset = $("btnReset");
-      if(btnReset){
-        btnReset.onclick = ()=>{
-          $("fCategory").value = "";
-          $("fLocation").value = "";
-          $("fQuery").value = "";
-          applyFilters();
-        };
+      // Back link slug-safe
+      const back = $("btnBackAds");
+      const mback = $("mBackAds");
+      if(window.DIGIY_GUARD?.withSlug){
+        const href = window.DIGIY_GUARD.withSlug("./index.html");
+        if(back) back.href = href;
+        if(mback) mback.href = href;
       }
 
-      if($("fCategory")) $("fCategory").onchange = ()=> applyFilters();
-      if($("fLocation")) $("fLocation").onchange = ()=> applyFilters();
-      if($("fQuery")) $("fQuery").addEventListener("input", ()=> applyFilters());
+      toast("✅ Connecté. Chargement cockpit…", "ok");
+      return true;
     }
 
-    // =============================
-    // VITRINE (exemples si vide)
-    // =============================
-    function renderExamples(){
-      const grid = $("adsGrid");
-      if(!grid) return;
-      grid.innerHTML = "";
-
-      const EXAMPLES = [
-        { title:"iPhone 12 – très bon état", category:"occaz", location:"Dakar", price:180000 },
-        { title:"Moto TVS – démarre nickel", category:"occaz", location:"Pikine", price:320000 },
-        { title:"Canapé 5 places", category:"occaz", location:"Guédiawaye", price:95000 },
-        { title:"Ordinateur HP i5", category:"occaz", location:"Thiès", price:150000 },
-        { title:"Petit terrain 150m²", category:"occaz", location:"Rufisque", price:2800000 },
-        { title:"Plombier disponible", category:"service", location:"Dakar", price:null },
-        { title:"Électricien maison", category:"service", location:"Mbour", price:null },
-        { title:"Menuisier bois & alu", category:"service", location:"Saly", price:null },
-        { title:"Lavage auto à domicile", category:"service", location:"Pikine", price:null },
-        { title:"Toyota Yaris 2016", category:"pro", location:"Dakar", price:5200000 },
-        { title:"Appartement meublé", category:"pro", location:"Saly", price:45000 },
-        { title:"Matériel de boutique", category:"pro", location:"Thiès", price:750000 }
-      ];
-
-      const top = document.createElement("div");
-      top.className = "toast ok";
-      top.style.gridColumn = "1/-1";
-      top.textContent = "🧪 Exemples d’annonces (vitrine pédagogique) — Publie la tienne pour apparaître ici.";
-      grid.appendChild(top);
-
-      for(const it of EXAMPLES){
-        const price = it.price ? money(it.price) : "—";
-        const catLabel =
-          it.category === "occaz" ? "♻️ Occaz" :
-          it.category === "service" ? "🛠️ Service" :
-          it.category === "pro" ? "🏪 Pro" : "Annonce";
-
-        const card = document.createElement("article");
-        card.className = "shop-card";
-        card.innerHTML = `
-          <div class="shop-head">
-            <div>
-              <div class="shop-name">${esc(it.title)}</div>
-              <div class="shop-type">${esc(catLabel)} • ${esc(it.location)}</div>
-            </div>
-            <div class="shop-price">${price}</div>
-          </div>
-
-          <div class="shop-body">
-            <div class="auto-photo">
-              <div class="ico">🧪</div>
-              <div class="big">${esc(it.title)}</div>
-              <div class="small">
-                <span>${esc(catLabel)}</span>
-                <span>•</span>
-                <span>${esc(it.location)}</span>
-                <span>•</span>
-                <span>🔒 Pub payante</span>
-              </div>
-            </div>
-
-            <p class="shop-desc">
-              Exemple pour montrer le format. Les annonces réelles sont publiées après <strong>paiement</strong> (anti-spam).
-            </p>
-
-            <div class="shop-meta">
-              <div class="shop-badge">Exemple</div>
-              <div class="pill">0% Com DIGIY</div>
-            </div>
-
-            <div class="shop-actions">
-              <button class="btn btn-main" onclick="document.getElementById('btnOpenPost')?.click()">
-                ✍️ Publier la mienne
-              </button>
-            </div>
-          </div>
-        `;
-        grid.appendChild(card);
+    // ==============
+    // SUPABASE CLIENT
+    // ==============
+    function getSb(){
+      if(window.DIGIY_GUARD?.getSb){
+        const x = window.DIGIY_GUARD.getSb();
+        if(x) return x;
       }
+      const SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
+      const SUPABASE_ANON_KEY =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
+      if(!window.supabase?.createClient) return null;
+      if(!window.__ba_sb__) window.__ba_sb__ = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      return window.__ba_sb__;
     }
 
-    // =============================
-    // DATA + FILTERS
-    // =============================
+    // ==============
+    // DATA
+    // ==============
     let ALL = [];
 
-    function render(items){
-      const grid = $("adsGrid");
-      if(!grid) return;
+    const RPC = {
+      listMine: "ba_pro_list_ads",
+      stats:    "ba_pro_stats",
+      toggle:   "ba_pro_toggle_ad_status",
+      remove:   "ba_pro_delete_ad"
+    };
 
-      if(!items || items.length === 0){
-        renderExamples();
+    async function callRpc(name, payload){
+      const sb = getSb();
+      if(!sb) return { ok:false, error:"Supabase non prêt" };
+      const { data, error } = await sb.rpc(name, payload || {});
+      if(error) return { ok:false, error: error.message };
+      return { ok:true, data };
+    }
+
+    function computeStatsFromList(items){
+      const total = items.length;
+      const active = items.filter(x=>String(x.status||"").toLowerCase()==="active").length;
+      const draft = items.filter(x=>String(x.status||"").toLowerCase()==="draft").length;
+
+      const soon = items.filter(x=>{
+        const ex = x.expires_at || x.expiresAt || x.expire_at || x.end_at;
+        const d = safeDate(ex);
+        if(!d) return false;
+        const left = daysBetween(new Date(), d);
+        return left >= 0 && left <= 3;
+      }).length;
+
+      return { total, active, draft, exp_soon: soon };
+    }
+
+    function setKpi(stats){
+      const a = $("kpiTotal"), b = $("kpiActive"), c = $("kpiDraft"), d = $("kpiExpSoon");
+      if(a) a.textContent = String(stats.total ?? "—");
+      if(b) b.textContent = String(stats.active ?? "—");
+      if(c) c.textContent = String(stats.draft ?? "—");
+      if(d) d.textContent = String(stats.exp_soon ?? "—");
+    }
+
+    // ==============
+    // RENDER
+    // ==============
+    function statusTag(st){
+      const s = String(st||"").toLowerCase();
+      if(s==="active") return `<span class="tag ok">✅ active</span>`;
+      if(s==="draft") return `<span class="tag">🧱 draft</span>`;
+      if(s==="paused") return `<span class="tag">⏸️ pause</span>`;
+      if(s==="expired") return `<span class="tag bad">⌛ expirée</span>`;
+      return `<span class="tag">• ${esc(s||"—")}</span>`;
+    }
+
+    function render(items){
+      const el = $("list");
+      if(!el) return;
+
+      if(!items || items.length===0){
+        el.innerHTML = `
+          <div class="toast" style="grid-column:1/-1">
+            Aucune annonce trouvée. Clique <strong>➕ Nouvelle annonce</strong> pour publier.
+          </div>
+        `;
         return;
       }
 
-      grid.innerHTML = "";
+      el.innerHTML = "";
 
       for(const it of items){
-        const cat =
-          it.category==="occaz" ? "♻️ Occaz" :
-          it.category==="service" ? "🛠️ Service" :
-          it.category==="pro" ? "🏪 Pro" : "Annonce";
+        const title = it.title || it.titre || "Annonce";
+        const slug  = it.slug || CTX.slug || "";
+        const cat   = it.category || it.categorie || "—";
+        const loc   = it.location || it.zone || "—";
+        const price = money(it.price || it.prix || 0) || "—";
+        const st    = it.status || "—";
+        const phone = it.phone || it.telephone || CTX.phone || "";
+        const wa    = it.whatsapp || it.wa || phone || "";
 
-        const price = money(it.price);
-        const phone = it.phone || "";
-        const wa = it.whatsapp || it.phone || "";
-        const msg = `Salut, je viens de DIGIY BONNE AFFAIRE. Je suis intéressé par: ${it.title} (slug: ${it.slug}).`;
+        const desc  = (it.description || it.desc || "").trim();
 
-        const card = document.createElement("article");
-        card.className = "shop-card";
+        const exRaw = it.expires_at || it.expiresAt || it.expire_at || it.end_at || "";
+        const exD = safeDate(exRaw);
+        const exTxt = exD ? exD.toLocaleDateString("fr-FR") : "";
+
+        const msg = `Salut, je viens de DIGIY BONNE AFFAIRE. Je suis intéressé par: ${title} (slug: ${slug}).`;
+
+        const id = it.id || it.ad_id || it.uuid || "";
+
+        const card = document.createElement("div");
+        card.className = "card";
         card.innerHTML = `
-          <div class="shop-head">
+          <div class="cTop">
             <div>
-              <div class="shop-name">${esc(it.title || "Annonce")}</div>
-              <div class="shop-type">${esc(cat)} • ${esc(it.location || "—")}</div>
-            </div>
-            <div class="shop-price">${price || "—"}</div>
-          </div>
-
-          <div class="shop-body">
-            <div class="auto-photo">
-              <div class="ico">📷</div>
-              <div class="big">${esc(it.title || "Annonce")}</div>
-              <div class="small">
-                <span>${esc(cat)}</span>
-                <span>•</span>
-                <span>${esc(it.location || "—")}</span>
-                <span>•</span>
-                <span>Photo via WhatsApp</span>
+              <div class="cTitle">${esc(title)}</div>
+              <div class="cMeta">
+                <span class="tag">🏷️ ${esc(cat)}</span>
+                <span class="tag">📍 ${esc(loc)}</span>
+                <span class="tag">💰 ${esc(price)}</span>
+                ${statusTag(st)}
+                ${exTxt ? `<span class="tag">⌛ ${esc(exTxt)}</span>` : ``}
               </div>
             </div>
+            <div class="cBadge">${esc(String(id||"").slice(0,8) || "—")}</div>
+          </div>
 
-            <p class="shop-desc">
-              ${esc(it.description || "Contact direct via WhatsApp / Appel.")}
-            </p>
+          <div class="cDesc">${esc(desc || "—")}</div>
 
-            <div class="shop-meta">
-              <span>slug: <strong>${esc(it.slug||"")}</strong></span>
-              <div class="shop-badge">0% Com DIGIY</div>
-            </div>
-
-            <div class="shop-actions">
-              <a class="btn btn-contact"
-                 href="${waLink(wa || phone, msg)}"
-                 target="_blank" rel="noopener">
-                💬 WhatsApp
-              </a>
-
-              <a class="btn btn-call" href="tel:${esc(phone)}">
-                📞 Appeler
-              </a>
-
-              <button class="btn btn-outline"
-                onclick="window.open('${waLink(wa || phone, "Salut, peux-tu m’envoyer la photo/vidéo de: "+(it.title||"l’annonce")+" ?")}', '_blank')">
-                📷 Demander photo
-              </button>
-            </div>
+          <div class="cBtns">
+            <button class="btn btn-ghost btn-small" data-act="copy" data-id="${esc(id)}">📋 Copier</button>
+            <a class="btn btn-main btn-small" href="${waLink(wa, msg)}" target="_blank" rel="noopener">💬 WhatsApp</a>
+            <button class="btn btn-ok btn-small" data-act="renew" data-id="${esc(id)}">🔁 Renouveler</button>
+            <button class="btn btn-ghost btn-small" data-act="toggle" data-id="${esc(id)}" data-status="${esc(st)}">⚙️ Pause/Activer</button>
+            <button class="btn btn-bad btn-small" data-act="delete" data-id="${esc(id)}">🗑️ Supprimer</button>
           </div>
         `;
-        grid.appendChild(card);
+
+        el.appendChild(card);
       }
+
+      // bind actions
+      el.querySelectorAll("button[data-act]").forEach(btn=>{
+        btn.addEventListener("click", async ()=>{
+          const act = btn.getAttribute("data-act");
+          const id = btn.getAttribute("data-id") || "";
+          const curStatus = btn.getAttribute("data-status") || "";
+
+          if(act==="copy"){
+            const found = items.find(x => String(x.id||x.ad_id||x.uuid||"")===String(id));
+            const payload = found ? JSON.stringify(found, null, 2) : ("Annonce: "+id);
+            try{
+              await navigator.clipboard.writeText(payload);
+              toast("✅ Copié dans le presse-papier.", "ok");
+            }catch(_){
+              toast("⚠️ Copie impossible (navigateur).", "bad");
+            }
+            return;
+          }
+
+          if(act==="renew"){
+            const u = new URL("https://beauville.github.io/commencer-a-payer/", location.href);
+            u.searchParams.set("module","bonne_affaire");
+            u.searchParams.set("action","renew");
+            if(CTX.slug) u.searchParams.set("slug", CTX.slug);
+            if(id) u.searchParams.set("ad_id", id);
+            u.searchParams.set("next", location.pathname + location.search);
+            location.href = u.toString();
+            return;
+          }
+
+          if(act==="toggle"){
+            const s = String(curStatus||"").toLowerCase();
+            const nextStatus = (s==="active") ? "paused" : "active";
+
+            toast("⏳ Changement statut…", "");
+            const r = await callRpc(RPC.toggle, { p_owner_id: CTX.owner_id, p_ad_id: id, p_status: nextStatus });
+            if(!r.ok){
+              toast("⚠️ Toggle RPC indisponible: " + (r.error || "erreur"), "bad");
+              return;
+            }
+            toast("✅ Statut mis à jour: " + nextStatus, "ok");
+            await refresh();
+            return;
+          }
+
+          if(act==="delete"){
+            if(!confirm("Supprimer cette annonce ? (irréversible)")) return;
+
+            toast("⏳ Suppression…", "");
+            const r = await callRpc(RPC.remove, { p_owner_id: CTX.owner_id, p_ad_id: id });
+            if(!r.ok){
+              toast("⚠️ Delete RPC indisponible: " + (r.error || "erreur"), "bad");
+              return;
+            }
+            toast("✅ Annonce supprimée.", "ok");
+            await refresh();
+            return;
+          }
+        });
+      });
+    }
+
+    function getFilters(){
+      const st = ($("fStatus")?.value || "").trim().toLowerCase();
+      const cat = ($("fCategory")?.value || "").trim().toLowerCase();
+      const q = ($("q")?.value || "").trim().toLowerCase();
+      return { st, cat, q };
     }
 
     function applyFilters(){
-      const q = ($("fQuery").value || "").trim().toLowerCase();
-      const cat = ($("fCategory").value || "").trim();
-      const loc = ($("fLocation").value || "").trim();
+      const { st, cat, q } = getFilters();
 
-      const list = (ALL || []).filter(it=>{
-        const okQ = !q || String(it.title||"").toLowerCase().includes(q) || String(it.slug||"").toLowerCase().includes(q);
-        const okC = !cat || String(it.category||"") === cat;
-        const okL = !loc || String(it.location||"") === loc;
-        return okQ && okC && okL;
+      const out = (ALL || []).filter(it=>{
+        const s = String(it.status||"").toLowerCase();
+        const c = String(it.category||it.categorie||"").toLowerCase();
+        const hay = (String(it.title||it.titre||"")+" "+String(it.slug||"")+" "+String(it.location||it.zone||"")).toLowerCase();
+
+        const okS = !st || s===st;
+        const okC = !cat || c===cat;
+        const okQ = !q || hay.includes(q);
+        return okS && okC && okQ;
       });
 
-      render(list);
+      render(out);
+
+      // KPI reste global ALL (stable)
+      setKpi(computeStatsFromList(ALL));
+
+      if(q || st || cat) toast("🔎 Filtre actif — " + out.length + " annonce(s).", "");
+      else toast("✅ Cockpit chargé — " + ALL.length + " annonce(s).", "ok");
     }
 
-    // =============================
-    // SUPABASE LOAD (public)
-    // =============================
-    const SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
-    const SUPABASE_ANON_KEY =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
-
-    const sb = window.supabase?.createClient
-      ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
-      : null;
-
+    // ==============
+    // LOAD
+    // ==============
     async function refresh(){
+      const sb = getSb();
       if(!sb){
-        toastTop("Supabase non prêt", "bad");
+        toast("Supabase non prêt.", "bad");
         ALL = [];
+        setKpi({ total:"—", active:"—", draft:"—", exp_soon:"—" });
         render([]);
         return;
       }
 
-      toastTop("Chargement…", "");
-      const { data, error } = await sb.rpc("ba_list_ads", { p_category:null, p_location:null });
+      toast("⏳ Chargement de tes annonces…", "");
 
-      if(error){
-        console.error(error);
-        toastTop(error.message, "bad");
-        ALL = [];
-        render([]);
-        return;
+      // 1) try dedicated pro list
+      let mine = null;
+
+      const r1 = await callRpc(RPC.listMine, { p_owner_id: CTX.owner_id });
+      if(r1.ok){
+        mine = (r1.data && r1.data.items) ? r1.data.items : (Array.isArray(r1.data) ? r1.data : []);
+      }else{
+        // 2) fallback: public list + filter by owner_id if present
+        const r2 = await callRpc("ba_list_ads", { p_category: null, p_location: null });
+        if(r2.ok){
+          const items = (r2.data && r2.data.items) ? r2.data.items : (Array.isArray(r2.data) ? r2.data : []);
+          mine = items.filter(x => String(x.owner_id||"") === String(CTX.owner_id));
+        }else{
+          mine = [];
+        }
       }
 
-      ALL = data?.items || data || [];
-      toastTop("✅ " + ALL.length + " annonce(s)", "ok");
+      ALL = mine || [];
+
+      // stats (si RPC existe)
+      const rS = await callRpc(RPC.stats, { p_owner_id: CTX.owner_id });
+      if(rS.ok && rS.data && typeof rS.data === "object"){
+        const st = rS.data;
+        if(st.total!=null || st.active!=null || st.draft!=null || st.exp_soon!=null) setKpi(st);
+        else setKpi(computeStatsFromList(ALL));
+      }else{
+        setKpi(computeStatsFromList(ALL));
+      }
+
       applyFilters();
     }
 
-    // =============================
+    // ==============
+    // UI BIND
+    // ==============
+    function debounce(fn, delay){
+      let t = null;
+      return (...args)=>{
+        clearTimeout(t);
+        t = setTimeout(()=>fn(...args), delay);
+      };
+    }
+
+    function bindUI(){
+      const goNew = ()=>{
+        const u = new URL("https://beauville.github.io/commencer-a-payer/", location.href);
+        u.searchParams.set("module","bonne_affaire");
+        u.searchParams.set("action","new");
+        if(CTX.slug) u.searchParams.set("slug", CTX.slug);
+        u.searchParams.set("next", location.pathname + location.search);
+        location.href = u.toString();
+      };
+
+      const btnNew = $("btnNew"), mNew = $("mNew");
+      const btnRefresh = $("btnRefresh"), mRefresh = $("mRefresh");
+      const btnLogout = $("btnLogout");
+      const btnReset = $("btnReset");
+      const fStatus = $("fStatus");
+      const fCategory = $("fCategory");
+      const q = $("q");
+
+      if(btnNew) btnNew.onclick = goNew;
+      if(mNew) mNew.onclick = goNew;
+
+      if(btnRefresh) btnRefresh.onclick = ()=> refresh();
+      if(mRefresh) mRefresh.onclick = ()=> refresh();
+
+      if(btnLogout) btnLogout.onclick = ()=>{
+        try{
+          if(window.DIGIY_GUARD?.logout) window.DIGIY_GUARD.logout("./pin.html");
+          else location.href = "./pin.html";
+        }catch(_){
+          location.href = "./pin.html";
+        }
+      };
+
+      if(btnReset) btnReset.onclick = ()=>{
+        if(fStatus) fStatus.value = "";
+        if(fCategory) fCategory.value = "";
+        if(q) q.value = "";
+        render(ALL);
+        setKpi(computeStatsFromList(ALL));
+        toast("🧹 Filtres reset.", "");
+      };
+
+      if(fStatus) fStatus.onchange = applyFilters;
+      if(fCategory) fCategory.onchange = applyFilters;
+      if(q) q.addEventListener("input", debounce(applyFilters, 120));
+    }
+
+    // ==============
     // INIT
-    // =============================
+    // ==============
     document.addEventListener("DOMContentLoaded", async ()=>{
-      await boot();
-      wireNav();       // ✅ retour header + fab + slug safe
-      bindButtons();   // ✅ tous boutons
-      render([]);      // vitrine jamais vide
-      refresh();       // annonces (si dispo)
-      console.log("🚆 DIGIY BA READY", { slug: CTX.slug, owner_id: CTX.owner_id });
+      const ok = await boot();
+      if(!ok) return;
+      bindUI();
+      await refresh();
+      console.log("🚆 DIGIY BA COCKPIT READY", { slug: CTX.slug, owner_id: CTX.owner_id });
     });
+
   })();
   </script>
 </body>
