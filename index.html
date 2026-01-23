@@ -560,7 +560,8 @@
         const slug  = it.slug || CTX.slug || "";
         const cat   = it.category || it.categorie || "—";
         const loc   = it.location || it.zone || "—";
-        const price = money(it.price || it.prix || 0) || "—";
+        const cur = it.currency || "XOF";
+        const price = money(it.price || 0) + " " + cur;
         const st    = it.status || "—";
         const phone = it.phone || it.telephone || CTX.phone || "";
         const wa    = it.whatsapp || it.wa || phone || "";
