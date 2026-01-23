@@ -587,7 +587,17 @@
       try{ return (new URLSearchParams(location.search).get(k) || "").trim(); }
       catch(_){ return ""; }
     }
-
+    function withSlug(url){
+  const slug = (qp("slug") || localStorage.getItem("DIGIY_SLUG") || "").trim();
+  try{
+    const u = new URL(url, location.href);
+    if(slug) u.searchParams.set("slug", slug);
+    return u.toString();
+  }catch(_){
+    if(!slug) return url;
+    return url + (url.includes("?") ? "&" : "?") + "slug=" + encodeURIComponent(slug);
+  }
+}
     // =============================
     // CONTEXT (slug optionnel)
     // =============================
