@@ -6,10 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
   <meta name="description" content="DIGIY BONNE AFFAIRE — Achat, Vente, Échange : Occaz, Services, Pros. 0% commission. Paiement direct.">
 
-  <!-- Supabase -->
+  <!-- Supabase (PUBLIC) -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <!-- Guard (optionnel) -->
-  <script src="./guard.js?v=ba-mix-4-full"></script>
 
   <style>
     :root{
@@ -335,13 +333,7 @@
     }
     footer span{color:var(--accent-main);font-weight:1000}
 
-    #guard_status{
-      position:fixed;top:14px;right:14px;z-index:9999;
-      background:rgba(0,0,0,.82);border:1px solid rgba(255,255,255,.08);
-      color:#fff;padding:10px 12px;border-radius:12px;font-weight:1000;font-size:12px;
-    }
-
-    /* MODAL */
+    /* MODAL (structure conservée) */
     .modal{
       position:fixed;inset:0;display:none;align-items:center;justify-content:center;
       background:rgba(0,0,0,.55);z-index:2000;padding:12px;
@@ -383,7 +375,7 @@
       border-radius:999px;
       box-shadow:0 14px 30px rgba(0,0,0,.55);
       cursor:pointer;
-      display:none; /* activé par JS si besoin */
+      display:none; /* activé par JS */
       user-select:none;
     }
     #fabBack:active{transform:scale(.98)}
@@ -391,8 +383,6 @@
 </head>
 
 <body>
-  <div id="guard_status">🔐 Boot…</div>
-
   <!-- FAB mobile -->
   <button id="fabBack" title="Retour">⬅️</button>
 
@@ -406,14 +396,12 @@
         </div>
       </div>
 
-      <!-- ✅ NAV RETOUR PROPRE + SLUG SAFE -->
+      <!-- NAV (PUBLIC) -->
       <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:flex-end">
         <a href="#" class="back-link" id="btnBack">← Retour</a>
-        <a href="#" class="back-link" id="btnHome">🏠 Accueil</a>
+        <a href="./index.html#top" class="back-link" id="btnHome">🏠 Accueil</a>
         <div class="pill" id="pillCtx">slug: —</div>
-        <a href="https://beauville.github.io/mon-espace-digiy/" class="back-link" id="btnHub">
-          🌀 HUB
-        </a>
+        <a href="https://beauville.github.io/mon-espace-digiy/" class="back-link" id="btnHub">🌀 HUB</a>
       </div>
     </header>
 
@@ -444,7 +432,7 @@
         <div class="toast" id="toastTop">Prêt.</div>
       </section>
 
-      <!-- ✅ VITRINE PARTICULIER (A/B/C) -->
+      <!-- VITRINE PARTICULIER -->
       <section class="pricing" id="section-particulier">
         <div class="pricing-title">Publication individuelle (Particulier) — payante ✅</div>
         <p class="pricing-sub">
@@ -623,92 +611,44 @@
       catch(_){ return ""; }
     }
 
-    function withSlug(url){
-      const slug = (window.DIGIY_GUARD?.getSlug?.() || qp("slug") || "").trim();
-      try{
-        const u = new URL(url, location.href);
-        if(slug) u.searchParams.set("slug", slug);
-        return u.toString();
-      }catch(_){
-        if(!slug) return url;
-        return url + (url.includes("?") ? "&" : "?") + "slug=" + encodeURIComponent(slug);
-      }
-    }
-
     // =============================
-    // CONTEXT
+    // CONTEXT (slug optionnel, jamais obligatoire)
     // =============================
-    const CTX = (window.BA_CTX = window.BA_CTX || { slug:"", owner_id:"" });
+    const CTX = (window.BA_CTX = window.BA_CTX || { slug:"" });
 
     function loadCtx(){
-      const urlSlug = qp("slug");
-      const gSlug = window.DIGIY_GUARD?.getSlug?.() || "";
-      const s = window.DIGIY_GUARD?.getSession?.() || null;
-
-      CTX.slug = (urlSlug || gSlug || localStorage.getItem("DIGIY_SLUG") || "").trim();
-      CTX.owner_id = (s?.owner_id || localStorage.getItem("DIGIY_PRO_ID") || "").trim();
-
+      CTX.slug = (qp("slug") || localStorage.getItem("DIGIY_SLUG") || "").trim();
       const pill = $("pillCtx");
       if(pill) pill.textContent = "slug: " + (CTX.slug || "—");
     }
 
     // =============================
-    // GUARD BOOT (public safe)
-    // =============================
-    async function boot(){
-      const status = $("guard_status");
-      const setStatus = (t)=>{ if(status) status.textContent = t; };
-      const hideStatus = ()=>{ if(status) status.style.display="none"; };
-
-      try{
-        setStatus("🔐 Vérification…");
-        if(window.DIGIY_GUARD?.boot){
-          const r = await window.DIGIY_GUARD.boot({ login:"./pin.html" });
-          setStatus(r?.ok ? "✅ Connecté" : "ℹ️ Public");
-        }else{
-          setStatus("ℹ️ Public");
-        }
-      }catch(e){
-        console.warn("GUARD boot:", e);
-        setStatus("ℹ️ Public");
-      }
-      loadCtx();
-      setTimeout(hideStatus, 550);
-    }
-
-    // =============================
-    // RETOUR / HOME / HUB (slug safe)
+    // NAV (aucune redirection, jamais)
     // =============================
     function wireNav(){
-      // Home (même page) -> top + slug
-      const home = $("btnHome");
-      if(home) home.href = withSlug("./index.html#top");
-
-      // HUB (garde slug si tu veux)
-      const hub = $("btnHub");
-      if(hub) hub.href = withSlug("https://beauville.github.io/mon-espace-digiy/");
-
-      // Retour intelligent:
-      // - si history existe -> back
-      // - sinon -> HUB
       const back = $("btnBack");
       if(back){
         back.onclick = (e)=>{
           e.preventDefault();
           if(history.length > 1) history.back();
-          else location.href = withSlug("https://beauville.github.io/mon-espace-digiy/");
+          else location.href = "https://beauville.github.io/mon-espace-digiy/";
         };
       }
 
-      // FAB retour (mobile terrain)
       const fab = $("fabBack");
       if(fab){
         fab.style.display = "grid";
         fab.onclick = ()=>{
           if(history.length > 1) history.back();
-          else location.href = withSlug("https://beauville.github.io/mon-espace-digiy/");
+          else location.href = "https://beauville.github.io/mon-espace-digiy/";
         };
       }
+
+      const home = $("btnHome");
+      if(home) home.href = "./index.html#top";
+
+      const hub = $("btnHub");
+      if(hub) hub.href = "https://beauville.github.io/mon-espace-digiy/";
     }
 
     // =============================
@@ -725,24 +665,20 @@
     }
 
     // =============================
-    // BUTTONS (tous raccords)
+    // BUTTONS
     // =============================
     function bindButtons(){
-      // Publier -> paiement pack B
       const btnOpen = $("btnOpenPost");
       if(btnOpen) btnOpen.onclick = (e)=>{ e.preventDefault(); goPayBA("B"); };
 
-      // Packs A/B/C
       const btnA = $("btnPackA"), btnB = $("btnPackB"), btnC = $("btnPackC");
       if(btnA) btnA.onclick = (e)=>{ e.preventDefault(); goPayBA("A"); };
       if(btnB) btnB.onclick = (e)=>{ e.preventDefault(); goPayBA("B"); };
       if(btnC) btnC.onclick = (e)=>{ e.preventDefault(); goPayBA("C"); };
 
-      // refresh
       const btnRefresh = $("btnRefresh");
       if(btnRefresh) btnRefresh.onclick = ()=> refresh();
 
-      // reset
       const btnReset = $("btnReset");
       if(btnReset){
         btnReset.onclick = ()=>{
@@ -759,7 +695,7 @@
     }
 
     // =============================
-    // VITRINE (exemples si vide)
+    // EXAMPLES (si vitrine vide)
     // =============================
     function renderExamples(){
       const grid = $("adsGrid");
@@ -973,13 +909,13 @@
     // =============================
     // INIT
     // =============================
-    document.addEventListener("DOMContentLoaded", async ()=>{
-      await boot();
-      wireNav();       // ✅ retour header + fab + slug safe
-      bindButtons();   // ✅ tous boutons
-      render([]);      // vitrine jamais vide
-      refresh();       // annonces (si dispo)
-      console.log("🚆 DIGIY BA READY", { slug: CTX.slug, owner_id: CTX.owner_id });
+    document.addEventListener("DOMContentLoaded", ()=>{
+      loadCtx();        // slug optionnel (affichage seulement)
+      wireNav();        // retour/header/fab (aucune redirection)
+      bindButtons();    // packs + refresh + reset + filtres
+      render([]);       // vitrine jamais vide
+      refresh();        // annonces si dispo
+      console.log("🚆 DIGIY BA READY (NO GUARD)", { slug: CTX.slug });
     });
   })();
   </script>
