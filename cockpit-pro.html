@@ -1,1 +1,806 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <title>DIGIY BONNE AFFAIRE — Cockpit PRO</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no" />
+  <meta name="theme-color" content="#0b1020" />
+  <meta name="description" content="Cockpit PRO DIGIY BONNE AFFAIRE — Mes annonces, stats, actions. 0% commission." />
 
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- Guard BONNE AFFAIRE -->
+  <script src="./guard.js?v=ba-guard"></script>
+
+  <style>
+    :root{
+      --bg:#020617;
+      --bg2:#020818;
+      --card:#0b1020;
+      --card2:#030712;
+      --line:rgba(148,163,184,.22);
+      --ink:#f9fafb;
+      --muted:#cbd5f5;
+      --accent:#f97316;
+      --accent2:#facc15;
+      --ok:#22c55e;
+      --bad:#fb7185;
+      --shadow:0 20px 55px rgba(0,0,0,.55);
+      --shadow2:0 12px 30px rgba(15,23,42,.9);
+      --radius:22px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,Segoe UI,Roboto}
+    body{
+      min-height:100vh;
+      background:
+        radial-gradient(circle at top, rgba(249,115,22,.16), transparent 55%),
+        radial-gradient(circle at bottom, rgba(34,197,94,.12), transparent 55%),
+        linear-gradient(135deg,var(--bg),var(--bg2));
+      color:var(--ink);
+      padding:12px;
+      display:flex;
+      justify-content:center;
+    }
+    a{color:inherit}
+    .app{
+      width:100%;
+      max-width:1100px;
+      background:rgba(2,6,23,.35);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    .app::before{
+      content:"";
+      position:absolute;inset:-40%;
+      background:
+        radial-gradient(circle at 0% 0%,rgba(249,115,22,.12),transparent 55%),
+        radial-gradient(circle at 100% 100%,rgba(34,197,94,.10),transparent 45%);
+      opacity:.9;
+      pointer-events:none;
+    }
+
+    /* TOPBAR */
+    .topbar{
+      position:relative;z-index:2;
+      padding:14px;
+      display:flex;
+      gap:10px;
+      justify-content:space-between;
+      align-items:center;
+      flex-wrap:wrap;
+      border-bottom:1px solid var(--line);
+      background:rgba(11,16,32,.78);
+      backdrop-filter: blur(8px);
+    }
+    .brand{display:flex;gap:10px;align-items:center}
+    .logo{
+      width:42px;height:42px;border-radius:14px;
+      display:grid;place-items:center;
+      background:linear-gradient(135deg,var(--accent),#ea580c);
+      color:#111827;font-weight:1000;
+      box-shadow:0 12px 28px rgba(249,115,22,.55);
+      font-size:20px;
+    }
+    .bt{display:flex;flex-direction:column;gap:2px}
+    .title{
+      font-weight:1000;letter-spacing:.06em;
+      text-transform:uppercase;
+      color:var(--accent);
+      font-size:14px;
+    }
+    .sub{color:var(--muted);font-weight:800;font-size:12px}
+    .right{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+    .pill{
+      font-size:12px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,.28);
+      background:rgba(2,6,23,.55);
+      color:var(--muted);
+      font-weight:900;
+      white-space:nowrap;
+    }
+    .btn{
+      border:none;
+      border-radius:999px;
+      padding:10px 14px;
+      font-weight:1000;
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      white-space:nowrap;
+      transition:transform .18s, box-shadow .18s, border-color .18s;
+      justify-content:center;
+      text-decoration:none;
+      user-select:none;
+    }
+    .btn-main{
+      background:linear-gradient(135deg,var(--accent),#ea580c);
+      color:#111827;
+      box-shadow:0 10px 22px rgba(249,115,22,.45);
+    }
+    .btn-main:hover{transform:translateY(-1px);box-shadow:0 14px 28px rgba(249,115,22,.62)}
+    .btn-ghost{
+      background:rgba(2,6,23,.55);
+      color:var(--ink);
+      border:1px solid rgba(148,163,184,.35);
+    }
+    .btn-ghost:hover{border-color:rgba(249,115,22,.65)}
+    .btn-ok{
+      background:rgba(34,197,94,.15);
+      border:1px solid rgba(34,197,94,.55);
+      color:#bbf7d0;
+    }
+    .btn-bad{
+      background:rgba(251,113,133,.12);
+      border:1px solid rgba(251,113,133,.45);
+      color:#fecaca;
+    }
+
+    /* CONTENT */
+    .content{position:relative;z-index:2;padding:14px;display:flex;flex-direction:column;gap:12px}
+    .toast{
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid rgba(148,163,184,.25);
+      background:rgba(0,0,0,.20);
+      font-weight:900;
+      font-size:12px;
+      min-height:18px;
+    }
+    .toast.ok{border-color:rgba(34,197,94,.45)}
+    .toast.bad{border-color:rgba(251,113,133,.45)}
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:10px;
+    }
+    @media(max-width:980px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
+    @media(max-width:520px){.grid{grid-template-columns:1fr;}}
+    .kpi{
+      background:rgba(3,7,18,.82);
+      border:1px solid rgba(148,163,184,.24);
+      border-radius:18px;
+      padding:12px;
+      box-shadow:var(--shadow2);
+      position:relative;
+      overflow:hidden;
+    }
+    .kpi::before{
+      content:"";
+      position:absolute;inset:-60%;
+      background:radial-gradient(circle at 25% 0%, rgba(249,115,22,.10), transparent 55%);
+      pointer-events:none;
+      opacity:.9;
+    }
+    .kpi .lab{color:var(--muted);font-weight:900;font-size:12px;position:relative;z-index:2}
+    .kpi .val{font-size:26px;font-weight:1000;margin-top:6px;color:var(--ink);position:relative;z-index:2}
+    .kpi .hint{margin-top:6px;color:rgba(203,213,245,.9);font-weight:800;font-size:12px;position:relative;z-index:2}
+
+    .panel{
+      background:rgba(11,16,32,.72);
+      border:1px solid rgba(148,163,184,.22);
+      border-radius:22px;
+      padding:12px;
+      box-shadow:var(--shadow2);
+    }
+    .panelTop{
+      display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px
+    }
+    .panelTitle{
+      font-size:14px;font-weight:1000;color:var(--accent2);
+      letter-spacing:.02em;
+    }
+    .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:flex-end}
+    .input,.select{
+      background:rgba(2,6,23,.72);
+      border:1px solid rgba(148,163,184,.35);
+      color:var(--ink);
+      border-radius:14px;
+      padding:10px 12px;
+      font-weight:900;
+      outline:none;
+      min-width:180px;
+    }
+    .input{flex:1;min-width:220px}
+    .list{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:10px;
+    }
+    @media(max-width:900px){.list{grid-template-columns:1fr;}}
+    .card{
+      background:radial-gradient(circle at top,rgba(15,23,42,.95),rgba(2,6,23,.85));
+      border:1px solid rgba(148,163,184,.22);
+      border-radius:22px;
+      padding:12px;
+      box-shadow:0 12px 30px rgba(0,0,0,.35);
+      position:relative;
+      overflow:hidden;
+      min-height:170px;
+    }
+    .card::before{
+      content:"";
+      position:absolute;inset:-60%;
+      background:radial-gradient(circle at 0% 0%, rgba(249,115,22,.08), transparent 55%);
+      pointer-events:none;
+      opacity:.9;
+    }
+    .cTop{position:relative;z-index:2;display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+    .cTitle{font-weight:1000;font-size:16px;color:var(--accent)}
+    .cBadge{
+      font-size:11px;font-weight:1000;
+      padding:5px 9px;border-radius:999px;
+      border:1px solid rgba(148,163,184,.28);
+      background:rgba(2,6,23,.55);
+      color:var(--muted);
+      white-space:nowrap;
+    }
+    .cMeta{position:relative;z-index:2;margin-top:8px;color:#e5e7eb;font-weight:800;font-size:12px;display:flex;gap:8px;flex-wrap:wrap}
+    .tag{
+      border:1px solid rgba(148,163,184,.25);
+      border-radius:999px;
+      padding:5px 9px;
+      background:rgba(2,6,23,.55);
+      color:rgba(203,213,245,.92);
+    }
+    .tag.ok{border-color:rgba(34,197,94,.45);color:#bbf7d0;background:rgba(34,197,94,.10)}
+    .tag.bad{border-color:rgba(251,113,133,.38);color:#fecaca;background:rgba(251,113,133,.08)}
+    .cDesc{position:relative;z-index:2;margin-top:8px;color:#f3f4f6;font-weight:700;font-size:13px;line-height:1.5}
+    .cBtns{position:relative;z-index:2;margin-top:10px;display:flex;gap:8px;flex-wrap:wrap}
+    .btn-small{padding:9px 12px;font-size:12px}
+
+    /* FIXED bottom nav (mobile) */
+    .bottomNav{
+      position:fixed;
+      left:12px; right:12px; bottom:12px;
+      z-index:9999;
+      display:none;
+    }
+    .bottomNav .bar{
+      max-width:1100px;margin:0 auto;
+      background:rgba(11,16,32,.78);
+      backdrop-filter: blur(10px);
+      border:1px solid rgba(148,163,184,.22);
+      border-radius:18px;
+      box-shadow:0 18px 55px rgba(0,0,0,.55);
+      padding:8px;
+      display:flex;
+      gap:8px;
+    }
+    .bottomNav .bar .btn{flex:1;padding:12px 12px}
+    @media(max-width:720px){
+      body{padding-bottom:86px}
+      .bottomNav{display:block}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app" id="app">
+    <div class="topbar">
+      <div class="brand">
+        <div class="logo">🧭</div>
+        <div class="bt">
+          <div class="title">DIGIY BONNE AFFAIRE — COCKPIT PRO</div>
+          <div class="sub">Mes annonces • Stats • Actions terrain • 0% commission</div>
+        </div>
+      </div>
+
+      <div class="right">
+        <div class="pill" id="pillSlug">slug: —</div>
+        <div class="pill" id="pillOwner">owner: —</div>
+
+        <a class="btn btn-ghost" id="btnBackAds" href="./index.html">← Retour annonces</a>
+        <button class="btn btn-main" id="btnNew">➕ Nouvelle annonce</button>
+        <button class="btn btn-ghost" id="btnRefresh">🔄 Actualiser</button>
+        <button class="btn btn-bad" id="btnLogout">⛔ Logout</button>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="toast" id="toast">🔐 Boot…</div>
+
+      <div class="grid">
+        <div class="kpi">
+          <div class="lab">Annonces totales</div>
+          <div class="val" id="kpiTotal">—</div>
+          <div class="hint">Toutes tes annonces (PRO)</div>
+        </div>
+        <div class="kpi">
+          <div class="lab">Actives</div>
+          <div class="val" id="kpiActive">—</div>
+          <div class="hint">Visibles dans la vitrine</div>
+        </div>
+        <div class="kpi">
+          <div class="lab">En brouillon</div>
+          <div class="val" id="kpiDraft">—</div>
+          <div class="hint">À publier (paiement/validation)</div>
+        </div>
+        <div class="kpi">
+          <div class="lab">Expire bientôt</div>
+          <div class="val" id="kpiExpSoon">—</div>
+          <div class="hint">≤ 3 jours (si dates dispo)</div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panelTop">
+          <div class="panelTitle">Mes annonces</div>
+          <div class="row">
+            <select class="select" id="fStatus">
+              <option value="">Tous statuts</option>
+              <option value="active">✅ Actives</option>
+              <option value="draft">🧱 Draft</option>
+              <option value="paused">⏸️ Pause</option>
+              <option value="expired">⌛ Expirées</option>
+            </select>
+            <select class="select" id="fCategory">
+              <option value="">Toutes catégories</option>
+              <option value="occaz">♻️ Occaz</option>
+              <option value="service">🛠️ Service</option>
+              <option value="pro">🏪 Pro</option>
+            </select>
+            <input class="input" id="q" placeholder="Recherche… (titre / slug / zone)" />
+            <button class="btn btn-ghost btn-small" id="btnReset">🧹 Reset</button>
+          </div>
+        </div>
+
+        <div class="list" id="list"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- bottom mobile nav -->
+  <div class="bottomNav">
+    <div class="bar">
+      <a class="btn btn-ghost" id="mBackAds" href="./index.html">← Annonces</a>
+      <button class="btn btn-main" id="mNew">➕ Publier</button>
+      <button class="btn btn-ghost" id="mRefresh">🔄</button>
+    </div>
+  </div>
+
+  <script>
+  (function(){
+    "use strict";
+
+    const $ = (id)=>document.getElementById(id);
+
+    function qp(k){
+      try{ return (new URLSearchParams(location.search).get(k) || "").trim(); }catch(_){ return ""; }
+    }
+
+    function esc(s){
+      return String(s||"")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    function toast(msg, kind){
+      const el = $("toast");
+      if(!el) return;
+      el.textContent = msg || "";
+      el.classList.remove("ok","bad");
+      if(kind) el.classList.add(kind);
+    }
+
+    function money(x){
+      const n = Number(x||0);
+      if(!isFinite(n) || n<=0) return "";
+      return Math.round(n).toLocaleString("fr-FR") + " XOF";
+    }
+
+    function waLink(phone, msg){
+      const p = String(phone||"").replace(/[^\d]/g,"");
+      return "https://wa.me/" + p + "?text=" + encodeURIComponent(msg||"");
+    }
+
+    function safeDate(x){
+      const d = new Date(x);
+      return isNaN(d.getTime()) ? null : d;
+    }
+
+    function daysBetween(a,b){
+      const ms = b.getTime() - a.getTime();
+      return Math.ceil(ms / (1000*60*60*24));
+    }
+
+    // ==============
+    // CONTEXT
+    // ==============
+    const CTX = {
+      slug: "",
+      owner_id: "",
+      phone: "",
+      title: ""
+    };
+
+    function setPills(){
+      $("pillSlug").textContent = "slug: " + (CTX.slug || "—");
+      $("pillOwner").textContent = "owner: " + (CTX.owner_id ? (CTX.owner_id.slice(0,8)+"…") : "—");
+    }
+
+    function requireAuthOrGoPin(){
+      const next = encodeURIComponent(location.pathname + location.search + location.hash);
+      location.href = "./pin.html?next=" + next;
+    }
+
+    async function boot(){
+      toast("🔐 Vérification…", "");
+
+      // 1) Boot guard if exists
+      try{
+        if(window.DIGIY_GUARD?.boot){
+          const r = await window.DIGIY_GUARD.boot({ login: "./pin.html" });
+          // ok ou public
+        }
+      }catch(_){}
+
+      // 2) Pull session
+      const s = window.DIGI_GUARD_SESSION_FIX ? null : null; // (no-op placeholder; avoids accidental globals)
+
+      const sess = window.DIGIY_GUARD?.getSession ? window.DIGIY_GUARD.getSession() : null;
+      CTX.owner_id = (sess?.owner_id || localStorage.getItem("DIGIY_PRO_ID") || "").trim();
+      CTX.slug = (qp("slug") || (window.DIGIY_GUARD?.getSlug ? window.DIGIY_GUARD.getSlug() : "") || localStorage.getItem("DIGIY_SLUG") || "").trim();
+      CTX.phone = (sess?.phone || localStorage.getItem("DIGIY_PHONE") || "").trim();
+      CTX.title = (sess?.title || localStorage.getItem("DIGIY_TITLE") || "").trim();
+
+      setPills();
+
+      if(!CTX.owner_id){
+        toast("⛔ Accès PRO requis — redirection GO PIN…", "bad");
+        setTimeout(requireAuthOrGoPin, 250);
+        return false;
+      }
+
+      // Back link slug-safe (si tu veux garder slug dans URL)
+      const back = $("btnBackAds");
+      const mback = $("mBackAds");
+      if(window.DIGIY_GUARD?.withSlug){
+        const href = window.DIGIY_GUARD.withSlug("./index.html");
+        if(back) back.href = href;
+        if(mback) mback.href = href;
+      }
+
+      toast("✅ Connecté. Chargement cockpit…", "ok");
+      return true;
+    }
+
+    // ==============
+    // SUPABASE CLIENT
+    // ==============
+    function getSb(){
+      // priorité guard (client unique)
+      if(window.DIGIY_GUARD?.getSb){
+        const x = window.DIGIY_GUARD.getSb();
+        if(x) return x;
+      }
+      // fallback (au cas où)
+      const SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
+      const SUPABASE_ANON_KEY =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
+      if(!window.supabase?.createClient) return null;
+      if(!window.__ba_sb__) window.__ba_sb__ = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      return window.__ba_sb__;
+    }
+
+    // ==============
+    // DATA
+    // ==============
+    let ALL = [];
+
+    // RPC names (tu peux les créer après; la page reste stable si absent)
+    const RPC = {
+      listMine: "ba_pro_list_ads",           // (p_owner_id) -> {items:[]}|[]
+      stats:    "ba_pro_stats",              // (p_owner_id) -> {total,active,draft,exp_soon}
+      toggle:   "ba_pro_toggle_ad_status",   // (p_owner_id,p_ad_id,p_status) -> ok
+      remove:   "ba_pro_delete_ad"           // (p_owner_id,p_ad_id) -> ok
+    };
+
+    async function callRpc(name, payload){
+      const sb = getSb();
+      if(!sb) return { ok:false, error:"Supabase non prêt" };
+      const { data, error } = await sb.rpc(name, payload || {});
+      if(error) return { ok:false, error: error.message };
+      return { ok:true, data };
+    }
+
+    function computeStatsFromList(items){
+      const total = items.length;
+      const active = items.filter(x=>String(x.status||"").toLowerCase()==="active").length;
+      const draft = items.filter(x=>String(x.status||"").toLowerCase()==="draft").length;
+
+      const soon = items.filter(x=>{
+        const ex = x.expires_at || x.expiresAt || x.expire_at || x.end_at;
+        const d = safeDate(ex);
+        if(!d) return false;
+        const left = daysBetween(new Date(), d);
+        return left >= 0 && left <= 3;
+      }).length;
+
+      return { total, active, draft, exp_soon: soon };
+    }
+
+    function setKpi(stats){
+      $("kpiTotal").textContent = String(stats.total ?? "—");
+      $("kpiActive").textContent = String(stats.active ?? "—");
+      $("kpiDraft").textContent = String(stats.draft ?? "—");
+      $("kpiExpSoon").textContent = String(stats.exp_soon ?? "—");
+    }
+
+    // ==============
+    // RENDER
+    // ==============
+    function statusTag(st){
+      const s = String(st||"").toLowerCase();
+      if(s==="active") return `<span class="tag ok">✅ active</span>`;
+      if(s==="draft") return `<span class="tag">🧱 draft</span>`;
+      if(s==="paused") return `<span class="tag">⏸️ pause</span>`;
+      if(s==="expired") return `<span class="tag bad">⌛ expirée</span>`;
+      return `<span class="tag">• ${esc(s||"—")}</span>`;
+    }
+
+    function render(items){
+      const el = $("list");
+      if(!el) return;
+
+      if(!items || items.length===0){
+        el.innerHTML = `
+          <div class="toast" style="grid-column:1/-1">
+            Aucune annonce trouvée. Clique <strong>➕ Nouvelle annonce</strong> pour publier.
+          </div>
+        `;
+        return;
+      }
+
+      el.innerHTML = "";
+
+      for(const it of items){
+        const title = it.title || it.titre || "Annonce";
+        const slug  = it.slug || CTX.slug || "";
+        const cat   = it.category || it.categorie || "—";
+        const loc   = it.location || it.zone || "—";
+        const price = money(it.price || it.prix || 0) || "—";
+        const st    = it.status || "—";
+        const phone = it.phone || it.telephone || CTX.phone || "";
+        const wa    = it.whatsapp || it.wa || phone || "";
+
+        const desc  = (it.description || it.desc || "").trim();
+
+        const exRaw = it.expires_at || it.expiresAt || it.expire_at || it.end_at || "";
+        const exD = safeDate(exRaw);
+        const exTxt = exD ? exD.toLocaleDateString("fr-FR") : "";
+
+        const msg = `Salut, je viens de DIGIY BONNE AFFAIRE. Je suis intéressé par: ${title} (slug: ${slug}).`;
+
+        const id = it.id || it.ad_id || it.uuid || "";
+
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+          <div class="cTop">
+            <div>
+              <div class="cTitle">${esc(title)}</div>
+              <div class="cMeta">
+                <span class="tag">🏷️ ${esc(cat)}</span>
+                <span class="tag">📍 ${esc(loc)}</span>
+                <span class="tag">💰 ${esc(price)}</span>
+                ${statusTag(st)}
+                ${exTxt ? `<span class="tag">⌛ ${esc(exTxt)}</span>` : ``}
+              </div>
+            </div>
+            <div class="cBadge">${esc(String(id||"").slice(0,8) || "—")}</div>
+          </div>
+
+          <div class="cDesc">${esc(desc || "—")}</div>
+
+          <div class="cBtns">
+            <button class="btn btn-ghost btn-small" data-act="copy" data-id="${esc(id)}">📋 Copier</button>
+            <a class="btn btn-main btn-small" href="${waLink(wa, msg)}" target="_blank" rel="noopener">💬 WhatsApp</a>
+            <button class="btn btn-ok btn-small" data-act="renew" data-id="${esc(id)}">🔁 Renouveler</button>
+            <button class="btn btn-ghost btn-small" data-act="toggle" data-id="${esc(id)}" data-status="${esc(st)}">⚙️ Pause/Activer</button>
+            <button class="btn btn-bad btn-small" data-act="delete" data-id="${esc(id)}">🗑️ Supprimer</button>
+          </div>
+        `;
+
+        el.appendChild(card);
+      }
+
+      // bind actions
+      el.querySelectorAll("button[data-act]").forEach(btn=>{
+        btn.addEventListener("click", async (e)=>{
+          const act = btn.getAttribute("data-act");
+          const id = btn.getAttribute("data-id") || "";
+          const curStatus = btn.getAttribute("data-status") || "";
+
+          if(act==="copy"){
+            const found = items.find(x => String(x.id||x.ad_id||x.uuid||"")===String(id));
+            const payload = found ? JSON.stringify(found, null, 2) : ("Annonce: "+id);
+            try{
+              await navigator.clipboard.writeText(payload);
+              toast("✅ Copié dans le presse-papier.", "ok");
+            }catch(_){
+              toast("⚠️ Copie impossible (navigateur).", "bad");
+            }
+            return;
+          }
+
+          if(act==="renew"){
+            // redirect paiement pack (tu peux adapter ta page de paiement)
+            const u = new URL("https://beauville.github.io/commencer-a-payer/", location.href);
+            u.searchParams.set("module","bonne_affaire");
+            u.searchParams.set("action","renew");
+            if(CTX.slug) u.searchParams.set("slug", CTX.slug);
+            if(id) u.searchParams.set("ad_id", id);
+            u.searchParams.set("next", location.pathname + location.search);
+            location.href = u.toString();
+            return;
+          }
+
+          if(act==="toggle"){
+            const s = String(curStatus||"").toLowerCase();
+            const nextStatus = (s==="active") ? "paused" : "active";
+
+            toast("⏳ Changement statut…", "");
+            const r = await callRpc(RPC.toggle, { p_owner_id: CTX.owner_id, p_ad_id: id, p_status: nextStatus });
+            if(!r.ok){
+              toast("⚠️ Toggle RPC indisponible: " + (r.error || "erreur"), "bad");
+              return;
+            }
+            toast("✅ Statut mis à jour: " + nextStatus, "ok");
+            await refresh();
+            return;
+          }
+
+          if(act==="delete"){
+            if(!confirm("Supprimer cette annonce ? (irréversible)")) return;
+
+            toast("⏳ Suppression…", "");
+            const r = await callRpc(RPC.remove, { p_owner_id: CTX.owner_id, p_ad_id: id });
+            if(!r.ok){
+              toast("⚠️ Delete RPC indisponible: " + (r.error || "erreur"), "bad");
+              return;
+            }
+            toast("✅ Annonce supprimée.", "ok");
+            await refresh();
+            return;
+          }
+        }, { passive:true });
+      });
+    }
+
+    function applyFilters(){
+      const st = ($("fStatus").value || "").trim().toLowerCase();
+      const cat = ($("fCategory").value || "").trim().toLowerCase();
+      const q = ($("q").value || "").trim().toLowerCase();
+
+      const out = (ALL || []).filter(it=>{
+        const s = String(it.status||"").toLowerCase();
+        const c = String(it.category||it.categorie||"").toLowerCase();
+        const hay = (String(it.title||it.titre||"")+" "+String(it.slug||"")+" "+String(it.location||it.zone||"")).toLowerCase();
+
+        const okS = !st || s===st;
+        const okC = !cat || c===cat;
+        const okQ = !q || hay.includes(q);
+        return okS && okC && okQ;
+      });
+
+      render(out);
+      const stats = computeStatsFromList(out.length===ALL.length ? ALL : out);
+      // on garde KPI global (ALL) par défaut, mais si filtre, on peut afficher "filtré" dans toast
+      if(q || st || cat) toast("🔎 Filtre actif — " + out.length + " annonce(s).", "");
+    }
+
+    // ==============
+    // LOAD
+    // ==============
+    async function refresh(){
+      const sb = getSb();
+      if(!sb){
+        toast("Supabase non prêt.", "bad");
+        ALL = [];
+        setKpi({ total:"—", active:"—", draft:"—", exp_soon:"—" });
+        render([]);
+        return;
+      }
+
+      toast("⏳ Chargement de tes annonces…", "");
+      // 1) try dedicated pro list
+      let mine = null;
+
+      const r1 = await callRpc(RPC.listMine, { p_owner_id: CTX.owner_id });
+      if(r1.ok){
+        mine = (r1.data && r1.data.items) ? r1.data.items : (Array.isArray(r1.data) ? r1.data : []);
+      }else{
+        // 2) fallback: public list + filter by owner_id if present
+        const r2 = await callRpc("ba_list_ads", { p_category: null, p_location: null });
+        if(r2.ok){
+          const items = (r2.data && r2.data.items) ? r2.data.items : (Array.isArray(r2.data) ? r2.data : []);
+          mine = items.filter(x => String(x.owner_id||"") === String(CTX.owner_id));
+        }else{
+          mine = [];
+        }
+      }
+
+      ALL = mine || [];
+
+      // stats
+      const rS = await callRpc(RPC.stats, { p_owner_id: CTX.owner_id });
+      if(rS.ok && rS.data){
+        const st = (typeof rS.data === "object") ? rS.data : null;
+        if(st && (st.total!=null || st.active!=null)) setKpi(st);
+        else setKpi(computeStatsFromList(ALL));
+      }else{
+        setKpi(computeStatsFromList(ALL));
+      }
+
+      toast("✅ Cockpit chargé — " + ALL.length + " annonce(s).", "ok");
+      render(ALL);
+      applyFilters();
+    }
+
+    // ==============
+    // UI BIND
+    // ==============
+    function bindUI(){
+      const goNew = ()=>{
+        // même logique que vitrine: diriger vers paiement / création
+        const u = new URL("https://beauville.github.io/commencer-a-payer/", location.href);
+        u.searchParams.set("module","bonne_affaire");
+        u.searchParams.set("action","new");
+        if(CTX.slug) u.searchParams.set("slug", CTX.slug);
+        u.searchParams.set("next", location.pathname + location.search);
+        location.href = u.toString();
+      };
+
+      $("btnNew").onclick = goNew;
+      $("mNew").onclick = goNew;
+
+      $("btnRefresh").onclick = ()=> refresh();
+      $("mRefresh").onclick = ()=> refresh();
+
+      $("btnLogout").onclick = ()=>{
+        try{
+          if(window.DIGIY_GUARD?.logout) window.DIGIY_GUARD.logout("./pin.html");
+          else location.href = "./pin.html";
+        }catch(_){
+          location.href = "./pin.html";
+        }
+      };
+
+      $("btnReset").onclick = ()=>{
+        $("fStatus").value = "";
+        $("fCategory").value = "";
+        $("q").value = "";
+        render(ALL);
+        setKpi(computeStatsFromList(ALL));
+        toast("🧹 Filtres reset.", "");
+      };
+
+      $("fStatus").onchange = applyFilters;
+      $("fCategory").onchange = applyFilters;
+      $("q").addEventListener("input", applyFilters);
+    }
+
+    // ==============
+    // INIT
+    // ==============
+    document.addEventListener("DOMContentLoaded", async ()=>{
+      const ok = await boot();
+      if(!ok) return;
+      bindUI();
+      await refresh();
+      console.log("🚆 DIGIY BA COCKPIT READY", { slug: CTX.slug, owner_id: CTX.owner_id });
+    });
+
+  })();
+  </script>
+</body>
+</html>
