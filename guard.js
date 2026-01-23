@@ -2,12 +2,12 @@
    DIGIY BONNE AFFAIRE — GUARD (GH PAGES SAFE)
    - Public libre: aucune redirection automatique
    - Slug source of truth: URL > session > localStorage
-   - Login: slug + phone + pin -> RPC verify_access_pin (module: "bonne_affaire")
+   - Login: phone + pin -> RPC verify_access_pin_phone (module: "bonne_affaire")
    - Session longue (90 jours) terrain
    - Expose:
      DIGIY_GUARD.boot({login})
      DIGIY_GUARD.isAuth()
-     DIGIY_GUARD.loginWithPin(slug, phone, pin)
+     DIGIY_GUARD.loginWithPin(phone, pin)
      DIGIY_GUARD.logout(redirect)
      DIGIY_GUARD.getSession()
      DIGIY_GUARD.getSlug()
@@ -36,8 +36,7 @@
   };
 
   const SESSION_TTL_MS = 90 * 24 * 60 * 60 * 1000; // 90 jours
-
-  function now(){ return Date.now(); }
+  const now = ()=> Date.now();
 
   // =============================
   // SAFE localStorage
@@ -83,7 +82,7 @@
     try{
       const raw = lsGet(K.SESSION);
       if(!raw) return null;
-      const s = JSON.parse(raw);
+      const s = safeJsonParse(raw);
       if(!s || !s.expires_at) return null;
       if(now() > s.expires_at) return null;
       return s;
@@ -112,7 +111,7 @@
   }
 
   // =============================
-  // SUPABASE
+  // SUPABASE (singleton)
   // =============================
   function getSb(){
     if(!window.supabase?.createClient) return null;
@@ -126,12 +125,8 @@
   // SLUG source of truth
   // =============================
   function safeSessionObj(){
-    try{
-      const s = getSession();
-      return (s && typeof s === "object") ? s : null;
-    }catch(_){
-      return null;
-    }
+    const s = getSession();
+    return (s && typeof s === "object") ? s : null;
   }
 
   function getSlug(){
@@ -170,53 +165,52 @@
   }
 
   // =============================
-// LOGIN (phone + pin -> RPC)
-// =============================
-async function loginWithPin(phone, pin){
-  const sb = getSb();
-  if(!sb) return { ok:false, error:"Supabase non initialisé (script Supabase manquant ou bloqué)" };
+  // LOGIN (phone + pin -> RPC)
+  // =============================
+  async function loginWithPin(phone, pin){
+    const sb = getSb();
+    if(!sb) return { ok:false, error:"Supabase non initialisé (script Supabase manquant ou bloqué)" };
 
-  phone = String(phone || "").trim();
-  pin   = String(pin || "").trim();
+    phone = String(phone || "").trim();
+    pin   = String(pin || "").trim();
 
-  if(!phone || !pin){
-    return { ok:false, error:"Téléphone et PIN requis" };
+    if(!phone || !pin){
+      return { ok:false, error:"Téléphone et PIN requis" };
+    }
+
+    const payload = {
+      p_phone: phone,
+      p_pin: pin,
+      p_module: "bonne_affaire"
+    };
+
+    // ✅ RPC dédiée (sans slug)
+    const { data, error } = await sb.rpc("verify_access_pin_phone", payload);
+    if(error) return { ok:false, error: error.message };
+
+    const res = (typeof data === "string") ? safeJsonParse(data) : data;
+    if(!res?.ok || !res?.owner_id){
+      return { ok:false, error: res?.reason || res?.error || "Accès refusé" };
+    }
+
+    const session = setSession({
+      ok: true,
+      module: "bonne_affaire",
+      owner_id: res.owner_id,
+      slug: cleanSlug(res.slug || ""),
+      title: res.title || "",
+      phone: res.phone || phone
+    });
+
+    // mirrors cross-modules
+    lsSet(K.PRO_ID, session.owner_id);
+    if(session.slug)  lsSet(K.SLUG, session.slug);
+    if(session.title) lsSet(K.TITLE, session.title);
+    if(session.phone) lsSet(K.PHONE, session.phone);
+
+    return { ok:true, session };
   }
 
-  const payload = {
-    p_phone: phone,
-    p_pin: pin,
-    p_module: "bonne_affaire"
-  };
-
-  // ✅ RPC dédiée (sans slug)
-  const { data, error } = await sb.rpc("verify_access_pin_phone", payload);
-  if(error) return { ok:false, error: error.message };
-
-  const res = (typeof data === "string") ? safeJsonParse(data) : data;
-  console.log("VERIFY_ACCESS_PIN_PHONE_RES", res);
-
-  if(!res?.ok || !res?.owner_id){
-    return { ok:false, error: res?.reason || res?.error || "Accès refusé" };
-  }
-
-  const session = setSession({
-    ok: true,
-    module: "bonne_affaire",
-    owner_id: res.owner_id,
-    slug: cleanSlug(res.slug || ""),
-    title: res.title || "",
-    phone: res.phone || phone
-  });
-
-  // mirrors cross-modules
-  lsSet(K.PRO_ID, session.owner_id);
-  if(session.slug) lsSet(K.SLUG, session.slug);
-  if(session.title) lsSet(K.TITLE, session.title);
-  if(session.phone) lsSet(K.PHONE, session.phone);
-
-  return { ok:true, session };
-}
   // =============================
   // BOOT (Public safe)
   // =============================
@@ -251,7 +245,7 @@ async function loginWithPin(phone, pin){
   }
 
   // =============================
-  // EXPORT
+  // EXPORT (ne casse pas si déjà existant)
   // =============================
   window.DIGIY_GUARD = window.DIGIY_GUARD || {};
   window.DIGIY_GUARD.getSb = getSb;
@@ -265,5 +259,6 @@ async function loginWithPin(phone, pin){
   window.DIGIY_GUARD.go = go;
   window.DIGIY_GUARD.syncSlugFromUrl = syncSlugFromUrl;
 
+  // init
   syncSlugFromUrl();
 })();
