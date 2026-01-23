@@ -619,47 +619,45 @@
     }
 
     // =============================
-    // NAV (PUBLIC) + COCKPIT LINK
-    // =============================
-    function wireNav(){
-      // Retour
-      const back = $("btnBack");
-      if(back){
-        back.onclick = (e)=>{
-          e.preventDefault();
-          if(history.length > 1) history.back();
-          else location.href = "https://beauville.github.io/mon-espace-digiy/";
-        };
-      }
+// NAV (aucune redirection, jamais)
+// =============================
+function wireNav(){
+  // HUB
+  const hub = $("btnHub");
+  if(hub) hub.href = "https://beauville.github.io/mon-espace-digiy/";
 
-      // FAB retour
-      const fab = $("fabBack");
-      if(fab){
-        fab.style.display = "grid";
-        fab.onclick = ()=>{
-          if(history.length > 1) history.back();
-          else location.href = "https://beauville.github.io/mon-espace-digiy/";
-        };
-      }
+  // ✅ Cockpit PRO (clic explicite, pas de redirection auto)
+  const cockpit = $("btnCockpit");
+  if(cockpit){
+    cockpit.href = "./cockpit-pro.html"; // ✅ aucun slug
+    cockpit.style.pointerEvents = "auto";
+    cockpit.style.cursor = "pointer";
+  }
 
-      // Home / Hub
-      const home = $("btnHome");
-      if(home) home.href = "./index.html#top";
+  // RETOUR
+  const back = $("btnBack");
+  if(back){
+    back.onclick = (e)=>{
+      e.preventDefault();
+      if(history.length > 1) history.back();
+      else location.href = "https://beauville.github.io/mon-espace-digiy/";
+    };
+  }
 
-      const hub = $("btnHub");
-      if(hub) hub.href = "https://beauville.github.io/mon-espace-digiy/";
+  // FAB RETOUR (mobile)
+  const fab = $("fabBack");
+  if(fab){
+    fab.style.display = "grid";
+    fab.onclick = ()=>{
+      if(history.length > 1) history.back();
+      else location.href = "https://beauville.github.io/mon-espace-digiy/";
+    };
+  }
 
-      // ✅ Cockpit PRO (clic explicite, pas de redirection auto)
-      const cockpit = $("btnCockpit");
-      if(cockpit){
-        cockpit.href = withSlug("./cockpit-pro.html");
-        cockpit.addEventListener("click", (e)=>{
-          e.preventDefault();
-          location.href = cockpit.href;
-        }, { passive:false });
-      }
-    }
-
+  // HOME
+  const home = $("btnHome");
+  if(home) home.href = "./index.html#top";
+}
     // =============================
     // PAY REDIRECT (Particulier A/B/C)
     // =============================
