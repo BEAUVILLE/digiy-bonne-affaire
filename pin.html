@@ -6,7 +6,9 @@
   <title>DIGIY — GO PIN</title>
   <meta name="theme-color" content="#0b1020" />
 
+  <!-- Supabase (au cas où guard.js en dépend) -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- Guard BONNE AFFAIRE -->
   <script src="./guard.js?v=ba-go-pin"></script>
 
   <style>
@@ -43,13 +45,10 @@
 
     <div class="pill" id="pillNext">next: —</div>
 
-    <div class="label">Slug</div>
-    <input class="input" id="slug" placeholder="ex: chez-astou-saly" />
-
     <div class="label">Téléphone</div>
     <input class="input" id="phone" inputmode="tel" placeholder="+22177xxxxxxx" />
 
-    <div class="label">PIN</div>
+    <div class="label">PIN (auto = 4 derniers chiffres)</div>
     <input class="input" id="pin" inputmode="numeric" placeholder="••••" />
 
     <div class="row">
@@ -63,6 +62,7 @@
   <script>
     (function(){
       const $ = (id)=>document.getElementById(id);
+
       function qp(k){
         try{ return (new URLSearchParams(location.search).get(k) || "").trim(); }catch(_){ return ""; }
       }
@@ -73,21 +73,38 @@
         if(kind) el.classList.add(kind);
       }
 
+      // =============================
+      // PIN AUTO = 4 DERNIERS CHIFFRES
+      // =============================
+      function last4(phone){
+        const d = String(phone || "").replace(/\D+/g, "");
+        return d.slice(-4);
+      }
+
+      // =============================
+      // NEXT
+      // =============================
       const next = qp("next") || "./";
       $("pillNext").textContent = "next: " + next;
 
-      // slug auto depuis URL (si fourni)
-      const s0 = qp("slug") || window.DIGIY_GUARD?.getSlug?.() || "";
-      if(s0) $("slug").value = s0;
-
       $("btnBack").onclick = ()=> location.href = next;
 
+      // auto PIN sans écraser si déjà tapé
+      $("phone").addEventListener("input", ()=>{
+        const x = last4($("phone").value);
+        if(x && !$("pin").value){
+          $("pin").value = x;
+          toast("PIN auto rempli ✅", "ok");
+        }
+      });
+
+      // =============================
+      // LOGIN
+      // =============================
       $("btnGo").onclick = async ()=>{
-        const slug = ($("slug").value || "").trim();
         const phone = ($("phone").value || "").trim();
         const pin = ($("pin").value || "").trim();
 
-        if(!slug) return toast("Slug requis.", "bad");
         if(!phone) return toast("Téléphone requis.", "bad");
         if(!pin) return toast("PIN requis.", "bad");
 
