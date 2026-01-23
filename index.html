@@ -841,11 +841,38 @@
   }
 
   // 🔒 Verrouille publier + draft + payer
-  function bindGuardActionsBA(){
-    const btnOpen = $("btnOpenPost");
-    if(btnOpen){
-      btnOpen.onclick = ()=> requireAuthBA(()=> openPost());
-    }
+ // =============================
+// BIND GUARD ACTIONS (SAFE)
+// =============================
+function bindGuardActionsBA(){
+
+  const btnOpen = $("btnOpenPost");
+  if(btnOpen){
+    btnOpen.addEventListener("click", (e)=>{
+      e.preventDefault();
+      e.stopPropagation();
+      requireAuthBA(()=> window.BA_OPEN_POST && window.BA_OPEN_POST());
+    }, true);
+  }
+
+  const btnDraft = $("btnCreateDraft");
+  if(btnDraft){
+    btnDraft.addEventListener("click", (e)=>{
+      e.preventDefault();
+      e.stopPropagation();
+      requireAuthBA(()=> window.BA_CREATE_DRAFT && window.BA_CREATE_DRAFT());
+    }, true);
+  }
+
+  const btnPay = $("btnPayPublish");
+  if(btnPay){
+    btnPay.addEventListener("click", (e)=>{
+      e.preventDefault();
+      e.stopPropagation();
+      requireAuthBA(()=> window.BA_PAY_PUBLISH && window.BA_PAY_PUBLISH());
+    }, true);
+  }
+}
 
     const btnDraft = $("btnCreateDraft");
     if(btnDraft){
@@ -857,6 +884,9 @@
       btnPay.onclick = ()=> requireAuthBA(()=> payPublish());
     }
   }
+  window.BA_OPEN_POST = openPost;
+window.BA_CREATE_DRAFT = createDraft;
+window.BA_PAY_PUBLISH = payPublish;
 
   // =============================
   // VITRINE EXEMPLES (12)
