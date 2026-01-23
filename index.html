@@ -533,11 +533,11 @@
     // ==============
     function statusTag(st){
       const s = String(st||"").toLowerCase();
-      if(s==="active") return <span class="tag ok">✅ active</span>;
-      if(s==="draft") return <span class="tag">🧱 draft</span>;
-      if(s==="paused") return <span class="tag">⏸️ pause</span>;
-      if(s==="expired") return <span class="tag bad">⌛ expirée</span>;
-      return <span class="tag">• ${esc(s||"—")}</span>;
+      if(s==="active") return `<span class="tag ok">✅ active</span>`;
+      if(s==="draft") return `<span class="tag">🧱 draft</span>`;
+      if(s==="paused") return `<span class="tag">⏸️ pause</span>`;
+      if(s==="expired") return `<span class="tag bad">⌛ expirée</span>`;
+      return `<span class="tag">• ${esc(s||"—")}</span>`;
     }
 
     function render(items){
@@ -545,11 +545,11 @@
       if(!el) return;
 
       if(!items || items.length===0){
-        el.innerHTML = 
+        el.innerHTML = `
           <div class="toast" style="grid-column:1/-1">
             Aucune annonce trouvée. Clique <strong>➕ Nouvelle annonce</strong> pour publier.
           </div>
-        ;
+        `;
         return;
       }
 
@@ -572,13 +572,13 @@
         const exD = safeDate(exRaw);
         const exTxt = exD ? exD.toLocaleDateString("fr-FR") : "";
 
-        const msg = Salut, je viens de DIGIY BONNE AFFAIRE. Je suis intéressé par: ${title} (slug: ${slug}).;
+        const msg = `Salut, je viens de DIGIY BONNE AFFAIRE. Je suis intéressé par: ${title} (slug: ${slug}).`;
 
         const id = it.id || it.ad_id || it.uuid || "";
 
         const card = document.createElement("div");
         card.className = "card";
-        card.innerHTML = 
+        card.innerHTML = `
           <div class="cTop">
             <div>
               <div class="cTitle">${esc(title)}</div>
@@ -587,7 +587,7 @@
                 <span class="tag">📍 ${esc(loc)}</span>
                 <span class="tag">💰 ${esc(price)}</span>
                 ${statusTag(st)}
-                ${exTxt ? <span class="tag">⌛ ${esc(exTxt)}</span> : `}
+                ${exTxt ? `<span class="tag">⌛ ${esc(exTxt)}</span>` : ``}
               </div>
             </div>
             <div class="cBadge">${esc(String(id||"").slice(0,8) || "—")}</div>
@@ -602,7 +602,7 @@
             <button class="btn btn-ghost btn-small" data-act="toggle" data-id="${esc(id)}" data-status="${esc(st)}">⚙️ Pause/Activer</button>
             <button class="btn btn-bad btn-small" data-act="delete" data-id="${esc(id)}">🗑️ Supprimer</button>
           </div>
-        ;
+        `;
 
         el.appendChild(card);
       }
