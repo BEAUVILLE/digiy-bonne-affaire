@@ -780,21 +780,17 @@ function wireNav(){
         grid.appendChild(card);
       }
     }
-
     // =============================
     // DATA + FILTERS
     // =============================
     let ALL = [];
-
     function render(items){
       const grid = $("adsGrid");
       if(!grid) return;
-
       if(!items || items.length === 0){
         renderExamples();
         return;
       }
-
       grid.innerHTML = "";
 
       for(const it of items){
