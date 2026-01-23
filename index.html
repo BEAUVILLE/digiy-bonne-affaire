@@ -133,7 +133,6 @@
     }
     .hero-cta-btn-secondary:hover{border-color:var(--accent-main)}
 
-    /* FILTER BAR */
     .filters{
       background:rgba(15,23,42,0.92);
       border:1px solid rgba(148,163,184,0.55);
@@ -188,7 +187,6 @@
     .toast.ok{border-color:rgba(34,197,94,0.55)}
     .toast.bad{border-color:rgba(249,115,115,0.55)}
 
-    /* PRICING (GENERAL) */
     .pricing{
       margin-top:4px;
       background:radial-gradient(circle at top right,rgba(34,197,94,0.12),rgba(3,7,18,0.98));
@@ -226,7 +224,6 @@
     .pricing-line::before{content:"•";color:var(--accent-main);margin-top:1px}
     .pricing-cta{margin-top:8px;display:flex;gap:6px;flex-wrap:wrap}
 
-    /* GRID ADS */
     .grid{
       margin-top:10px;
       display:grid;
@@ -264,110 +261,6 @@
     .shop-body{position:relative;z-index:2;display:flex;flex-direction:column;gap:8px}
     .shop-desc{font-size:14px;color:#f3f4f6;font-weight:600;line-height:1.6}
 
-    /* ✅ AUTO-PHOTO (pas de stockage) */
-    .auto-photo{
-      height:220px;border-radius:16px;overflow:hidden;
-      border:2px solid rgba(249,115,22,0.85);
-      position:relative;
-      background:
-        radial-gradient(circle at 25% 0%, rgba(250,204,21,.16), transparent 55%),
-        radial-gradient(circle at 100% 100%, rgba(34,197,94,.14), transparent 50%),
-        rgba(3,7,18,.55);
-      display:flex;flex-direction:column;justify-content:flex-end;
-      padding:14px;
-      box-shadow:0 12px 26px rgba(0,0,0,.35);
-    }
-    .auto-photo .big{
-      font-weight:1000;font-size:18px;line-height:1.15;
-      color:#f9fafb;
-      text-shadow:0 10px 22px rgba(0,0,0,.55);
-    }
-    .auto-photo .small{
-      margin-top:6px;
-      font-weight:900;font-size:12px;color:rgba(203,213,245,.92);
-      display:flex;gap:10px;flex-wrap:wrap;align-items:center;
-    }
-    .auto-photo .ico{
-      position:absolute;top:12px;right:12px;
-      width:40px;height:40px;border-radius:14px;
-      display:grid;place-items:center;
-      background:rgba(0,0,0,.35);
-      border:1px solid rgba(148,163,184,.25);
-      font-size:20px;
-    }
-    .deal-badge{
-      position:absolute;top:10px;left:10px;z-index:3;
-      padding:6px 10px;border-radius:999px;
-      font-size:12px;font-weight:1000;letter-spacing:.02em;
-      color:#111827;
-      background:linear-gradient(135deg,#facc15,#f97316);
-      box-shadow:0 10px 24px rgba(249,115,22,.45);
-      display:inline-flex;align-items:center;gap:6px;
-      border:1px solid rgba(255,255,255,.14);
-      user-select:none;pointer-events:none;
-    }
-
-    .shop-meta{
-      margin-top:6px;font-size:13px;color:#e5e7eb;font-weight:600;
-      display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;
-    }
-    .shop-badge{
-      font-size:12px;padding:5px 9px;border-radius:999px;
-      border:1px solid rgba(34,197,94,0.9);
-      color:var(--accent-green);
-      background:rgba(15,23,42,0.98);
-      white-space:nowrap;
-      font-weight:800;
-    }
-    .trust-badge{
-      display:inline-flex;align-items:center;gap:6px;
-      padding:5px 9px;border-radius:999px;
-      font-size:11px;font-weight:900;
-      color:#bbf7d0;
-      background:rgba(34,197,94,.16);
-      border:1px solid rgba(34,197,94,.55);
-      white-space:nowrap;
-    }
-
-    .shop-actions{
-      margin-top:10px;
-      display:flex;justify-content:space-between;align-items:center;gap:10px;
-      flex-wrap:wrap;
-    }
-    .btn-contact{
-      background:linear-gradient(135deg,#f97316,#ea580c);
-      color:#111827;
-      box-shadow:0 7px 18px rgba(249,115,22,0.55);
-      flex:1;
-    }
-    .btn-call{
-      background:rgba(34,197,94,0.2);
-      color:#bbf7d0;
-      border:1px solid rgba(34,197,94,0.85);
-      flex:1;
-    }
-    .btn-pickup{
-      background:rgba(56,189,248,0.18);
-      color:#bae6fd;
-      border:1px solid rgba(56,189,248,0.55);
-      flex:1;
-    }
-    .btn-photo{
-      background:rgba(250,204,21,0.14);
-      color:#fde68a;
-      border:1px solid rgba(250,204,21,0.45);
-      flex:1;
-    }
-    .btn-photo:hover{border-color:rgba(250,204,21,0.75);transform:translateY(-1px);}
-
-    .btn-report{
-      background:rgba(249,115,115,0.14);
-      color:#fecaca;
-      border:1px solid rgba(249,115,115,0.45);
-      flex:1;
-    }
-    .btn-report:hover{border-color:rgba(249,115,115,0.75);transform:translateY(-1px);}
-
     footer{
       position:relative;z-index:2;margin-top:16px;
       font-size:12px;color:var(--muted);
@@ -381,32 +274,6 @@
       background:rgba(0,0,0,.82);border:1px solid rgba(255,255,255,.08);
       color:#fff;padding:10px 12px;border-radius:12px;font-weight:1000;font-size:12px;
     }
-
-    /* MODAL */
-    .modal{
-      position:fixed;inset:0;display:none;align-items:center;justify-content:center;
-      background:rgba(0,0,0,.55);z-index:2000;padding:12px;
-    }
-    .modalBox{
-      width:100%;max-width:760px;
-      border-radius:22px;
-      border:1px solid rgba(148,163,184,0.55);
-      background:rgba(3,7,18,0.96);
-      box-shadow:0 22px 70px rgba(0,0,0,.55);
-      padding:14px;
-    }
-    .modalTop{
-      display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px;
-    }
-    .modalTitle{font-size:16px;font-weight:1000;color:var(--accent-soft)}
-    .xBtn{
-      border:none;border-radius:999px;padding:10px 14px;
-      font-weight:1000;cursor:pointer;background:rgba(15,23,42,0.98);
-      color:#e5e7eb;border:1px solid rgba(148,163,184,0.8);
-    }
-    .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-    @media(max-width:720px){.grid2{grid-template-columns:1fr}}
-    .help{font-size:12px;color:rgba(203,213,245,.85);font-weight:700;margin-top:6px}
   </style>
 </head>
 
@@ -441,12 +308,6 @@
           et des <strong>offres PRO</strong>.
           Contact direct via WhatsApp / Appel. Publication payante = annonces propres (anti-spam).
         </div>
-        <div class="hero-tags">
-          <div class="hero-tag"><strong>0% commission</strong> — Direct</div>
-          <div class="hero-tag">Photo via WhatsApp (pas de stockage)</div>
-          <div class="hero-tag">Annonce payante = anti-spam</div>
-          <div class="hero-tag"><strong>🚩 Signalement</strong> = panier propre</div>
-        </div>
 
         <div class="hero-cta-row">
           <button class="hero-cta-btn" id="btnOpenPost">✍️ Publier une annonce</button>
@@ -458,7 +319,6 @@
         <div class="toast" id="toastTop">Prêt.</div>
       </section>
 
-      <!-- ✅ VITRINE PARTICULIER (A/B/C) -->
       <section class="pricing" id="section-particulier">
         <div class="pricing-title">Publication individuelle (Particulier) — payante ✅</div>
         <p class="pricing-sub">
@@ -478,7 +338,7 @@
             <div class="pricing-line">Contact WhatsApp / Appel</div>
             <div class="pricing-line">Idéal : vente rapide / petit service</div>
             <div class="pricing-cta">
-              <button class="btn btn-main" data-pack="A" id="btnPackA">💸 Payer Pack A</button>
+              <button class="btn btn-main" id="btnPackA">💸 Payer Pack A</button>
               <a class="btn btn-outline" href="#adsGrid">Voir annonces</a>
             </div>
           </article>
@@ -492,7 +352,7 @@
             <div class="pricing-line">Confiance (paiement)</div>
             <div class="pricing-line">Terrain : “2 semaines”, simple</div>
             <div class="pricing-cta">
-              <button class="btn btn-main" data-pack="B" id="btnPackB">⭐ Payer Pack B</button>
+              <button class="btn btn-main" id="btnPackB">⭐ Payer Pack B</button>
               <a class="btn btn-outline" href="#adsGrid">Voir annonces</a>
             </div>
           </article>
@@ -506,15 +366,13 @@
             <div class="pricing-line">Idéal immobilier / auto</div>
             <div class="pricing-line">Pour vendeurs qui veulent du temps</div>
             <div class="pricing-cta">
-              <button class="btn btn-main" data-pack="C" id="btnPackC">👑 Payer Pack C</button>
+              <button class="btn btn-main" id="btnPackC">👑 Payer Pack C</button>
               <a class="btn btn-outline" href="#adsGrid">Voir annonces</a>
             </div>
           </article>
         </div>
 
-        <div class="help">
-          Sécurité terrain: demander photo/vidéo + infos avant décision. Pas d’acompte sans preuve.
-        </div>
+        <div class="toast" id="toastPay" style="display:none">—</div>
       </section>
 
       <section class="filters">
@@ -535,7 +393,6 @@
         <button class="btn btn-outline" id="btnReset">🧹 Reset</button>
       </section>
 
-      <!-- PRICING PRO (tes liens) -->
       <section class="pricing" id="section-pro">
         <div class="pricing-title">Abonnements DIGIY BONNE AFFAIRE PRO</div>
         <p class="pricing-sub">
@@ -585,7 +442,6 @@
         </div>
       </section>
 
-      <!-- LISTING DYNAMIQUE -->
       <section class="grid" id="adsGrid"></section>
     </main>
 
@@ -598,560 +454,331 @@
     </footer>
   </div>
 
-  <!-- MODAL POST -->
-  <div class="modal" id="postModal">
-    <div class="modalBox">
-      <div class="modalTop">
-        <div class="modalTitle">✍️ Publier une annonce (Occaz • Service • Pro)</div>
-        <button class="xBtn" id="btnClosePost">✖ Fermer</button>
-      </div>
+  <script>
+  (function(){
+    "use strict";
 
-      <div class="grid2">
-        <div>
-          <div class="help">Slug boutique / profil (auto si GO PIN)</div>
-          <input id="pSlug" class="input" placeholder="slug (ex: chez-astou-boutique)" />
-        </div>
-        <div>
-          <div class="help">Owner ID (auto si GO PIN)</div>
-          <input id="pOwner" class="input" placeholder="owner_id (uuid)" />
-        </div>
+    // =============================
+    // HELPERS
+    // =============================
+    const $ = (id)=>document.getElementById(id);
 
-        <div>
-          <div class="help">Catégorie</div>
-          <select id="pCategory" class="select" style="width:100%">
-            <option value="occaz">♻️ Occaz</option>
-            <option value="service">🛠️ Service</option>
-            <option value="pro">🏪 Pro</option>
-          </select>
-        </div>
+    const esc = (s)=>String(s||"")
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
 
-        <div>
-          <div class="help">Zone</div>
-          <select id="pLocation" class="select" style="width:100%">
-            <option>Dakar</option><option>Pikine</option><option>Guédiawaye</option><option>Rufisque</option>
-            <option>Thiès</option><option>Mbour</option><option>Saly</option><option>Saint-Louis</option>
-          </select>
-        </div>
+    function money(x){
+      const n = Number(x||0);
+      if(!isFinite(n) || n<=0) return "";
+      return Math.round(n).toLocaleString("fr-FR") + " XOF";
+    }
 
-        <div style="grid-column:1/-1">
-          <div class="help">Titre</div>
-          <input id="pTitle" class="input" placeholder="Ex: iPhone 12 128Go / Plombier dispo / Lot quincaillerie promo" />
-        </div>
+    function toast(id, msg, kind){
+      const el = $(id); if(!el) return;
+      el.style.display = "";
+      el.textContent = msg || "";
+      el.classList.remove("ok","bad");
+      if(kind) el.classList.add(kind);
+    }
 
-        <div style="grid-column:1/-1">
-          <div class="help">Description</div>
-          <textarea id="pDesc" class="textarea" style="width:100%;min-height:110px" placeholder="Décris simple et vrai."></textarea>
-        </div>
+    function waLink(phone, msg){
+      const p = String(phone||"").replace(/[^\d]/g,"");
+      return "https://wa.me/" + p + "?text=" + encodeURIComponent(msg||"");
+    }
 
-        <div>
-          <div class="help">Prix FCFA (optionnel pour services)</div>
-          <input id="pPrice" class="input" inputmode="numeric" placeholder="ex: 25000" />
-        </div>
+    function qp(k){
+      try{ return (new URLSearchParams(location.search).get(k) || "").trim(); }
+      catch(_){ return ""; }
+    }
 
-        <div>
-          <div class="help">Pickup DIGIY (option)</div>
-          <select id="pPickup" class="select" style="width:100%">
-            <option value="false">🚫 Non</option>
-            <option value="true">🚚 Oui</option>
-          </select>
-        </div>
+    // =============================
+    // SUPABASE
+    // =============================
+    const SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
+    const SUPABASE_ANON_KEY =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
 
-        <div>
-          <div class="help">Téléphone</div>
-          <input id="pPhone" class="input" placeholder="+22177xxxxxxx" />
-        </div>
-        <div>
-          <div class="help">WhatsApp (optionnel)</div>
-          <input id="pWa" class="input" placeholder="+22177xxxxxxx" />
-        </div>
+    const sb = window.supabase?.createClient
+      ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+      : null;
 
-        <div style="grid-column:1/-1">
-          <div class="help">Pack publication (Particulier)</div>
-          <select id="pPack" class="select" style="width:100%">
-            <option value="A">Pack A — 500 / 7 jours</option>
-            <option value="B" selected>Pack B — 1 000 / 14 jours (RECO)</option>
-            <option value="C">Pack C — 2 000 / 30 jours</option>
-          </select>
-        </div>
-      </div>
+    // =============================
+    // CTX + GUARD (SINGLE)
+    // =============================
+    const CTX = (window.BA_CTX = window.BA_CTX || { slug:"", owner_id:"" });
 
-      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
-        <button class="btn btn-outline" id="btnCreateDraft" style="flex:1">🧱 Créer (draft)</button>
-        <button class="btn btn-main" id="btnPayPublish" style="flex:1">💸 Payer & Publier</button>
-      </div>
+    function setStatus(t){
+      const el = $("guard_status");
+      if(el) el.textContent = t;
+    }
+    function hideStatus(){
+      const el = $("guard_status");
+      if(el) el.style.display = "none";
+    }
 
-      <div class="toast" id="toastPost">Prêt.</div>
-      <div class="help">Paiement via page DIGIY. Après paiement, on publie.</div>
-    </div>
-  </div>
+    function loadCtxBA(){
+      const urlSlug = qp("slug");
+      const gSlug = window.DIGIY_GUARD?.getSlug?.() || "";
+      const s = window.DIGIY_GUARD?.getSession?.() || null;
 
-  <!-- MODAL REPORT -->
-  <div class="modal" id="reportModal">
-    <div class="modalBox">
-      <div class="modalTop">
-        <div class="modalTitle">🚩 Signaler une annonce</div>
-        <button class="xBtn" id="btnCloseReport">✖ Fermer</button>
-      </div>
+      CTX.slug = (urlSlug || gSlug || localStorage.getItem("DIGIY_SLUG") || "").trim();
+      CTX.owner_id = (s?.owner_id || localStorage.getItem("DIGIY_PRO_ID") || "").trim();
 
-      <div class="help" id="reportCtx">Annonce: —</div>
+      const pill = $("pillCtx");
+      if(pill) pill.textContent = "slug: " + (CTX.slug || "—");
+    }
 
-      <div style="margin-top:10px" class="grid2">
-        <div style="grid-column:1/-1">
-          <div class="help">Raison</div>
-          <select id="rReason" class="select" style="width:100%">
-            <option value="arnaque">⚠️ Suspicion d’arnaque</option>
-            <option value="faux_produit">🧨 Faux produit / tromperie</option>
-            <option value="contenu_inapproprie">🚫 Contenu inapproprié</option>
-            <option value="prix_abusif">💸 Prix abusif / incohérent</option>
-            <option value="spam">🧹 Spam / doublons</option>
-            <option value="autre">❓ Autre</option>
-          </select>
-        </div>
-
-        <div style="grid-column:1/-1">
-          <div class="help">Détails (optionnel)</div>
-          <textarea id="rDetails" class="textarea" style="width:100%;min-height:110px"
-            placeholder="Explique vite fait (refus photo, demande acompte, numéro bizarre…)."></textarea>
-        </div>
-      </div>
-
-      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
-        <button class="btn btn-outline" id="btnCopyReport" style="flex:1">📋 Copier</button>
-        <button class="btn btn-main" id="btnSendReport" style="flex:1">📲 Envoyer au support</button>
-      </div>
-
-      <div class="toast" id="toastReport">Prêt.</div>
-      <div class="help">Objectif : garder DIGIY propre. Merci 🙏</div>
-    </div>
-  </div>
-
- <script>
-(function(){
-  "use strict";
-
-  // =============================
-  // HELPERS (OBLIGATOIRES)
-  // =============================
-  const $ = (id)=>document.getElementById(id);
-
-  const esc = (s)=>String(s||"")
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
-
-  function money(x){
-    const n = Number(x||0);
-    if(!isFinite(n) || n<=0) return "";
-    return Math.round(n).toLocaleString("fr-FR") + " XOF";
-  }
-
-  function toast(id, msg, kind){
-    const el = $(id); if(!el) return;
-    el.textContent = msg || "";
-    el.classList.remove("ok","bad");
-    if(kind) el.classList.add(kind);
-  }
-
-  function waLink(phone, msg){
-    const p = String(phone||"").replace(/[^\d]/g,"");
-    return "https://wa.me/" + p + "?text=" + encodeURIComponent(msg||"");
-  }
-
-  function qp(k){
-    try{ return (new URLSearchParams(location.search).get(k) || "").trim(); }
-    catch(_){ return ""; }
-  }
-
-  // =============================
-  // SUPABASE
-  // =============================
-  const SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
-  const SUPABASE_ANON_KEY =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
-
-  const sb = window.supabase?.createClient
-    ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
-    : null;
-
-  // =============================
-  // GUARD BA — PUBLIC FREE / POST LOCKED
-  // =============================
-  const CTX = { slug:"", owner_id:"" };
-
-  function setStatus(t){
-    const el = $("guard_status");
-    if(el) el.textContent = t;
-  }
-  function hideStatus(){
-    const el = $("guard_status");
-    if(el) el.style.display = "none";
-  }
-
-  function loadCtxBA(){
-    const urlSlug = qp("slug");
-    const gSlug = window.DIGIY_GUARD?.getSlug?.() || "";
-    const s = window.DIGIY_GUARD?.getSession?.() || null;
-
-    CTX.slug = (urlSlug || gSlug || localStorage.getItem("DIGIY_SLUG") || "").trim();
-    CTX.owner_id = (s?.owner_id || localStorage.getItem("DIGIY_PRO_ID") || "").trim();
-
-    const pill = $("pillCtx");
-    if(pill) pill.textContent = "slug: " + (CTX.slug || "—");
-
-    if($("pSlug") && !$("pSlug").value) $("pSlug").value = CTX.slug || "";
-    if($("pOwner") && !$("pOwner").value) $("pOwner").value = CTX.owner_id || "";
-  }
-
-  function isAuthedBA(){
-    if(CTX.owner_id) return true;
-    if(window.DIGIY_GUARD?.isAuth) return !!window.DIGIY_GUARD.isAuth();
-    const s = window.DIGIY_GUARD?.getSession?.();
-    return !!(s && s.owner_id);
-  }
-
-  function requireAuthBA(action){
-    if(isAuthedBA()) return action();
-
-    const next = encodeURIComponent(location.pathname + location.search + location.hash);
-    location.href = "./pin.html?next=" + next;
-  }
-
-  async function bootGuardBA(){
-    try{
-      setStatus("🔐 Vérification…");
-
-      if(window.DIGIY_GUARD?.boot){
-        const r = await window.DIGIY_GUARD.boot({ login: "./pin.html" });
-        if(r?.ok) setStatus("✅ Connecté");
-        else setStatus("ℹ️ Public");
-      }else{
+    async function bootGuardBA(){
+      try{
+        setStatus("🔐 Vérification…");
+        if(window.DIGIY_GUARD?.boot){
+          const r = await window.DIGIY_GUARD.boot({ login: "./pin.html" });
+          setStatus(r?.ok ? "✅ Connecté" : "ℹ️ Public");
+        }else{
+          setStatus("ℹ️ Public");
+        }
+        loadCtxBA();
+        setTimeout(hideStatus, 550);
+      }catch(e){
+        console.warn("GUARD BA public:", e);
         setStatus("ℹ️ Public");
+        loadCtxBA();
+        setTimeout(hideStatus, 550);
+      }
+    }
+
+    // =============================
+    // PAY REDIRECT (A/B/C) + Publish
+    // =============================
+    function goPayBA(pack){
+      const p = (pack || "B").toUpperCase();
+      const u = new URL("https://beauville.github.io/commencer-a-payer/", location.href);
+      u.searchParams.set("module", "bonne_affaire");
+      u.searchParams.set("pack", p);
+      if(CTX.slug) u.searchParams.set("slug", CTX.slug);
+      u.searchParams.set("next", location.pathname + location.search + "#adsGrid");
+      location.href = u.toString();
+    }
+
+    // =============================
+    // EXAMPLES (fallback)
+    // =============================
+    function renderExamples(){
+      const grid = $("adsGrid");
+      if(!grid) return;
+      grid.innerHTML = "";
+
+      const EXAMPLES = [
+        { title:"iPhone 12 – très bon état", category:"occaz", location:"Dakar", price:180000 },
+        { title:"Moto TVS – démarre nickel", category:"occaz", location:"Pikine", price:320000 },
+        { title:"Canapé 5 places", category:"occaz", location:"Guédiawaye", price:95000 },
+        { title:"Ordinateur HP i5", category:"occaz", location:"Thiès", price:150000 },
+        { title:"Petit terrain 150m²", category:"occaz", location:"Rufisque", price:2800000 },
+
+        { title:"Plombier disponible", category:"service", location:"Dakar", price:null },
+        { title:"Électricien maison", category:"service", location:"Mbour", price:null },
+        { title:"Menuisier bois & alu", category:"service", location:"Saly", price:null },
+        { title:"Lavage auto à domicile", category:"service", location:"Pikine", price:null },
+
+        { title:"Toyota Yaris 2016", category:"pro", location:"Dakar", price:5200000 },
+        { title:"Appartement meublé", category:"pro", location:"Saly", price:45000 },
+        { title:"Matériel de boutique", category:"pro", location:"Thiès", price:750000 }
+      ];
+
+      const top = document.createElement("div");
+      top.className = "toast ok";
+      top.style.gridColumn = "1/-1";
+      top.textContent = "🧪 Exemples d’annonces (vitrine pédagogique) — Publie la tienne pour apparaître ici.";
+      grid.appendChild(top);
+
+      for(const it of EXAMPLES){
+        const price = it.price ? money(it.price) : "—";
+        const catLabel =
+          it.category === "occaz" ? "♻️ Occaz" :
+          it.category === "service" ? "🛠️ Service" :
+          it.category === "pro" ? "🏪 Pro" : "Annonce";
+
+        const card = document.createElement("article");
+        card.className = "shop-card";
+        card.innerHTML = `
+          <div class="shop-head">
+            <div>
+              <div class="shop-name">${esc(it.title)}</div>
+              <div class="shop-type">${esc(catLabel)} • ${esc(it.location)}</div>
+            </div>
+            <div class="shop-price">${price}</div>
+          </div>
+
+          <div class="shop-body">
+            <p class="shop-desc">
+              Exemple pour montrer le format. Les annonces réelles sont publiées après <strong>paiement</strong> (anti-spam).
+            </p>
+
+            <div class="shop-actions">
+              <button class="btn btn-main" id="btnExamplePublish">✍️ Publier la mienne</button>
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+
+        const b = card.querySelector("#btnExamplePublish");
+        if(b) b.onclick = ()=> goPayBA("B");
+      }
+    }
+
+    // =============================
+    // RENDER REAL ADS
+    // =============================
+    let ALL = [];
+
+    function render(items){
+      const grid = $("adsGrid");
+      if(!grid) return;
+
+      if(!items || items.length === 0){
+        renderExamples();
+        return;
       }
 
-      loadCtxBA();
-      setTimeout(hideStatus, 550);
-    }catch(e){
-      console.warn("GUARD BA public:", e);
-      setStatus("ℹ️ Public");
-      loadCtxBA();
-      setTimeout(hideStatus, 550);
-    }
-  }
+      grid.innerHTML = "";
 
- // =============================
-// GUARD BA — COMPLET (Public free / Post locked)
-// =============================
-const CTX = { slug:"", owner_id:"" };
+      for(const it of items){
+        const cat =
+          it.category==="occaz" ? "♻️ Occaz" :
+          it.category==="service" ? "🛠️ Service" :
+          it.category==="pro" ? "🏪 Pro" : "Annonce";
 
-function setStatus(t){
-  const el = document.getElementById("guard_status");
-  if(el) el.textContent = t;
-}
-function hideStatus(){
-  const el = document.getElementById("guard_status");
-  if(el) el.style.display = "none";
-}
+        const price = money(it.price);
+        const phone = it.phone || "";
+        const wa = it.whatsapp || it.phone || "";
+        const msg = `Salut, je viens de DIGIY BONNE AFFAIRE. Je suis intéressé par: ${it.title} (slug: ${it.slug}).`;
 
-function loadCtxBA(){
-  const urlSlug = (typeof qp === "function" ? qp("slug") : "");
-  const gSlug = window.DIGIY_GUARD?.getSlug?.() || "";
-  const s = window.DIGIY_GUARD?.getSession?.() || null;
+        const card = document.createElement("article");
+        card.className = "shop-card";
+        card.innerHTML = `
+          <div class="shop-head">
+            <div>
+              <div class="shop-name">${esc(it.title || "Annonce")}</div>
+              <div class="shop-type">${esc(cat)} • ${esc(it.location || "—")}</div>
+            </div>
+            <div class="shop-price">${price || "—"}</div>
+          </div>
 
-  CTX.slug = (urlSlug || gSlug || localStorage.getItem("DIGIY_SLUG") || "").trim();
-  CTX.owner_id = (s?.owner_id || localStorage.getItem("DIGIY_PRO_ID") || "").trim();
+          <div class="shop-body">
+            <p class="shop-desc">
+              ${esc(it.description || "Contact direct via WhatsApp / Appel.")}
+            </p>
 
-  const pill = document.getElementById("pillCtx");
-  if(pill) pill.textContent = "slug: " + (CTX.slug || "—");
+            <div class="shop-meta" style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap">
+              <span>slug: <strong>${esc(it.slug||"")}</strong></span>
+              <span class="pill">0% Com DIGIY</span>
+            </div>
 
-  const pSlug = document.getElementById("pSlug");
-  const pOwner = document.getElementById("pOwner");
-  if(pSlug && !pSlug.value) pSlug.value = CTX.slug || "";
-  if(pOwner && !pOwner.value) pOwner.value = CTX.owner_id || "";
-}
+            <div class="shop-actions" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px">
+              <a class="btn btn-main" style="flex:1"
+                 href="${waLink(wa || phone, msg)}"
+                 target="_blank" rel="noopener">💬 WhatsApp</a>
 
-function isAuthedBA(){
-  if(CTX.owner_id) return true;
-  if(window.DIGIY_GUARD?.isAuth) return !!window.DIGIY_GUARD.isAuth();
-  const s = window.DIGIY_GUARD?.getSession?.();
-  return !!(s && s.owner_id);
-}
+              <a class="btn btn-outline" style="flex:1"
+                 href="tel:${esc(phone)}">📞 Appeler</a>
 
-function requireAuthBA(action){
-  if(isAuthedBA()) return action();
-
-  const next = encodeURIComponent(location.pathname + location.search + location.hash);
-  location.href = "./pin.html?next=" + next;
-}
-
-async function bootGuardBA(){
-  try{
-    setStatus("🔐 Vérification…");
-
-    if(window.DIGIY_GUARD?.boot){
-      const r = await window.DIGIY_GUARD.boot({ login: "./pin.html" });
-      if(r?.ok) setStatus("✅ Connecté");
-      else setStatus("ℹ️ Public");
-    }else{
-      setStatus("ℹ️ Public");
+              <button class="btn btn-outline" style="flex:1"
+                onclick="window.open('${waLink(wa || phone, "Salut, peux-tu m’envoyer la photo/vidéo de: "+(it.title||"l’annonce")+" ?")}', '_blank')">
+                📷 Demander photo
+              </button>
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      }
     }
 
-    loadCtxBA();
-    setTimeout(hideStatus, 550);
-  }catch(e){
-    console.warn("GUARD BA public:", e);
-    setStatus("ℹ️ Public");
-    loadCtxBA();
-    setTimeout(hideStatus, 550);
-  }
-}
+    function applyFilters(){
+      const q = ($("fQuery").value || "").trim().toLowerCase();
+      const cat = ($("fCategory").value || "").trim();
+      const loc = ($("fLocation").value || "").trim();
 
-// =============================
-// ACTIONS — SAFE RESOLVE (zéro scope bug)
-// =============================
-// On "résout" les fonctions au moment du clic, donc même si openPost/createDraft/payPublish
-// sont définies plus bas dans le fichier, ça marche.
-function wireBAActions(){
-  window.BA_OPEN_POST = ()=> (typeof openPost === "function" ? openPost() : console.warn("openPost() manquant"));
-  window.BA_CREATE_DRAFT = ()=> (typeof createDraft === "function" ? createDraft() : console.warn("createDraft() manquant"));
-  window.BA_PAY_PUBLISH = ()=> (typeof payPublish === "function" ? payPublish() : console.warn("payPublish() manquant"));
-}
+      const list = (ALL || []).filter(it=>{
+        const okQ = !q || String(it.title||"").toLowerCase().includes(q) || String(it.slug||"").toLowerCase().includes(q);
+        const okC = !cat || String(it.category||"") === cat;
+        const okL = !loc || String(it.location||"") === loc;
+        return okQ && okC && okL;
+      });
 
-// =============================
-// BIND GUARD ACTIONS (SAFE)
-// =============================
-function bindGuardActionsBA(){
-
-  const btnOpen = document.getElementById("btnOpenPost");
-  if(btnOpen){
-    btnOpen.addEventListener("click", (e)=>{
-      e.preventDefault();
-      e.stopPropagation();
-      requireAuthBA(()=> window.BA_OPEN_POST());
-    }, true);
-  }
-
-  const btnDraft = document.getElementById("btnCreateDraft");
-  if(btnDraft){
-    btnDraft.addEventListener("click", (e)=>{
-      e.preventDefault();
-      e.stopPropagation();
-      requireAuthBA(()=> window.BA_CREATE_DRAFT());
-    }, true);
-  }
-
-  const btnPay = document.getElementById("btnPayPublish");
-  if(btnPay){
-    btnPay.addEventListener("click", (e)=>{
-      e.preventDefault();
-      e.stopPropagation();
-      requireAuthBA(()=> window.BA_PAY_PUBLISH());
-    }, true);
-  }
-}
-
-// =============================
-// EXPOSE ACTIONS (GLOBAL)
-// =============================
-window.BA_OPEN_POST = openPost;
-window.BA_CREATE_DRAFT = createDraft;
-window.BA_PAY_PUBLISH = payPublish;
-
-  // =============================
-  // VITRINE EXEMPLES (12)
-  // =============================
-  function renderExamples(){
-    const grid = $("adsGrid");
-    if(!grid) return;
-    grid.innerHTML = "";
-
-    const EXAMPLES = [
-      // ♻️ OCCAZ (5)
-      { title:"iPhone 12 – très bon état", category:"occaz", location:"Dakar", price:180000 },
-      { title:"Moto TVS – démarre nickel", category:"occaz", location:"Pikine", price:320000 },
-      { title:"Canapé 5 places", category:"occaz", location:"Guédiawaye", price:95000 },
-      { title:"Ordinateur HP i5", category:"occaz", location:"Thiès", price:150000 },
-      { title:"Petit terrain 150m²", category:"occaz", location:"Rufisque", price:2800000 },
-
-      // 🛠️ SERVICES (4)
-      { title:"Plombier disponible", category:"service", location:"Dakar", price:null },
-      { title:"Électricien maison", category:"service", location:"Mbour", price:null },
-      { title:"Menuisier bois & alu", category:"service", location:"Saly", price:null },
-      { title:"Lavage auto à domicile", category:"service", location:"Pikine", price:null },
-
-      // 🏪 PRO (3)
-      { title:"Toyota Yaris 2016", category:"pro", location:"Dakar", price:5200000 },
-      { title:"Appartement meublé", category:"pro", location:"Saly", price:45000 },
-      { title:"Matériel de boutique", category:"pro", location:"Thiès", price:750000 }
-    ];
-
-    const top = document.createElement("div");
-    top.className = "toast ok";
-    top.style.gridColumn = "1/-1";
-    top.textContent = "🧪 Exemples d’annonces (vitrine pédagogique) — Publie la tienne pour apparaître ici.";
-    grid.appendChild(top);
-
-    for(const it of EXAMPLES){
-      const price = it.price ? money(it.price) : "—";
-      const catLabel =
-        it.category === "occaz" ? "♻️ Occaz" :
-        it.category === "service" ? "🛠️ Service" :
-        it.category === "pro" ? "🏪 Pro" : "Annonce";
-
-      const card = document.createElement("article");
-      card.className = "shop-card";
-      card.innerHTML = `
-        <div class="shop-head">
-          <div>
-            <div class="shop-name">${esc(it.title)}</div>
-            <div class="shop-type">${esc(catLabel)} • ${esc(it.location)}</div>
-          </div>
-          <div class="shop-price">${price}</div>
-        </div>
-
-        <div class="shop-body">
-          <div class="shop-photo">
-            <div class="ph">🧪 Exemple (pas une vraie)</div>
-          </div>
-
-          <p class="shop-desc">
-            Exemple pour montrer le format. Les annonces réelles sont publiées après <strong>paiement</strong> (anti-spam).
-          </p>
-
-          <div class="shop-meta">
-            <div class="shop-badge">Exemple</div>
-            <div class="pill">🔒 Publication payante</div>
-          </div>
-
-          <div class="shop-actions">
-            <button class="btn btn-main" onclick="document.getElementById('btnOpenPost')?.click()">
-              ✍️ Publier la mienne
-            </button>
-          </div>
-        </div>
-      `;
-      grid.appendChild(card);
-    }
-  }
-
-  // =============================
-  // RENDER ANNONCES (réelles)
-  // =============================
-  let ALL = [];
-
-  function render(items){
-    const grid = $("adsGrid");
-    if(!grid) return;
-
-    if(!items || items.length === 0){
-      renderExamples();
-      return;
+      render(list);
     }
 
-    grid.innerHTML = "";
+    // =============================
+    // LOAD ADS
+    // =============================
+    async function refresh(){
+      if(!sb){
+        toast("toastTop","Supabase non prêt","bad");
+        render([]);
+        return;
+      }
 
-    for(const it of items){
-      const cat =
-        it.category==="occaz" ? "♻️ Occaz" :
-        it.category==="service" ? "🛠️ Service" :
-        it.category==="pro" ? "🏪 Pro" : "Annonce";
+      toast("toastTop","Chargement…","");
+      const { data, error } = await sb.rpc("ba_list_ads", { p_category:null, p_location:null });
 
-      const price = money(it.price);
-      const phone = it.phone || "";
-      const wa = it.whatsapp || it.phone || "";
-      const msg = `Salut, je viens de DIGIY BONNE AFFAIRE. Je suis intéressé par: ${it.title} (slug: ${it.slug}).`;
+      if(error){
+        toast("toastTop", error.message, "bad");
+        render([]);
+        return;
+      }
 
-      const card = document.createElement("article");
-      card.className = "shop-card";
-      card.innerHTML = `
-        <div class="shop-head">
-          <div>
-            <div class="shop-name">${esc(it.title || "Annonce")}</div>
-            <div class="shop-type">${esc(cat)} • ${esc(it.location || "—")}</div>
-          </div>
-          <div class="shop-price">${price || "—"}</div>
-        </div>
-
-        <div class="shop-body">
-          <div class="shop-photo">
-            <div class="ph">📷 Photo via WhatsApp (pas de stockage)</div>
-          </div>
-
-          <p class="shop-desc">
-            ${esc(it.description || "Contact direct via WhatsApp / Appel.")}
-          </p>
-
-          <div class="shop-meta">
-            <span>slug: <strong>${esc(it.slug||"")}</strong></span>
-            <div class="shop-badge">0% Com DIGIY</div>
-          </div>
-
-          <div class="shop-actions">
-            <a class="btn btn-contact"
-               href="${waLink(wa || phone, msg)}"
-               target="_blank" rel="noopener">
-              💬 WhatsApp
-            </a>
-
-            <a class="btn btn-call" href="tel:${esc(phone)}">
-              📞 Appeler
-            </a>
-
-            <button class="btn btn-outline"
-              onclick="window.open('${waLink(wa || phone, "Salut, peux-tu m’envoyer la photo/vidéo de: "+(it.title||"l’annonce")+" ?")}', '_blank')">
-              📷 Demander photo
-            </button>
-          </div>
-        </div>
-      `;
-      grid.appendChild(card);
-    }
-  }
-
-  // =============================
-  // LOAD ANNONCES (PUBLIC OK)
-  // =============================
-  async function refresh(){
-    if(!sb){
-      toast("toastTop","Supabase non prêt","bad");
-      render([]);
-      return;
+      ALL = data?.items || data || [];
+      toast("toastTop", "✅ " + ALL.length + " annonce(s)", "ok");
+      applyFilters();
     }
 
-    toast("toastTop","Chargement…","");
-    const { data, error } = await sb.rpc("ba_list_ads", {
-      p_category: null,
-      p_location: null
+    // =============================
+    // BIND BUTTONS (WORKING)
+    // =============================
+    function bindActionsBA(){
+      const btnOpen = $("btnOpenPost");
+      if(btnOpen) btnOpen.onclick = (e)=>{ e.preventDefault(); goPayBA("B"); };
+
+      const btnA = $("btnPackA");
+      const btnB = $("btnPackB");
+      const btnC = $("btnPackC");
+      if(btnA) btnA.onclick = (e)=>{ e.preventDefault(); goPayBA("A"); };
+      if(btnB) btnB.onclick = (e)=>{ e.preventDefault(); goPayBA("B"); };
+      if(btnC) btnC.onclick = (e)=>{ e.preventDefault(); goPayBA("C"); };
+
+      const btnRefresh = $("btnRefresh");
+      if(btnRefresh) btnRefresh.onclick = ()=> refresh();
+
+      const btnReset = $("btnReset");
+      if(btnReset){
+        btnReset.onclick = ()=>{
+          $("fCategory").value = "";
+          $("fLocation").value = "";
+          $("fQuery").value = "";
+          applyFilters();
+        };
+      }
+
+      if($("fCategory")) $("fCategory").onchange = ()=> applyFilters();
+      if($("fLocation")) $("fLocation").onchange = ()=> applyFilters();
+      if($("fQuery")) $("fQuery").addEventListener("input", ()=> applyFilters());
+    }
+
+    // =============================
+    // INIT
+    // =============================
+    document.addEventListener("DOMContentLoaded", async ()=>{
+      await bootGuardBA();
+      bindActionsBA();
+      render([]);     // vitrine jamais vide
+      refresh();      // tente vraies annonces
+      console.log("🚆 DIGIY BA READY", { slug: CTX.slug, owner_id: CTX.owner_id });
     });
 
-    if(error){
-      toast("toastTop", error.message, "bad");
-      render([]);
-      return;
-    }
-
-    // accepte json direct ou {items:[]}
-    ALL = data?.items || data || [];
-    toast("toastTop", "✅ " + ALL.length + " annonce(s)", "ok");
-    render(ALL);
-  }
-
-  // =============================
-  // INIT
-  // =============================
-  document.addEventListener("DOMContentLoaded", async ()=>{
-    await bootGuardBA();       // 🔐 public ou connecté
-    bindGuardActionsBA();      // 🔒 lock publier / draft / payer
-    render([]);                // vitrine jamais vide
-    refresh();                 // annonces publiques
-    console.log("🚆 DIGIY BA — GUARD READY");
-  });
-
-  // =============================
-  // END SCRIPT
-  // =============================
-})();
-</script>
+  })();
+  </script>
 </body>
 </html>
