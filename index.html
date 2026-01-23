@@ -9,7 +9,7 @@
   <!-- Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <!-- Guard (optionnel) -->
-  <script src="./guard.js?v=ba-mix-1"></script>
+  <script src="./guard.js?v=ba-mix-3-report"></script>
 
   <style>
     :root{
@@ -247,7 +247,7 @@
       gap:10px;
       position:relative;
       overflow:hidden;
-      min-height: 410px;
+      min-height: 430px;
     }
     .shop-card::before{
       content:"";
@@ -263,14 +263,6 @@
     .shop-price{font-size:20px;font-weight:900;color:var(--accent-green);text-align:right}
     .shop-body{position:relative;z-index:2;display:flex;flex-direction:column;gap:8px}
     .shop-desc{font-size:14px;color:#f3f4f6;font-weight:600;line-height:1.6}
-    .shop-photo{
-      border-radius:16px;overflow:hidden;
-      max-height:220px;height:220px;border:2px solid rgba(249,115,22,0.85);
-      order:-1;background:rgba(3,7,18,.55);
-      display:grid;place-items:center;
-    }
-    .shop-photo img{width:100%;height:100%;object-fit:cover;display:block}
-    .shop-photo .ph{font-weight:1000;color:rgba(203,213,245,.85);font-size:13px}
     .shop-meta{
       margin-top:6px;font-size:13px;color:#e5e7eb;font-weight:600;
       display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;
@@ -306,6 +298,87 @@
       border:1px solid rgba(56,189,248,0.55);
       flex:1;
     }
+
+    /* ✅ AUTO-PHOTO (pas de stockage) */
+    .auto-photo{
+      height:220px;border-radius:16px;overflow:hidden;
+      border:2px solid rgba(249,115,22,0.85);
+      position:relative;
+      background:
+        radial-gradient(circle at 25% 0%, rgba(250,204,21,.16), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(34,197,94,.14), transparent 50%),
+        rgba(3,7,18,.55);
+      display:flex;flex-direction:column;justify-content:flex-end;
+      padding:14px;
+      box-shadow:0 12px 26px rgba(0,0,0,.35);
+    }
+    .auto-photo .big{
+      font-weight:1000;font-size:18px;line-height:1.15;
+      color:#f9fafb;
+      text-shadow:0 10px 22px rgba(0,0,0,.55);
+    }
+    .auto-photo .small{
+      margin-top:6px;
+      font-weight:900;font-size:12px;color:rgba(203,213,245,.92);
+      display:flex;gap:10px;flex-wrap:wrap;align-items:center;
+    }
+    .auto-photo .ico{
+      position:absolute;top:12px;right:12px;
+      width:40px;height:40px;border-radius:14px;
+      display:grid;place-items:center;
+      background:rgba(0,0,0,.35);
+      border:1px solid rgba(148,163,184,.25);
+      font-size:20px;
+    }
+
+    /* ✅ Badge BONNE AFFAIRE */
+    .deal-badge{
+      position:absolute;top:10px;left:10px;z-index:3;
+      padding:6px 10px;border-radius:999px;
+      font-size:12px;font-weight:1000;letter-spacing:.02em;
+      color:#111827;
+      background:linear-gradient(135deg,#facc15,#f97316);
+      box-shadow:0 10px 24px rgba(249,115,22,.45);
+      display:inline-flex;align-items:center;gap:6px;
+      border:1px solid rgba(255,255,255,.14);
+      user-select:none;pointer-events:none;
+    }
+
+    /* ✅ Badge confiance */
+    .trust-badge{
+      display:inline-flex;align-items:center;gap:6px;
+      padding:5px 9px;border-radius:999px;
+      font-size:11px;font-weight:900;
+      color:#bbf7d0;
+      background:rgba(34,197,94,.16);
+      border:1px solid rgba(34,197,94,.55);
+      white-space:nowrap;
+    }
+
+    /* ✅ Bouton "Demander photo" */
+    .btn-photo{
+      background:rgba(250,204,21,0.14);
+      color:#fde68a;
+      border:1px solid rgba(250,204,21,0.45);
+      flex:1;
+    }
+    .btn-photo:hover{
+      border-color:rgba(250,204,21,0.75);
+      transform:translateY(-1px);
+    }
+
+    /* ✅ Bouton "Signaler" */
+    .btn-report{
+      background:rgba(249,115,115,0.14);
+      color:#fecaca;
+      border:1px solid rgba(249,115,115,0.45);
+      flex:1;
+    }
+    .btn-report:hover{
+      border-color:rgba(249,115,115,0.75);
+      transform:translateY(-1px);
+    }
+
     footer{
       position:relative;z-index:2;margin-top:16px;
       font-size:12px;color:var(--muted);
@@ -413,7 +486,7 @@
         <button class="btn btn-outline" id="btnReset">🧹 Reset</button>
       </section>
 
-      <!-- PRICING PRO (inchangé, tes liens) -->
+      <!-- PRICING PRO -->
       <section class="pricing" id="section-pro">
         <div class="pricing-title">Abonnements DIGIY BONNE AFFAIRE PRO</div>
         <p class="pricing-sub">
@@ -464,17 +537,14 @@
       </section>
 
       <!-- LISTING DYNAMIQUE -->
-      <section class="grid" id="adsGrid">
-        <!-- rempli par JS -->
-      </section>
-
+      <section class="grid" id="adsGrid"></section>
     </main>
 
     <footer>
       <div>DIGIY BONNE AFFAIRE • <span>Super App DIGIYLYFE</span> — Sénégal → Afrique</div>
-      <div>Transactions directes • 0% commission • annonces propres.</div>
+      <div>0% commission • contact direct • annonces propres</div>
       <div style="width:100%; margin-top:4px; font-size:11px; color:#a8b1c2;">
-        DIGIYLYFE met en relation vendeurs et acheteurs. Vérifiez documents et état des biens avant tout paiement.
+        DIGIY BONNE AFFAIRE facilite la mise en relation. Vérifications, preuves et paiements sont réalisés directement entre utilisateurs.
       </div>
     </footer>
   </div>
@@ -557,6 +627,46 @@
     </div>
   </div>
 
+  <!-- MODAL REPORT -->
+  <div class="modal" id="reportModal">
+    <div class="modalBox">
+      <div class="modalTop">
+        <div class="modalTitle">🚩 Signaler une annonce</div>
+        <button class="xBtn" id="btnCloseReport">✖ Fermer</button>
+      </div>
+
+      <div class="help" id="reportCtx">Annonce: —</div>
+
+      <div style="margin-top:10px" class="grid2">
+        <div style="grid-column:1/-1">
+          <div class="help">Raison</div>
+          <select id="rReason" class="select" style="width:100%">
+            <option value="arnaque">⚠️ Suspicion d’arnaque</option>
+            <option value="faux_produit">🧨 Faux produit / tromperie</option>
+            <option value="contenu_inapproprie">🚫 Contenu inapproprié</option>
+            <option value="prix_abusif">💸 Prix abusif / incohérent</option>
+            <option value="spam">🧹 Spam / doublons</option>
+            <option value="autre">❓ Autre</option>
+          </select>
+        </div>
+
+        <div style="grid-column:1/-1">
+          <div class="help">Détails (optionnel)</div>
+          <textarea id="rDetails" class="textarea" style="width:100%;min-height:110px"
+            placeholder="Explique vite fait (ex: vendeur refuse vidéo, demande acompte, numéro bizarre...)."></textarea>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+        <button class="btn btn-outline" id="btnCopyReport" style="flex:1">📋 Copier le signalement</button>
+        <button class="btn btn-main" id="btnSendReport" style="flex:1">📲 Envoyer au support</button>
+      </div>
+
+      <div class="toast" id="toastReport">Prêt.</div>
+      <div class="help">Objectif : garder DIGIY propre. Merci 🙏</div>
+    </div>
+  </div>
+
   <script>
   (function(){
     // =============================
@@ -591,6 +701,73 @@
       const p = String(phone||"").replace(/\s+/g,"").replace(/[^\d+]/g,"");
       const text = encodeURIComponent(msg||"Salut, je viens de DIGIY Bonne Affaire.");
       return "https://wa.me/" + p.replace("+","") + "?text=" + text;
+    }
+
+    // =============================
+    // REPORT (signalement -> WhatsApp Support)
+    // =============================
+    const SUPPORT_WA = "+221771342889";
+    let REPORT = { id:"", slug:"", title:"", location:"", category:"" };
+
+    function openReport(it){
+      REPORT = {
+        id: String(it.id||""),
+        slug: String(it.slug||""),
+        title: String(it.title||""),
+        location: String(it.location||""),
+        category: String(it.category||"")
+      };
+      $("reportCtx").textContent =
+        `Annonce: ${REPORT.title} • ${REPORT.location||"—"} • slug: ${REPORT.slug} • id: ${REPORT.id.slice(0,8)}…`;
+      $("rReason").value = "arnaque";
+      $("rDetails").value = "";
+      $("reportModal").style.display = "flex";
+      toast("toastReport","Prêt.","");
+    }
+
+    function closeReport(){
+      $("reportModal").style.display = "none";
+    }
+
+    function buildReportText(){
+      const reason = $("rReason").value;
+      const details = ($("rDetails").value || "").trim();
+      return (
+        `🚩 SIGNALEMENT DIGIY BONNE AFFAIRE\n` +
+        `Raison: ${reason}\n` +
+        (details ? `Détails: ${details}\n` : "") +
+        `---\n` +
+        `Annonce: ${REPORT.title}\n` +
+        `Catégorie: ${REPORT.category}\n` +
+        `Zone: ${REPORT.location}\n` +
+        `Slug: ${REPORT.slug}\n` +
+        `Ad ID: ${REPORT.id}\n` +
+        `Page: ${location.href}\n`
+      );
+    }
+
+    async function copyReport(){
+      const text = buildReportText();
+      try{
+        await navigator.clipboard.writeText(text);
+        toast("toastReport","✅ Copié. Tu peux coller où tu veux.","ok");
+      }catch(_){
+        toast("toastReport","Copie impossible (navigateur).","bad");
+      }
+    }
+
+    function sendReport(){
+      const k = "DIGIY_BA_REPORT_LAST";
+      const last = Number(localStorage.getItem(k) || "0");
+      if(Date.now() - last < 20000){
+        toast("toastReport","⏳ Patiente 20s avant un autre signalement.","bad");
+        return;
+      }
+      localStorage.setItem(k, String(Date.now()));
+      const link = waLink(SUPPORT_WA, buildReportText());
+      window.open(link, "_blank", "noopener");
+      toast("toastReport","✅ Ouverture WhatsApp support…","ok");
+      setTimeout(closeReport, 400);
     }
 
     // =============================
@@ -652,6 +829,16 @@
     });
 
     // =============================
+    // CLOSE REPORT MODAL
+    // =============================
+    $("btnCloseReport").onclick = closeReport;
+    $("reportModal").addEventListener("click", (e)=>{
+      if(e.target && e.target.id === "reportModal") closeReport();
+    });
+    $("btnCopyReport").onclick = copyReport;
+    $("btnSendReport").onclick = sendReport;
+
+    // =============================
     // LIST ADS (RPC ba_list_ads)
     // =============================
     let ALL = [];
@@ -680,9 +867,38 @@
           it.category==="service" ? "Service terrain" :
           it.category==="pro" ? "Offre Pro" : "Annonce";
 
+        const catIco =
+          it.category==="occaz" ? "♻️" :
+          it.category==="service" ? "🛠️" :
+          it.category==="pro" ? "🏪" : "⭐";
+
         const price = money(it.price);
         const msg = `Salut, je suis intéressé par: ${it.title} (DIGIY BONNE AFFAIRE, slug: ${it.slug}).`;
-        const phone = it.phone || "";
+
+        const phone = (it.phone || "").trim();
+        const wa = (it.whatsapp || it.phone || "").trim();
+
+        const photoAskMsg =
+          `Salut 👋 Je viens de DIGIY BONNE AFFAIRE.\n` +
+          `Peux-tu m’envoyer la photo (et si possible une petite vidéo) de : ${it.title} ?\n` +
+          `Zone: ${it.location||"—"}\n` +
+          `Merci 🙏`;
+        const waPhotoLink = wa ? waLink(wa, photoAskMsg) : "";
+
+        const isIdentified = !!(it.owner_id || it.phone);
+        const trustHtml = isIdentified ? `<span class="trust-badge">🔐 Utilisateur identifié</span>` : ``;
+
+        const photoHtml = `
+          <div class="auto-photo">
+            <div class="deal-badge">🔥 BONNE AFFAIRE</div>
+            <div class="ico">${catIco}</div>
+            <div class="big">${esc(it.title||"Annonce")}</div>
+            <div class="small">
+              <span>📍 ${esc(it.location||"—")}</span>
+              <span>💰 ${esc(price||"—")}</span>
+            </div>
+          </div>
+        `;
 
         const card = document.createElement("article");
         card.className = "shop-card";
@@ -696,26 +912,41 @@
           </div>
 
           <div class="shop-body">
-            <div class="shop-photo">
-              <div class="ph">📷 Photo (à brancher Storage)</div>
-            </div>
+            ${photoHtml}
 
             <p class="shop-desc">
-              ${esc("Contact direct. Détails à venir (description complète bientôt).")}
+              ${esc(it.description || "Contact direct. Offre terrain — répond vite sur WhatsApp/Appel.")}
             </p>
+
+            <div class="help">
+              🔎 Demandez photo / vidéo et infos avant toute décision. Transaction directe entre utilisateurs.
+            </div>
 
             <div class="shop-meta">
               <span>slug: <strong>${esc(it.slug||"")}</strong></span>
-              <div class="shop-badge">0% Com DIGIY</div>
+              <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">
+                ${trustHtml}
+                <div class="shop-badge">0% Com DIGIY</div>
+              </div>
             </div>
 
             <div class="shop-actions">
-              <a class="btn btn-contact" href="${waLink(phone, msg)}" target="_blank" rel="noopener">
+              <a class="btn btn-contact" href="${waLink(wa || phone, msg)}" target="_blank" rel="noopener">
                 💬 WhatsApp
               </a>
+
+              ${waPhotoLink ? `
+                <a class="btn btn-photo" href="${waPhotoLink}" target="_blank" rel="noopener">
+                  📷 Demander photo
+                </a>
+              ` : ``}
+
               <a class="btn btn-call" href="tel:${esc(phone)}">
                 📞 Appeler
               </a>
+
+              <button class="btn btn-report" data-report="${esc(it.id)}">🚩 Signaler</button>
+
               <button class="btn btn-pickup" data-pick="${esc(it.id)}">
                 ${it.pickup_enabled ? "🚚 Pickup DIGIY" : "🚫 Pickup"}
               </button>
@@ -732,6 +963,15 @@
             return;
           }
           alert("Pickup DIGIY (placeholder) — prochain wagon: création mission DRIVER/FRET.");
+        };
+      });
+
+      grid.querySelectorAll("[data-report]").forEach(btn=>{
+        btn.onclick = ()=>{
+          const id = btn.getAttribute("data-report");
+          const it = (items || []).find(x => String(x.id) === String(id));
+          if(!it) return alert("Annonce introuvable.");
+          openReport(it);
         };
       });
     }
@@ -863,7 +1103,6 @@
 
       toast("toastPost","✅ Publié ! (paiement simulé)","ok");
 
-      // reset form léger
       $("pTitle").value = "";
       $("pDesc").value = "";
       $("pPrice").value = "";
