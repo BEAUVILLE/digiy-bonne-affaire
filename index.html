@@ -2,14 +2,14 @@
 <html lang="fr">
 <head>
   <meta charset="utf-8" />
-  <title>DIGIY BONNE AFFAIRE — Cockpit PRO</title>
+  <title>DIGIY BONNE AFFAIRE — Vitrine</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no" />
   <meta name="theme-color" content="#0b1020" />
-  <meta name="description" content="Cockpit PRO DIGIY BONNE AFFAIRE — Mes annonces, stats, actions. 0% commission." />
+  <meta name="description" content="DIGIY BONNE AFFAIRE — Vitrine publique. 0% commission. Contact direct WhatsApp." />
 
   <!-- Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <!-- Guard BONNE AFFAIRE -->
+  <!-- Guard BONNE AFFAIRE (slug-safe + session) -->
   <script src="./guard.js?v=ba-guard"></script>
 
   <style>
@@ -93,6 +93,7 @@
     }
     .sub{color:var(--muted);font-weight:800;font-size:12px}
     .right{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+
     .pill{
       font-size:12px;
       padding:6px 10px;
@@ -103,6 +104,7 @@
       font-weight:900;
       white-space:nowrap;
     }
+
     .btn{
       border:none;
       border-radius:999px;
@@ -135,11 +137,6 @@
       border:1px solid rgba(34,197,94,.55);
       color:#bbf7d0;
     }
-    .btn-bad{
-      background:rgba(251,113,133,.12);
-      border:1px solid rgba(251,113,133,.45);
-      color:#fecaca;
-    }
 
     /* CONTENT */
     .content{position:relative;z-index:2;padding:14px;display:flex;flex-direction:column;gap:12px}
@@ -154,32 +151,6 @@
     }
     .toast.ok{border-color:rgba(34,197,94,.45)}
     .toast.bad{border-color:rgba(251,113,133,.45)}
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(4,minmax(0,1fr));
-      gap:10px;
-    }
-    @media(max-width:980px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
-    @media(max-width:520px){.grid{grid-template-columns:1fr;}}
-    .kpi{
-      background:rgba(3,7,18,.82);
-      border:1px solid rgba(148,163,184,.24);
-      border-radius:18px;
-      padding:12px;
-      box-shadow:var(--shadow2);
-      position:relative;
-      overflow:hidden;
-    }
-    .kpi::before{
-      content:"";
-      position:absolute;inset:-60%;
-      background:radial-gradient(circle at 25% 0%, rgba(249,115,22,.10), transparent 55%);
-      pointer-events:none;
-      opacity:.9;
-    }
-    .kpi .lab{color:var(--muted);font-weight:900;font-size:12px;position:relative;z-index:2}
-    .kpi .val{font-size:26px;font-weight:1000;margin-top:6px;color:var(--ink);position:relative;z-index:2}
-    .kpi .hint{margin-top:6px;color:rgba(203,213,245,.9);font-weight:800;font-size:12px;position:relative;z-index:2}
 
     .panel{
       background:rgba(11,16,32,.72);
@@ -204,9 +175,10 @@
       padding:10px 12px;
       font-weight:900;
       outline:none;
-      min-width:180px;
+      min-width:160px;
     }
     .input{flex:1;min-width:220px}
+
     .list{
       display:grid;
       grid-template-columns:repeat(2,minmax(0,1fr));
@@ -221,7 +193,7 @@
       box-shadow:0 12px 30px rgba(0,0,0,.35);
       position:relative;
       overflow:hidden;
-      min-height:170px;
+      min-height:160px;
     }
     .card::before{
       content:"";
@@ -249,34 +221,9 @@
       color:rgba(203,213,245,.92);
     }
     .tag.ok{border-color:rgba(34,197,94,.45);color:#bbf7d0;background:rgba(34,197,94,.10)}
-    .tag.bad{border-color:rgba(251,113,133,.38);color:#fecaca;background:rgba(251,113,133,.08)}
     .cDesc{position:relative;z-index:2;margin-top:8px;color:#f3f4f6;font-weight:700;font-size:13px;line-height:1.5}
     .cBtns{position:relative;z-index:2;margin-top:10px;display:flex;gap:8px;flex-wrap:wrap}
     .btn-small{padding:9px 12px;font-size:12px}
-
-    /* FIXED bottom nav (mobile) */
-    .bottomNav{
-      position:fixed;
-      left:12px; right:12px; bottom:12px;
-      z-index:9999;
-      display:none;
-    }
-    .bottomNav .bar{
-      max-width:1100px;margin:0 auto;
-      background:rgba(11,16,32,.78);
-      backdrop-filter: blur(10px);
-      border:1px solid rgba(148,163,184,.22);
-      border-radius:18px;
-      box-shadow:0 18px 55px rgba(0,0,0,.55);
-      padding:8px;
-      display:flex;
-      gap:8px;
-    }
-    .bottomNav .bar .btn{flex:1;padding:12px 12px}
-    @media(max-width:720px){
-      body{padding-bottom:86px}
-      .bottomNav{display:block}
-    }
   </style>
 </head>
 
@@ -284,83 +231,43 @@
   <div class="app" id="app">
     <div class="topbar">
       <div class="brand">
-        <div class="logo">🧭</div>
+        <div class="logo">🏪</div>
         <div class="bt">
-          <div class="title">DIGIY BONNE AFFAIRE — COCKPIT PRO</div>
-          <div class="sub">Mes annonces • Stats • Actions terrain • 0% commission</div>
+          <div class="title">DIGIY BONNE AFFAIRE — VITRINE</div>
+          <div class="sub">0% commission • Contact direct • Deals terrain</div>
         </div>
       </div>
 
       <div class="right">
         <div class="pill" id="pillSlug">slug: —</div>
-        <div class="pill" id="pillOwner">owner: —</div>
 
-        <a class="btn btn-ghost" id="btnBackAds" href="./index.html">← Retour annonces</a>
-        <button class="btn btn-main" id="btnNew">➕ Nouvelle annonce</button>
-        <button class="btn btn-ghost" id="btnRefresh">🔄 Actualiser</button>
-        <button class="btn btn-bad" id="btnLogout">⛔ Logout</button>
+        <a class="btn btn-ghost" id="btnGoPin" href="./pin.html">🔐 GO PIN</a>
+        <button class="btn btn-main" id="btnGoCockpit">🧭 Cockpit PRO</button>
+        <button class="btn btn-ok" id="btnPublish">➕ Publier</button>
       </div>
     </div>
 
     <div class="content">
-      <div class="toast" id="toast">🔐 Boot…</div>
-
-      <div class="grid">
-        <div class="kpi">
-          <div class="lab">Annonces totales</div>
-          <div class="val" id="kpiTotal">—</div>
-          <div class="hint">Toutes tes annonces (PRO)</div>
-        </div>
-        <div class="kpi">
-          <div class="lab">Actives</div>
-          <div class="val" id="kpiActive">—</div>
-          <div class="hint">Visibles dans la vitrine</div>
-        </div>
-        <div class="kpi">
-          <div class="lab">En brouillon</div>
-          <div class="val" id="kpiDraft">—</div>
-          <div class="hint">À publier (paiement/validation)</div>
-        </div>
-        <div class="kpi">
-          <div class="lab">Expire bientôt</div>
-          <div class="val" id="kpiExpSoon">—</div>
-          <div class="hint">≤ 3 jours (si dates dispo)</div>
-        </div>
-      </div>
+      <div class="toast" id="toast">🔎 Chargement vitrine…</div>
 
       <div class="panel">
         <div class="panelTop">
-          <div class="panelTitle">Mes annonces</div>
+          <div class="panelTitle">Annonces disponibles</div>
           <div class="row">
-            <select class="select" id="fStatus">
-              <option value="">Tous statuts</option>
-              <option value="active">✅ Actives</option>
-              <option value="draft">🧱 Draft</option>
-              <option value="paused">⏸️ Pause</option>
-              <option value="expired">⌛ Expirées</option>
-            </select>
             <select class="select" id="fCategory">
               <option value="">Toutes catégories</option>
               <option value="occaz">♻️ Occaz</option>
               <option value="service">🛠️ Service</option>
               <option value="pro">🏪 Pro</option>
             </select>
-            <input class="input" id="q" placeholder="Recherche… (titre / slug / zone)" />
+            <input class="input" id="q" placeholder="Recherche… (titre / zone / slug)" />
             <button class="btn btn-ghost btn-small" id="btnReset">🧹 Reset</button>
+            <button class="btn btn-ghost btn-small" id="btnRefresh">🔄</button>
           </div>
         </div>
 
         <div class="list" id="list"></div>
       </div>
-    </div>
-  </div>
-
-  <!-- bottom mobile nav -->
-  <div class="bottomNav">
-    <div class="bar">
-      <a class="btn btn-ghost" id="mBackAds" href="./index.html">← Annonces</a>
-      <button class="btn btn-main" id="mNew">➕ Publier</button>
-      <button class="btn btn-ghost" id="mRefresh">🔄</button>
     </div>
   </div>
 
@@ -392,10 +299,10 @@
       if(kind) el.classList.add(kind);
     }
 
-    function money(x){
-      const n = Number(x||0);
-      if(!isFinite(n) || n<=0) return "";
-      return Math.round(n).toLocaleString("fr-FR") + " XOF";
+    function money(n){
+      const x = Number(n||0);
+      if(!isFinite(x) || x<=0) return "";
+      return Math.round(x).toLocaleString("fr-FR");
     }
 
     function waLink(phone, msg){
@@ -403,74 +310,29 @@
       return "https://wa.me/" + p + "?text=" + encodeURIComponent(msg||"");
     }
 
-    function safeDate(x){
-      const d = new Date(x);
-      return isNaN(d.getTime()) ? null : d;
-    }
-
-    function daysBetween(a,b){
-      const ms = b.getTime() - a.getTime();
-      return Math.ceil(ms / (1000*60*60*24));
-    }
-
-    // ==============
-    // CONTEXT
-    // ==============
-    const CTX = { slug:"", owner_id:"", phone:"", title:"" };
-
-    function setPills(){
-      const ps = $("pillSlug"), po = $("pillOwner");
-      if(ps) ps.textContent = "slug: " + (CTX.slug || "—");
-      if(po) po.textContent = "owner: " + (CTX.owner_id ? (CTX.owner_id.slice(0,8)+"…") : "—");
-    }
-
-    function requireAuthOrGoPin(){
-      const next = encodeURIComponent(location.pathname + location.search + location.hash);
-      location.href = "./pin.html?next=" + next;
+    const CTX = { slug:"" };
+    function setSlugPill(){
+      const el = $("pillSlug");
+      if(el) el.textContent = "slug: " + (CTX.slug || "—");
     }
 
     async function boot(){
-      toast("🔐 Vérification…", "");
-
-      // 1) Boot guard if exists
       try{
         if(window.DIGIY_GUARD?.boot){
-          await window.DIGIY_GUARD.boot({ login: "./pin.html" });
+          await window.DIGIY_GUARD.boot({ login: "./pin.html" }); // public ok
         }
       }catch(_){}
 
-      // 2) Pull session
-      const sess = window.DIGIY_GUARD?.getSession ? window.DIGIY_GUARD.getSession() : null;
+      CTX.slug = (qp("slug") || (window.DIGIY_GUARD?.getSlug ? window.DIGIY_GUARD.getSlug() : "") || localStorage.getItem("DIGIY_SLUG") || "").trim();
+      setSlugPill();
 
-      CTX.owner_id = (sess?.owner_id || localStorage.getItem("DIGIY_PRO_ID") || "").trim();
-      CTX.slug     = (qp("slug") || (window.DIGIY_GUARD?.getSlug ? window.DIGIY_GUARD.getSlug() : "") || localStorage.getItem("DIGIY_SLUG") || "").trim();
-      CTX.phone    = (sess?.phone || localStorage.getItem("DIGIY_PHONE") || "").trim();
-      CTX.title    = (sess?.title || localStorage.getItem("DIGIY_TITLE") || "").trim();
-
-      setPills();
-
-      if(!CTX.owner_id){
-        toast("⛔ Accès PRO requis — redirection GO PIN…", "bad");
-        setTimeout(requireAuthOrGoPin, 250);
-        return false;
-      }
-
-      // Back link slug-safe
-      const back = $("btnBackAds");
-      const mback = $("mBackAds");
+      // slug-safe GO PIN
       if(window.DIGIY_GUARD?.withSlug){
-        const href = window.DIGIY_GUARD.withSlug("./index.html");
-        if(back) back.href = href;
-        if(mback) mback.href = href;
+        const a = $("btnGoPin");
+        if(a) a.href = window.DIGIY_GUARD.withSlug("./pin.html");
       }
-
-      toast("✅ Connecté. Chargement cockpit…", "ok");
-      return true;
     }
 
-    // ==============
-    // SUPABASE CLIENT
-    // ==============
     function getSb(){
       if(window.DIGIY_GUARD?.getSb){
         const x = window.DIGIY_GUARD.getSb();
@@ -480,64 +342,55 @@
       const SUPABASE_ANON_KEY =
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
       if(!window.supabase?.createClient) return null;
-      if(!window.__ba_sb__) window.__ba_sb__ = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-      return window.__ba_sb__;
+      if(!window.__ba_public_sb__) window.__ba_public_sb__ = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      return window.__ba_public_sb__;
     }
 
-    // ==============
-    // DATA
-    // ==============
+    const RPC_PUBLIC = "ba_list_ads"; // si tu la poses plus tard, la vitrine l'utilise direct
     let ALL = [];
-
-    const RPC = {
-      listMine: "ba_pro_list_ads",
-      stats:    "ba_pro_stats",
-      toggle:   "ba_pro_toggle_ad_status",
-      remove:   "ba_pro_delete_ad"
-    };
 
     async function callRpc(name, payload){
       const sb = getSb();
       if(!sb) return { ok:false, error:"Supabase non prêt" };
       const { data, error } = await sb.rpc(name, payload || {});
-      if(error) return { ok:false, error: error.message };
+      if(error) return { ok:false, error:error.message };
       return { ok:true, data };
     }
 
-    function computeStatsFromList(items){
-      const total = items.length;
-      const active = items.filter(x=>String(x.status||"").toLowerCase()==="active").length;
-      const draft = items.filter(x=>String(x.status||"").toLowerCase()==="draft").length;
+    async function loadPublic(){
+      toast("⏳ Chargement annonces publiques…", "");
 
-      const soon = items.filter(x=>{
-        const ex = x.expires_at || x.expiresAt || x.expire_at || x.end_at;
-        const d = safeDate(ex);
-        if(!d) return false;
-        const left = daysBetween(new Date(), d);
-        return left >= 0 && left <= 3;
-      }).length;
+      // 1) RPC public si elle existe
+      const r = await callRpc(RPC_PUBLIC, { p_category: null, p_location: null });
+      if(r.ok){
+        const items = (r.data && r.data.items) ? r.data.items : (Array.isArray(r.data) ? r.data : []);
+        ALL = items || [];
+        toast("✅ Vitrine chargée — " + ALL.length + " annonce(s).", "ok");
+        applyFilters();
+        return;
+      }
 
-      return { total, active, draft, exp_soon: soon };
-    }
+      // 2) fallback table directe (si RLS autorise public read)
+      try{
+        const sb = getSb();
+        const { data, error } = await sb
+          .from("digiy_ba_ads")
+          .select("id,slug,category,title,description,price,currency,whatsapp,location,is_active,status,is_featured,pickup_enabled,updated_at,created_at")
+          .eq("is_active", true)
+          .eq("status", "active")
+          .order("is_featured", { ascending:false })
+          .order("updated_at", { ascending:false });
 
-    function setKpi(stats){
-      const a = $("kpiTotal"), b = $("kpiActive"), c = $("kpiDraft"), d = $("kpiExpSoon");
-      if(a) a.textContent = String(stats.total ?? "—");
-      if(b) b.textContent = String(stats.active ?? "—");
-      if(c) c.textContent = String(stats.draft ?? "—");
-      if(d) d.textContent = String(stats.exp_soon ?? "—");
-    }
-
-    // ==============
-    // RENDER
-    // ==============
-    function statusTag(st){
-      const s = String(st||"").toLowerCase();
-      if(s==="active") return `<span class="tag ok">✅ active</span>`;
-      if(s==="draft") return `<span class="tag">🧱 draft</span>`;
-      if(s==="paused") return `<span class="tag">⏸️ pause</span>`;
-      if(s==="expired") return `<span class="tag bad">⌛ expirée</span>`;
-      return `<span class="tag">• ${esc(s||"—")}</span>`;
+        if(error) throw error;
+        ALL = data || [];
+        toast("✅ Vitrine chargée — " + ALL.length + " annonce(s).", "ok");
+        applyFilters();
+        return;
+      }catch(e){
+        ALL = [];
+        toast("⚠️ Vitrine indisponible (RPC public non posée / RLS). Pose ba_list_ads ou autorise lecture publique.", "bad");
+        render([]);
+      }
     }
 
     function render(items){
@@ -547,34 +400,27 @@
       if(!items || items.length===0){
         el.innerHTML = `
           <div class="toast" style="grid-column:1/-1">
-            Aucune annonce trouvée. Clique <strong>➕ Nouvelle annonce</strong> pour publier.
+            Aucune annonce visible pour le moment.
           </div>
         `;
         return;
       }
 
       el.innerHTML = "";
-
       for(const it of items){
-        const title = it.title || it.titre || "Annonce";
-        const slug  = it.slug || CTX.slug || "";
-        const cat   = it.category || it.categorie || "—";
-        const loc   = it.location || it.zone || "—";
-        const cur = it.currency || "XOF";
-        const price = money(it.price || 0) + " " + cur;
-        const st    = it.status || "—";
-        const phone = it.phone || it.telephone || CTX.phone || "";
-        const wa    = it.whatsapp || it.wa || phone || "";
+        const title = it.title || "Annonce";
+        const slug  = it.slug || "";
+        const cat   = it.category || "—";
+        const loc   = it.location || "—";
+        const cur   = it.currency || "XOF";
+        const pTxt  = money(it.price || 0);
+        const price = pTxt ? (pTxt + " " + cur) : "—";
+        const wa    = it.whatsapp || "";
 
-        const desc  = (it.description || it.desc || "").trim();
-
-        const exRaw = it.expires_at || it.expiresAt || it.expire_at || it.end_at || "";
-        const exD = safeDate(exRaw);
-        const exTxt = exD ? exD.toLocaleDateString("fr-FR") : "";
+        const desc  = (it.description || "").trim();
+        const id    = it.id || "";
 
         const msg = `Salut, je viens de DIGIY BONNE AFFAIRE. Je suis intéressé par: ${title} (slug: ${slug}).`;
-
-        const id = it.id || it.ad_id || it.uuid || "";
 
         const card = document.createElement("div");
         card.className = "card";
@@ -586,8 +432,7 @@
                 <span class="tag">🏷️ ${esc(cat)}</span>
                 <span class="tag">📍 ${esc(loc)}</span>
                 <span class="tag">💰 ${esc(price)}</span>
-                ${statusTag(st)}
-                ${exTxt ? `<span class="tag">⌛ ${esc(exTxt)}</span>` : ``}
+                ${it.pickup_enabled ? `<span class="tag ok">📦 Retrait</span>` : ``}
               </div>
             </div>
             <div class="cBadge">${esc(String(id||"").slice(0,8) || "—")}</div>
@@ -596,225 +441,90 @@
           <div class="cDesc">${esc(desc || "—")}</div>
 
           <div class="cBtns">
+            ${wa ? `<a class="btn btn-main btn-small" href="${waLink(wa, msg)}" target="_blank" rel="noopener">💬 WhatsApp</a>` : `<span class="tag">WhatsApp non dispo</span>`}
             <button class="btn btn-ghost btn-small" data-act="copy" data-id="${esc(id)}">📋 Copier</button>
-            <a class="btn btn-main btn-small" href="${waLink(wa, msg)}" target="_blank" rel="noopener">💬 WhatsApp</a>
-            <button class="btn btn-ok btn-small" data-act="renew" data-id="${esc(id)}">🔁 Renouveler</button>
-            <button class="btn btn-ghost btn-small" data-act="toggle" data-id="${esc(id)}" data-status="${esc(st)}">⚙️ Pause/Activer</button>
-            <button class="btn btn-bad btn-small" data-act="delete" data-id="${esc(id)}">🗑️ Supprimer</button>
           </div>
         `;
-
         el.appendChild(card);
       }
 
-      // bind actions
-      el.querySelectorAll("button[data-act]").forEach(btn=>{
+      el.querySelectorAll("button[data-act='copy']").forEach(btn=>{
         btn.addEventListener("click", async ()=>{
-          const act = btn.getAttribute("data-act");
           const id = btn.getAttribute("data-id") || "";
-          const curStatus = btn.getAttribute("data-status") || "";
-
-          if(act==="copy"){
-            const found = items.find(x => String(x.id||x.ad_id||x.uuid||"")===String(id));
-            const payload = found ? JSON.stringify(found, null, 2) : ("Annonce: "+id);
-            try{
-              await navigator.clipboard.writeText(payload);
-              toast("✅ Copié dans le presse-papier.", "ok");
-            }catch(_){
-              toast("⚠️ Copie impossible (navigateur).", "bad");
-            }
-            return;
-          }
-
-          if(act==="renew"){
-            const u = new URL("https://beauville.github.io/commencer-a-payer/", location.href);
-            u.searchParams.set("module","bonne_affaire");
-            u.searchParams.set("action","renew");
-            if(CTX.slug) u.searchParams.set("slug", CTX.slug);
-            if(id) u.searchParams.set("ad_id", id);
-            u.searchParams.set("next", location.pathname + location.search);
-            location.href = u.toString();
-            return;
-          }
-
-          if(act==="toggle"){
-            const s = String(curStatus||"").toLowerCase();
-            const nextStatus = (s==="active") ? "paused" : "active";
-
-            toast("⏳ Changement statut…", "");
-            const r = await callRpc(RPC.toggle, { p_owner_id: CTX.owner_id, p_ad_id: id, p_status: nextStatus });
-            if(!r.ok){
-              toast("⚠️ Toggle RPC indisponible: " + (r.error || "erreur"), "bad");
-              return;
-            }
-            toast("✅ Statut mis à jour: " + nextStatus, "ok");
-            await refresh();
-            return;
-          }
-
-          if(act==="delete"){
-            if(!confirm("Supprimer cette annonce ? (irréversible)")) return;
-
-            toast("⏳ Suppression…", "");
-            const r = await callRpc(RPC.remove, { p_owner_id: CTX.owner_id, p_ad_id: id });
-            if(!r.ok){
-              toast("⚠️ Delete RPC indisponible: " + (r.error || "erreur"), "bad");
-              return;
-            }
-            toast("✅ Annonce supprimée.", "ok");
-            await refresh();
-            return;
+          const found = (items||[]).find(x => String(x.id||"")===String(id));
+          const payload = found ? JSON.stringify(found, null, 2) : ("Annonce: "+id);
+          try{
+            await navigator.clipboard.writeText(payload);
+            toast("✅ Copié.", "ok");
+          }catch(_){
+            toast("⚠️ Copie impossible.", "bad");
           }
         });
       });
     }
 
-    function getFilters(){
-      const st = ($("fStatus")?.value || "").trim().toLowerCase();
+    function applyFilters(){
       const cat = ($("fCategory")?.value || "").trim().toLowerCase();
       const q = ($("q")?.value || "").trim().toLowerCase();
-      return { st, cat, q };
-    }
 
-    function applyFilters(){
-      const { st, cat, q } = getFilters();
-
-      const out = (ALL || []).filter(it=>{
-        const s = String(it.status||"").toLowerCase();
-        const c = String(it.category||it.categorie||"").toLowerCase();
-        const hay = (String(it.title||it.titre||"")+" "+String(it.slug||"")+" "+String(it.location||it.zone||"")).toLowerCase();
-
-        const okS = !st || s===st;
+      const out = (ALL||[]).filter(it=>{
+        const c = String(it.category||"").toLowerCase();
+        const hay = (String(it.title||"")+" "+String(it.slug||"")+" "+String(it.location||"")).toLowerCase();
         const okC = !cat || c===cat;
         const okQ = !q || hay.includes(q);
-        return okS && okC && okQ;
+        return okC && okQ;
       });
 
       render(out);
-
-      // KPI reste global ALL (stable)
-      setKpi(computeStatsFromList(ALL));
-
-      if(q || st || cat) toast("🔎 Filtre actif — " + out.length + " annonce(s).", "");
-      else toast("✅ Cockpit chargé — " + ALL.length + " annonce(s).", "ok");
+      if(q || cat) toast("🔎 Filtre actif — " + out.length + " annonce(s).", "");
     }
 
-    // ==============
-    // LOAD
-    // ==============
-    async function refresh(){
-      const sb = getSb();
-      if(!sb){
-        toast("Supabase non prêt.", "bad");
-        ALL = [];
-        setKpi({ total:"—", active:"—", draft:"—", exp_soon:"—" });
-        render([]);
-        return;
-      }
-
-      toast("⏳ Chargement de tes annonces…", "");
-
-      // 1) try dedicated pro list
-      let mine = null;
-
-      const r1 = await callRpc(RPC.listMine, { p_owner_id: CTX.owner_id });
-      if(r1.ok){
-        mine = (r1.data && r1.data.items) ? r1.data.items : (Array.isArray(r1.data) ? r1.data : []);
-      }else{
-        // 2) fallback: public list + filter by owner_id if present
-        const r2 = await callRpc("ba_list_ads", { p_category: null, p_location: null });
-        if(r2.ok){
-          const items = (r2.data && r2.data.items) ? r2.data.items : (Array.isArray(r2.data) ? r2.data : []);
-          mine = items.filter(x => String(x.owner_id||"") === String(CTX.owner_id));
-        }else{
-          mine = [];
-        }
-      }
-
-      ALL = mine || [];
-
-      // stats (si RPC existe)
-      const rS = await callRpc(RPC.stats, { p_owner_id: CTX.owner_id });
-      if(rS.ok && rS.data && typeof rS.data === "object"){
-        const st = rS.data;
-        if(st.total!=null || st.active!=null || st.draft!=null || st.exp_soon!=null) setKpi(st);
-        else setKpi(computeStatsFromList(ALL));
-      }else{
-        setKpi(computeStatsFromList(ALL));
-      }
-
-      applyFilters();
-    }
-
-    // ==============
-    // UI BIND
-    // ==============
     function debounce(fn, delay){
-      let t = null;
-      return (...args)=>{
-        clearTimeout(t);
-        t = setTimeout(()=>fn(...args), delay);
-      };
+      let t=null;
+      return (...args)=>{ clearTimeout(t); t=setTimeout(()=>fn(...args), delay); };
     }
 
     function bindUI(){
-      const goNew = ()=>{
+      $("btnRefresh") && ($("btnRefresh").onclick = ()=> loadPublic());
+      $("btnReset") && ($("btnReset").onclick = ()=>{
+        $("fCategory") && ($("fCategory").value = "");
+        $("q") && ($("q").value = "");
+        render(ALL);
+        toast("🧹 Reset filtres.", "");
+      });
+
+      $("fCategory") && ($("fCategory").onchange = applyFilters);
+      $("q") && $("q").addEventListener("input", debounce(applyFilters, 120));
+
+      // Publier -> paiement/pack
+      $("btnPublish") && ($("btnPublish").onclick = ()=>{
         const u = new URL("https://beauville.github.io/commencer-a-payer/", location.href);
         u.searchParams.set("module","bonne_affaire");
         u.searchParams.set("action","new");
         if(CTX.slug) u.searchParams.set("slug", CTX.slug);
         u.searchParams.set("next", location.pathname + location.search);
         location.href = u.toString();
-      };
+      });
 
-      const btnNew = $("btnNew"), mNew = $("mNew");
-      const btnRefresh = $("btnRefresh"), mRefresh = $("mRefresh");
-      const btnLogout = $("btnLogout");
-      const btnReset = $("btnReset");
-      const fStatus = $("fStatus");
-      const fCategory = $("fCategory");
-      const q = $("q");
-
-      if(btnNew) btnNew.onclick = goNew;
-      if(mNew) mNew.onclick = goNew;
-
-      if(btnRefresh) btnRefresh.onclick = ()=> refresh();
-      if(mRefresh) mRefresh.onclick = ()=> refresh();
-
-      if(btnLogout) btnLogout.onclick = ()=>{
-        try{
-          if(window.DIGIY_GUARD?.logout) window.DIGIY_GUARD.logout("./pin.html");
-          else location.href = "./pin.html";
-        }catch(_){
-          location.href = "./pin.html";
+      // Cockpit PRO -> si pas connecté => GO PIN
+      $("btnGoCockpit") && ($("btnGoCockpit").onclick = ()=>{
+        const sess = window.DIGIY_GUARD?.getSession?.();
+        if(!sess?.owner_id){
+          const next = encodeURIComponent("./cockpit.html" + location.search);
+          location.href = "./pin.html?next=" + next;
+          return;
         }
-      };
-
-      if(btnReset) btnReset.onclick = ()=>{
-        if(fStatus) fStatus.value = "";
-        if(fCategory) fCategory.value = "";
-        if(q) q.value = "";
-        render(ALL);
-        setKpi(computeStatsFromList(ALL));
-        toast("🧹 Filtres reset.", "");
-      };
-
-      if(fStatus) fStatus.onchange = applyFilters;
-      if(fCategory) fCategory.onchange = applyFilters;
-      if(q) q.addEventListener("input", debounce(applyFilters, 120));
+        if(window.DIGIY_GUARD?.withSlug) location.href = window.DIGIY_GUARD.withSlug("./cockpit.html");
+        else location.href = "./cockpit.html";
+      });
     }
 
-    // ==============
-    // INIT
-    // ==============
     document.addEventListener("DOMContentLoaded", async ()=>{
-      const ok = await boot();
-      if(!ok) return;
+      await boot();
       bindUI();
-      await refresh();
-      console.log("🚆 DIGIY BA COCKPIT READY", { slug: CTX.slug, owner_id: CTX.owner_id });
+      await loadPublic();
+      console.log("🏪 DIGIY BA PUBLIC READY", { slug: CTX.slug });
     });
-
   })();
   </script>
 </body>
