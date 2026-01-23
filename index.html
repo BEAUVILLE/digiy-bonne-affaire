@@ -725,254 +725,333 @@
     </div>
   </div>
 
-  <script>
-  (function(){
-    // =============================
-    // CONFIG
-    // =============================
-    const PAYMENT_URL = "https://beauville.github.io/commencer-a-payer/";
-    const SUPPORT_WA = "+221771342889";
+ <script>
+(function(){
+  "use strict";
 
-    const PACKS = {
-      A: { amount: 500, days: 7,  label:"A" },
-      B: { amount: 1000, days: 14, label:"B" },
-      C: { amount: 2000, days: 30, label:"C" }
-    };
+  // =============================
+  // HELPERS (OBLIGATOIRES)
+  // =============================
+  const $ = (id)=>document.getElementById(id);
 
-    // =============================
-    // SUPABASE
-    // =============================
-   const SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
-const SUPABASE_ANON_KEY =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
+  const esc = (s)=>String(s||"")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
 
-const sb = window.supabase?.createClient
-  ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
-  : null;
-
-// =============================
-// HELPERS
-// =============================
-const $ = (id)=>document.getElementById(id);
-const esc = (s)=>String(s||"")
-  .replaceAll("&","&amp;").replaceAll("<","&lt;")
-  .replaceAll(">","&gt;").replaceAll('"',"&quot;")
-  .replaceAll("'","&#039;");
-
-function toast(id, msg, kind){
-  const el = $(id); if(!el) return;
-  el.textContent = msg || "";
-  el.classList.remove("ok","bad");
-  if(kind) el.classList.add(kind);
-}
-
-function money(x){
-  const n = Number(x||0);
-  if(!isFinite(n) || n<=0) return "";
-  return Math.round(n).toLocaleString("fr-FR") + " XOF";
-}
-
-function waLink(phone, msg){
-  const p = String(phone||"").replace(/[^\d]/g,"");
-  return "https://wa.me/" + p + "?text=" + encodeURIComponent(msg||"");
-}function loadCtx(){
-  const s = window.DIGIY_GUARD?.getSession?.() || {};
-  if(s.slug) localStorage.setItem("DIGIY_SLUG", s.slug);
-  if(s.owner_id) localStorage.setItem("DIGIY_PRO_ID", s.owner_id);
-}    
-
-// =============================
-// EXEMPLES VITRINE (12)
-// =============================
-function renderExamples(){
-  const grid = $("adsGrid");
-  if(!grid) return;
-  grid.innerHTML = "";
-
-  const EXAMPLES = [
-    // ♻️ OCCAZ (5)
-    { title:"iPhone 12 – très bon état", category:"occaz", location:"Dakar", price:180000 },
-    { title:"Moto TVS – démarre nickel", category:"occaz", location:"Pikine", price:320000 },
-    { title:"Canapé 5 places", category:"occaz", location:"Guédiawaye", price:95000 },
-    { title:"Ordinateur HP i5", category:"occaz", location:"Thiès", price:150000 },
-    { title:"Petit terrain 150m²", category:"occaz", location:"Rufisque", price:2800000 },
-
-    // 🛠️ SERVICES (4)
-    { title:"Plombier disponible", category:"service", location:"Dakar", price:null },
-    { title:"Électricien maison", category:"service", location:"Mbour", price:null },
-    { title:"Menuisier bois & alu", category:"service", location:"Saly", price:null },
-    { title:"Lavage auto à domicile", category:"service", location:"Pikine", price:null },
-
-    // 🏪 PRO (3)
-    { title:"Toyota Yaris 2016", category:"pro", location:"Dakar", price:5200000 },
-    { title:"Appartement meublé", category:"pro", location:"Saly", price:45000 },
-    { title:"Matériel de boutique", category:"pro", location:"Thiès", price:750000 }
-  ];
-
-  // Petit bandeau au-dessus (optionnel mais rassurant)
-  const top = document.createElement("div");
-  top.className = "toast ok";
-  top.style.gridColumn = "1/-1";
-  top.textContent = "🧪 Exemples d’annonces (vitrine pédagogique) — Publie la tienne pour apparaître ici.";
-  grid.appendChild(top);
-
-  for(const it of EXAMPLES){
-    const price = it.price ? money(it.price) : "—";
-    const catLabel =
-      it.category === "occaz" ? "♻️ Occaz" :
-      it.category === "service" ? "🛠️ Service" :
-      it.category === "pro" ? "🏪 Pro" : "Annonce";
-
-    const card = document.createElement("article");
-    card.className = "shop-card";
-    card.innerHTML = `
-      <div class="shop-head">
-        <div>
-          <div class="shop-name">${esc(it.title)}</div>
-          <div class="shop-type">${esc(catLabel)} • ${esc(it.location)}</div>
-        </div>
-        <div class="shop-price">${price}</div>
-      </div>
-
-      <div class="shop-body">
-        <div class="shop-photo">
-          <div class="ph">🧪 Exemple d’annonce (pas une vraie)</div>
-        </div>
-
-        <p class="shop-desc">
-          Exemple pour montrer le format. Les annonces réelles sont <strong>publiées après paiement</strong> (anti-spam).
-        </p>
-
-        <div class="shop-meta">
-          <div class="shop-badge">Exemple</div>
-          <div class="pill">🔒 Publication payante</div>
-        </div>
-
-        <div class="shop-actions">
-          <button class="btn btn-main" onclick="document.getElementById('btnOpenPost')?.click()">
-            ✍️ Publier la mienne
-          </button>
-        </div>
-      </div>
-    `;
-    grid.appendChild(card);
-  }
-}
-
-// =============================
-// RENDER ANNONCES (réelles)
-// =============================
-function render(items){
-  const grid = $("adsGrid");
-  if(!grid) return;
-
-  // ✅ si vide → vitrine pédagogique
-  if(!items || items.length === 0){
-    renderExamples();
-    return;
+  function money(x){
+    const n = Number(x||0);
+    if(!isFinite(n) || n<=0) return "";
+    return Math.round(n).toLocaleString("fr-FR") + " XOF";
   }
 
-  grid.innerHTML = "";
-
-  for(const it of items){
-    const cat =
-      it.category==="occaz" ? "♻️ Occaz" :
-      it.category==="service" ? "🛠️ Service" :
-      it.category==="pro" ? "🏪 Pro" : "Annonce";
-
-    const price = money(it.price);
-    const phone = it.phone || "";
-    const wa = it.whatsapp || it.phone || "";
-    const msg = `Salut, je viens de DIGIY BONNE AFFAIRE. Je suis intéressé par: ${it.title} (slug: ${it.slug}).`;
-
-    const card = document.createElement("article");
-    card.className = "shop-card";
-    card.innerHTML = `
-      <div class="shop-head">
-        <div>
-          <div class="shop-name">${esc(it.title || "Annonce")}</div>
-          <div class="shop-type">${esc(cat)} • ${esc(it.location || "—")}</div>
-        </div>
-        <div class="shop-price">${price || "—"}</div>
-      </div>
-
-      <div class="shop-body">
-        <div class="shop-photo">
-          <div class="ph">📷 Photo via WhatsApp (pas de stockage)</div>
-        </div>
-
-        <p class="shop-desc">
-          ${esc(it.description || "Contact direct via WhatsApp / Appel.")}
-        </p>
-
-        <div class="shop-meta">
-          <span>slug: <strong>${esc(it.slug||"")}</strong></span>
-          <div class="shop-badge">0% Com DIGIY</div>
-        </div>
-
-        <div class="shop-actions">
-          <a class="btn btn-contact"
-             href="${waLink(wa || phone, msg)}"
-             target="_blank" rel="noopener">
-            💬 WhatsApp
-          </a>
-
-          <a class="btn btn-call" href="tel:${esc(phone)}">
-            📞 Appeler
-          </a>
-
-          <button class="btn btn-outline"
-                  onclick="window.open('${waLink(wa || phone, "Salut, peux-tu m’envoyer la photo/vidéo de: "+(it.title||"l’annonce")+" ?")}', '_blank')">
-            📷 Demander photo
-          </button>
-        </div>
-      </div>
-    `;
-    grid.appendChild(card);
-  }
-}
-
-// =============================
-// LOAD ANNONCES (PUBLIC OK)
-// =============================
-async function refresh(){
-  if(!sb){
-    toast("toastTop","Supabase non prêt","bad");
-    render([]);
-    return;
+  function toast(id, msg, kind){
+    const el = $(id); if(!el) return;
+    el.textContent = msg || "";
+    el.classList.remove("ok","bad");
+    if(kind) el.classList.add(kind);
   }
 
-  toast("toastTop","Chargement…","");
-  const { data, error } = await sb.rpc("ba_list_ads", {
-    p_category: null,
-    p_location: null
+  function waLink(phone, msg){
+    const p = String(phone||"").replace(/[^\d]/g,"");
+    return "https://wa.me/" + p + "?text=" + encodeURIComponent(msg||"");
+  }
+
+  function qp(k){
+    try{ return (new URLSearchParams(location.search).get(k) || "").trim(); }
+    catch(_){ return ""; }
+  }
+
+  // =============================
+  // SUPABASE
+  // =============================
+  const SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
+  const SUPABASE_ANON_KEY =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
+
+  const sb = window.supabase?.createClient
+    ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+    : null;
+
+  // =============================
+  // GUARD BA — PUBLIC FREE / POST LOCKED
+  // =============================
+  const CTX = { slug:"", owner_id:"" };
+
+  function setStatus(t){
+    const el = $("guard_status");
+    if(el) el.textContent = t;
+  }
+  function hideStatus(){
+    const el = $("guard_status");
+    if(el) el.style.display = "none";
+  }
+
+  function loadCtxBA(){
+    const urlSlug = qp("slug");
+    const gSlug = window.DIGIY_GUARD?.getSlug?.() || "";
+    const s = window.DIGIY_GUARD?.getSession?.() || null;
+
+    CTX.slug = (urlSlug || gSlug || localStorage.getItem("DIGIY_SLUG") || "").trim();
+    CTX.owner_id = (s?.owner_id || localStorage.getItem("DIGIY_PRO_ID") || "").trim();
+
+    const pill = $("pillCtx");
+    if(pill) pill.textContent = "slug: " + (CTX.slug || "—");
+
+    if($("pSlug") && !$("pSlug").value) $("pSlug").value = CTX.slug || "";
+    if($("pOwner") && !$("pOwner").value) $("pOwner").value = CTX.owner_id || "";
+  }
+
+  function isAuthedBA(){
+    if(CTX.owner_id) return true;
+    if(window.DIGIY_GUARD?.isAuth) return !!window.DIGIY_GUARD.isAuth();
+    const s = window.DIGIY_GUARD?.getSession?.();
+    return !!(s && s.owner_id);
+  }
+
+  function requireAuthBA(action){
+    if(isAuthedBA()) return action();
+
+    const next = encodeURIComponent(location.pathname + location.search + location.hash);
+    location.href = "./pin.html?next=" + next;
+  }
+
+  async function bootGuardBA(){
+    try{
+      setStatus("🔐 Vérification…");
+
+      if(window.DIGIY_GUARD?.boot){
+        const r = await window.DIGIY_GUARD.boot({ login: "./pin.html" });
+        if(r?.ok) setStatus("✅ Connecté");
+        else setStatus("ℹ️ Public");
+      }else{
+        setStatus("ℹ️ Public");
+      }
+
+      loadCtxBA();
+      setTimeout(hideStatus, 550);
+    }catch(e){
+      console.warn("GUARD BA public:", e);
+      setStatus("ℹ️ Public");
+      loadCtxBA();
+      setTimeout(hideStatus, 550);
+    }
+  }
+
+  // 🔒 Verrouille publier + draft + payer
+  function bindGuardActionsBA(){
+    const btnOpen = $("btnOpenPost");
+    if(btnOpen){
+      btnOpen.onclick = ()=> requireAuthBA(()=> openPost());
+    }
+
+    const btnDraft = $("btnCreateDraft");
+    if(btnDraft){
+      btnDraft.onclick = ()=> requireAuthBA(()=> createDraft());
+    }
+
+    const btnPay = $("btnPayPublish");
+    if(btnPay){
+      btnPay.onclick = ()=> requireAuthBA(()=> payPublish());
+    }
+  }
+
+  // =============================
+  // VITRINE EXEMPLES (12)
+  // =============================
+  function renderExamples(){
+    const grid = $("adsGrid");
+    if(!grid) return;
+    grid.innerHTML = "";
+
+    const EXAMPLES = [
+      // ♻️ OCCAZ (5)
+      { title:"iPhone 12 – très bon état", category:"occaz", location:"Dakar", price:180000 },
+      { title:"Moto TVS – démarre nickel", category:"occaz", location:"Pikine", price:320000 },
+      { title:"Canapé 5 places", category:"occaz", location:"Guédiawaye", price:95000 },
+      { title:"Ordinateur HP i5", category:"occaz", location:"Thiès", price:150000 },
+      { title:"Petit terrain 150m²", category:"occaz", location:"Rufisque", price:2800000 },
+
+      // 🛠️ SERVICES (4)
+      { title:"Plombier disponible", category:"service", location:"Dakar", price:null },
+      { title:"Électricien maison", category:"service", location:"Mbour", price:null },
+      { title:"Menuisier bois & alu", category:"service", location:"Saly", price:null },
+      { title:"Lavage auto à domicile", category:"service", location:"Pikine", price:null },
+
+      // 🏪 PRO (3)
+      { title:"Toyota Yaris 2016", category:"pro", location:"Dakar", price:5200000 },
+      { title:"Appartement meublé", category:"pro", location:"Saly", price:45000 },
+      { title:"Matériel de boutique", category:"pro", location:"Thiès", price:750000 }
+    ];
+
+    const top = document.createElement("div");
+    top.className = "toast ok";
+    top.style.gridColumn = "1/-1";
+    top.textContent = "🧪 Exemples d’annonces (vitrine pédagogique) — Publie la tienne pour apparaître ici.";
+    grid.appendChild(top);
+
+    for(const it of EXAMPLES){
+      const price = it.price ? money(it.price) : "—";
+      const catLabel =
+        it.category === "occaz" ? "♻️ Occaz" :
+        it.category === "service" ? "🛠️ Service" :
+        it.category === "pro" ? "🏪 Pro" : "Annonce";
+
+      const card = document.createElement("article");
+      card.className = "shop-card";
+      card.innerHTML = `
+        <div class="shop-head">
+          <div>
+            <div class="shop-name">${esc(it.title)}</div>
+            <div class="shop-type">${esc(catLabel)} • ${esc(it.location)}</div>
+          </div>
+          <div class="shop-price">${price}</div>
+        </div>
+
+        <div class="shop-body">
+          <div class="shop-photo">
+            <div class="ph">🧪 Exemple (pas une vraie)</div>
+          </div>
+
+          <p class="shop-desc">
+            Exemple pour montrer le format. Les annonces réelles sont publiées après <strong>paiement</strong> (anti-spam).
+          </p>
+
+          <div class="shop-meta">
+            <div class="shop-badge">Exemple</div>
+            <div class="pill">🔒 Publication payante</div>
+          </div>
+
+          <div class="shop-actions">
+            <button class="btn btn-main" onclick="document.getElementById('btnOpenPost')?.click()">
+              ✍️ Publier la mienne
+            </button>
+          </div>
+        </div>
+      `;
+      grid.appendChild(card);
+    }
+  }
+
+  // =============================
+  // RENDER ANNONCES (réelles)
+  // =============================
+  let ALL = [];
+
+  function render(items){
+    const grid = $("adsGrid");
+    if(!grid) return;
+
+    if(!items || items.length === 0){
+      renderExamples();
+      return;
+    }
+
+    grid.innerHTML = "";
+
+    for(const it of items){
+      const cat =
+        it.category==="occaz" ? "♻️ Occaz" :
+        it.category==="service" ? "🛠️ Service" :
+        it.category==="pro" ? "🏪 Pro" : "Annonce";
+
+      const price = money(it.price);
+      const phone = it.phone || "";
+      const wa = it.whatsapp || it.phone || "";
+      const msg = `Salut, je viens de DIGIY BONNE AFFAIRE. Je suis intéressé par: ${it.title} (slug: ${it.slug}).`;
+
+      const card = document.createElement("article");
+      card.className = "shop-card";
+      card.innerHTML = `
+        <div class="shop-head">
+          <div>
+            <div class="shop-name">${esc(it.title || "Annonce")}</div>
+            <div class="shop-type">${esc(cat)} • ${esc(it.location || "—")}</div>
+          </div>
+          <div class="shop-price">${price || "—"}</div>
+        </div>
+
+        <div class="shop-body">
+          <div class="shop-photo">
+            <div class="ph">📷 Photo via WhatsApp (pas de stockage)</div>
+          </div>
+
+          <p class="shop-desc">
+            ${esc(it.description || "Contact direct via WhatsApp / Appel.")}
+          </p>
+
+          <div class="shop-meta">
+            <span>slug: <strong>${esc(it.slug||"")}</strong></span>
+            <div class="shop-badge">0% Com DIGIY</div>
+          </div>
+
+          <div class="shop-actions">
+            <a class="btn btn-contact"
+               href="${waLink(wa || phone, msg)}"
+               target="_blank" rel="noopener">
+              💬 WhatsApp
+            </a>
+
+            <a class="btn btn-call" href="tel:${esc(phone)}">
+              📞 Appeler
+            </a>
+
+            <button class="btn btn-outline"
+              onclick="window.open('${waLink(wa || phone, "Salut, peux-tu m’envoyer la photo/vidéo de: "+(it.title||"l’annonce")+" ?")}', '_blank')">
+              📷 Demander photo
+            </button>
+          </div>
+        </div>
+      `;
+      grid.appendChild(card);
+    }
+  }
+
+  // =============================
+  // LOAD ANNONCES (PUBLIC OK)
+  // =============================
+  async function refresh(){
+    if(!sb){
+      toast("toastTop","Supabase non prêt","bad");
+      render([]);
+      return;
+    }
+
+    toast("toastTop","Chargement…","");
+    const { data, error } = await sb.rpc("ba_list_ads", {
+      p_category: null,
+      p_location: null
+    });
+
+    if(error){
+      toast("toastTop", error.message, "bad");
+      render([]);
+      return;
+    }
+
+    // accepte json direct ou {items:[]}
+    ALL = data?.items || data || [];
+    toast("toastTop", "✅ " + ALL.length + " annonce(s)", "ok");
+    render(ALL);
+  }
+
+  // =============================
+  // INIT
+  // =============================
+  document.addEventListener("DOMContentLoaded", async ()=>{
+    await bootGuardBA();       // 🔐 public ou connecté
+    bindGuardActionsBA();      // 🔒 lock publier / draft / payer
+    render([]);                // vitrine jamais vide
+    refresh();                 // annonces publiques
+    console.log("🚆 DIGIY BA — GUARD READY");
   });
 
-  if(error){
-    toast("toastTop", error.message, "bad");
-    render([]);
-    return;
-  }
-
-  ALL = data?.items || data || [];
-  toast("toastTop", "✅ " + ALL.length + " annonce(s)", "ok");
-  render(ALL);
-}
-
-// =============================
-// INIT
-// =============================
-document.addEventListener("DOMContentLoaded", ()=>{
-  render([]);     // affichage public même à vide
-  refresh();      // charge annonces
-  console.log("🦅 DIGIY BONNE AFFAIRE — public ready");
-});
-
-// =============================
-// END SCRIPT
-// =============================
+  // =============================
+  // END SCRIPT
+  // =============================
 })();
 </script>
-
 </body>
 </html>
