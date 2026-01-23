@@ -778,63 +778,149 @@ function waLink(phone, msg){
 }
 
 // =============================
-// LIST / RENDER ANNONCES
+// EXEMPLES VITRINE (12)
 // =============================
-let ALL = [];
-
-function render(items){
+function renderExamples(){
   const grid = $("adsGrid");
   if(!grid) return;
   grid.innerHTML = "";
 
-  if(!items || items.length===0){
-    grid.innerHTML =
-      `<div style="grid-column:1/-1" class="toast">
-        Aucune annonce pour le moment.
-      </div>`;
-    return;
-  }
+  const EXAMPLES = [
+    // ♻️ OCCAZ (5)
+    { title:"iPhone 12 – très bon état", category:"occaz", location:"Dakar", price:180000 },
+    { title:"Moto TVS – démarre nickel", category:"occaz", location:"Pikine", price:320000 },
+    { title:"Canapé 5 places", category:"occaz", location:"Guédiawaye", price:95000 },
+    { title:"Ordinateur HP i5", category:"occaz", location:"Thiès", price:150000 },
+    { title:"Petit terrain 150m²", category:"occaz", location:"Rufisque", price:2800000 },
 
-  for(const it of items){
-    const price = money(it.price);
-    const phone = it.phone || "";
-    const wa = it.whatsapp || phone;
+    // 🛠️ SERVICES (4)
+    { title:"Plombier disponible", category:"service", location:"Dakar", price:null },
+    { title:"Électricien maison", category:"service", location:"Mbour", price:null },
+    { title:"Menuisier bois & alu", category:"service", location:"Saly", price:null },
+    { title:"Lavage auto à domicile", category:"service", location:"Pikine", price:null },
+
+    // 🏪 PRO (3)
+    { title:"Toyota Yaris 2016", category:"pro", location:"Dakar", price:5200000 },
+    { title:"Appartement meublé", category:"pro", location:"Saly", price:45000 },
+    { title:"Matériel de boutique", category:"pro", location:"Thiès", price:750000 }
+  ];
+
+  // Petit bandeau au-dessus (optionnel mais rassurant)
+  const top = document.createElement("div");
+  top.className = "toast ok";
+  top.style.gridColumn = "1/-1";
+  top.textContent = "🧪 Exemples d’annonces (vitrine pédagogique) — Publie la tienne pour apparaître ici.";
+  grid.appendChild(top);
+
+  for(const it of EXAMPLES){
+    const price = it.price ? money(it.price) : "—";
+    const catLabel =
+      it.category === "occaz" ? "♻️ Occaz" :
+      it.category === "service" ? "🛠️ Service" :
+      it.category === "pro" ? "🏪 Pro" : "Annonce";
 
     const card = document.createElement("article");
     card.className = "shop-card";
     card.innerHTML = `
       <div class="shop-head">
         <div>
-          <div class="shop-name">${esc(it.title||"Annonce")}</div>
-          <div class="shop-type">${esc(it.category||"")} • ${esc(it.location||"—")}</div>
+          <div class="shop-name">${esc(it.title)}</div>
+          <div class="shop-type">${esc(catLabel)} • ${esc(it.location)}</div>
+        </div>
+        <div class="shop-price">${price}</div>
+      </div>
+
+      <div class="shop-body">
+        <div class="shop-photo">
+          <div class="ph">🧪 Exemple d’annonce (pas une vraie)</div>
+        </div>
+
+        <p class="shop-desc">
+          Exemple pour montrer le format. Les annonces réelles sont <strong>publiées après paiement</strong> (anti-spam).
+        </p>
+
+        <div class="shop-meta">
+          <div class="shop-badge">Exemple</div>
+          <div class="pill">🔒 Publication payante</div>
+        </div>
+
+        <div class="shop-actions">
+          <button class="btn btn-main" onclick="document.getElementById('btnOpenPost')?.click()">
+            ✍️ Publier la mienne
+          </button>
+        </div>
+      </div>
+    `;
+    grid.appendChild(card);
+  }
+}
+
+// =============================
+// RENDER ANNONCES (réelles)
+// =============================
+function render(items){
+  const grid = $("adsGrid");
+  if(!grid) return;
+
+  // ✅ si vide → vitrine pédagogique
+  if(!items || items.length === 0){
+    renderExamples();
+    return;
+  }
+
+  grid.innerHTML = "";
+
+  for(const it of items){
+    const cat =
+      it.category==="occaz" ? "♻️ Occaz" :
+      it.category==="service" ? "🛠️ Service" :
+      it.category==="pro" ? "🏪 Pro" : "Annonce";
+
+    const price = money(it.price);
+    const phone = it.phone || "";
+    const wa = it.whatsapp || it.phone || "";
+    const msg = `Salut, je viens de DIGIY BONNE AFFAIRE. Je suis intéressé par: ${it.title} (slug: ${it.slug}).`;
+
+    const card = document.createElement("article");
+    card.className = "shop-card";
+    card.innerHTML = `
+      <div class="shop-head">
+        <div>
+          <div class="shop-name">${esc(it.title || "Annonce")}</div>
+          <div class="shop-type">${esc(cat)} • ${esc(it.location || "—")}</div>
         </div>
         <div class="shop-price">${price || "—"}</div>
       </div>
 
       <div class="shop-body">
-        <div class="auto-photo">
-          <div class="deal-badge">🔥 BONNE AFFAIRE</div>
-          <div class="big">${esc(it.title||"Annonce")}</div>
-          <div class="small">
-            <span>📍 ${esc(it.location||"—")}</span>
-            <span>💰 ${price || "—"}</span>
-          </div>
+        <div class="shop-photo">
+          <div class="ph">📷 Photo via WhatsApp (pas de stockage)</div>
         </div>
 
         <p class="shop-desc">
-          ${esc(it.description || "Contact direct via WhatsApp ou Appel.")}
+          ${esc(it.description || "Contact direct via WhatsApp / Appel.")}
         </p>
 
-        <div class="help">
-          🔎 Demande photo / vidéo avant décision. Transaction directe.
+        <div class="shop-meta">
+          <span>slug: <strong>${esc(it.slug||"")}</strong></span>
+          <div class="shop-badge">0% Com DIGIY</div>
         </div>
 
         <div class="shop-actions">
           <a class="btn btn-contact"
-             href="${waLink(wa, "Salut, je viens de DIGIY BONNE AFFAIRE. Je suis intéressé par : "+it.title)}"
-             target="_blank">💬 WhatsApp</a>
+             href="${waLink(wa || phone, msg)}"
+             target="_blank" rel="noopener">
+            💬 WhatsApp
+          </a>
 
-          <a class="btn btn-call" href="tel:${esc(phone)}">📞 Appeler</a>
+          <a class="btn btn-call" href="tel:${esc(phone)}">
+            📞 Appeler
+          </a>
+
+          <button class="btn btn-outline"
+                  onclick="window.open('${waLink(wa || phone, "Salut, peux-tu m’envoyer la photo/vidéo de: "+(it.title||"l’annonce")+" ?")}', '_blank')">
+            📷 Demander photo
+          </button>
         </div>
       </div>
     `;
