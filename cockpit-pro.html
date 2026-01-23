@@ -427,47 +427,63 @@
     async function boot(){
       toast("🔐 Vérification…", "");
 
-      // Boot guard
-      try{
-        if(window.DIGIY_GUARD?.boot){
-          await window.DIGIY_GUARD.boot({ login: "./pin.html" });
-        }
-      }catch(_){}
+   // Boot guard (cockpit = PRO strict)
+try{
+  if(window.DIGIY_GUARD?.boot){
+    await window.DIGIY_GUARD.boot({ login: "./pin.html" });
+  }
+}catch(e){
+  console.warn("GUARD boot failed:", e);
+  toast("⛔ Guard indisponible — redirection GO PIN…", "bad");
+  setTimeout(requireAuthOrGoPin, 250);
+  return false;
+}
 
-      const sess = window.DIGIY_GUARD?.getSession ? window.DIGIY_GUARD.getSession() : null;
+const sess = (window.DIGIY_GUARD?.getSession ? window.DIGIY_GUARD.getSession() : null);
 
-      CTX.owner_id = (sess?.owner_id || localStorage.getItem("DIGIY_PRO_ID") || "").trim();
-      CTX.slug     = (qp("slug") || (window.DIGIY_GUARD?.getSlug ? window.DIGIY_GUARD.getSlug() : "") || localStorage.getItem("DIGIY_SLUG") || "").trim();
-      CTX.phone    = (sess?.phone || localStorage.getItem("DIGIY_PHONE") || "").trim();
-      CTX.title    = (sess?.title || localStorage.getItem("DIGIY_TITLE") || "").trim();
+// owner_id = clé PRO
+CTX.owner_id = (sess?.owner_id || localStorage.getItem("DIGIY_PRO_ID") || "").trim();
 
-      setPills();
+// slug = BONUS (affichage seulement)
+CTX.slug  = (qp("slug") || localStorage.getItem("DIGIY_SLUG") || "").trim();
+CTX.phone = (sess?.phone || localStorage.getItem("DIGIY_PHONE") || "").trim();
+CTX.title = (sess?.title || localStorage.getItem("DIGIY_TITLE") || "").trim();
 
-      if(!CTX.owner_id){
-        toast("⛔ Accès PRO requis — redirection GO PIN…", "bad");
-        setTimeout(requireAuthOrGoPin, 250);
-        return false;
-      }
+setPills();
 
-      // ✅ links slug-safe
-      const links = [
-        ["btnBackAds","./index.html"],
-        ["btnGoPublic","./index.html"],
-        ["mBackAds","./index.html"],
-        ["mGoPublic","./index.html"]
-      ];
+if(!CTX.owner_id){
+  toast("⛔ Accès PRO requis — redirection GO PIN…", "bad");
+  setTimeout(requireAuthOrGoPin, 250);
+  return false;
+}
 
-      if(window.DIGIY_GUARD?.withSlug){
-        for(const [id, href] of links){
-          const el = $(id);
-          if(el) el.href = window.DIGIY_GUARD.withSlug(href);
-        }
-      }
+// ✅ Links vers PUBLIC : pas besoin de slug ici (cockpit doit marcher sans)
+const links = [
+  ["btnBackAds","./index.html"],
+  ["btnGoPublic","./index.html"],
+  ["mBackAds","./index.html"],
+  ["mGoPublic","./index.html"]
+];
 
-      toast("✅ Connecté. Chargement cockpit…", "ok");
-      return true;
-    }
+// si tu veux garder slug quand il existe → optionnel
+const addSlug = (href)=>{
+  if(!CTX.slug) return href;
+  try{
+    const u = new URL(href, location.href);
+    u.searchParams.set("slug", CTX.slug);
+    return u.toString();
+  }catch(_){
+    return href + (href.includes("?") ? "&" : "?") + "slug=" + encodeURIComponent(CTX.slug);
+  }
+};
 
+for(const [id, href] of links){
+  const el = $(id);
+  if(el) el.href = addSlug(href);
+}
+
+toast("✅ Connecté. Chargement cockpit…", "ok");
+return true;
     // ==============
     // SUPABASE CLIENT
     // ==============
