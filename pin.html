@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>DIGIY — GO PIN</title>
+  <meta name="theme-color" content="#0b1020" />
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./guard.js?v=ba-go-pin"></script>
+
+  <style>
+    :root{--bg:#020617;--card:#0b1020;--line:rgba(148,163,184,.25);--ink:#f9fafb;--muted:#cbd5f5;--accent:#f97316}
+    *{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,Segoe UI,Roboto}
+    body{min-height:100vh;display:grid;place-items:center;padding:14px;color:var(--ink);
+      background:radial-gradient(circle at top,rgba(249,115,22,.18),transparent 55%),radial-gradient(circle at bottom,rgba(34,197,94,.14),transparent 55%),var(--bg);}
+    .box{width:100%;max-width:520px;background:rgba(11,16,32,.92);border:1px solid var(--line);border-radius:22px;padding:16px;box-shadow:0 22px 70px rgba(0,0,0,.55)}
+    .top{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+    .logo{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,#f97316,#ea580c);color:#111827;font-weight:900}
+    h1{font-size:16px;font-weight:1000}
+    .sub{font-size:12px;color:var(--muted);font-weight:700;margin-top:2px}
+    .pill{display:inline-flex;gap:6px;align-items:center;font-size:11px;font-weight:900;color:var(--muted);border:1px solid rgba(148,163,184,.25);border-radius:999px;padding:6px 10px;background:rgba(2,6,23,.55)}
+    .label{font-size:12px;color:var(--muted);font-weight:800;margin:10px 0 6px}
+    .input{width:100%;border-radius:14px;border:1px solid rgba(148,163,184,.35);padding:12px;background:rgba(2,6,23,.75);color:var(--ink);font-weight:900;outline:none}
+    .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+    .btn{flex:1;border:none;border-radius:999px;padding:12px 14px;font-weight:1000;cursor:pointer;white-space:nowrap}
+    .btn-main{background:linear-gradient(135deg,#f97316,#ea580c);color:#111827}
+    .btn-ghost{background:rgba(2,6,23,.55);border:1px solid rgba(148,163,184,.35);color:var(--ink)}
+    .toast{margin-top:10px;padding:10px 12px;border-radius:14px;border:1px solid rgba(148,163,184,.25);background:rgba(0,0,0,.22);font-weight:900;font-size:12px;min-height:18px}
+    .toast.ok{border-color:rgba(34,197,94,.45)}
+    .toast.bad{border-color:rgba(251,113,133,.45)}
+  </style>
+</head>
+<body>
+  <div class="box">
+    <div class="top">
+      <div class="logo">🔐</div>
+      <div>
+        <h1>DIGIY — GO PIN</h1>
+        <div class="sub">BONNE AFFAIRE • Connexion rapide terrain</div>
+      </div>
+    </div>
+
+    <div class="pill" id="pillNext">next: —</div>
+
+    <div class="label">Slug</div>
+    <input class="input" id="slug" placeholder="ex: chez-astou-saly" />
+
+    <div class="label">Téléphone</div>
+    <input class="input" id="phone" inputmode="tel" placeholder="+22177xxxxxxx" />
+
+    <div class="label">PIN</div>
+    <input class="input" id="pin" inputmode="numeric" placeholder="••••" />
+
+    <div class="row">
+      <button class="btn btn-main" id="btnGo">🔓 Ouvrir</button>
+      <button class="btn btn-ghost" id="btnBack">← Retour</button>
+    </div>
+
+    <div class="toast" id="toast">Prêt.</div>
+  </div>
+
+  <script>
+    (function(){
+      const $ = (id)=>document.getElementById(id);
+      function qp(k){
+        try{ return (new URLSearchParams(location.search).get(k) || "").trim(); }catch(_){ return ""; }
+      }
+      function toast(msg, kind){
+        const el = $("toast");
+        el.textContent = msg || "";
+        el.classList.remove("ok","bad");
+        if(kind) el.classList.add(kind);
+      }
+
+      const next = qp("next") || "./";
+      $("pillNext").textContent = "next: " + next;
+
+      // slug auto depuis URL (si fourni)
+      const s0 = qp("slug") || window.DIGIY_GUARD?.getSlug?.() || "";
+      if(s0) $("slug").value = s0;
+
+      $("btnBack").onclick = ()=> location.href = next;
+
+      $("btnGo").onclick = async ()=>{
+        const slug = ($("slug").value || "").trim();
+        const phone = ($("phone").value || "").trim();
+        const pin = ($("pin").value || "").trim();
+
+        if(!slug) return toast("Slug requis.", "bad");
+        if(!phone) return toast("Téléphone requis.", "bad");
+        if(!pin) return toast("PIN requis.", "bad");
+
+        if(!window.DIGIY_GUARD?.loginWithPin){
+          return toast("guard.js: loginWithPin introuvable.", "bad");
+        }
+
+        toast("Connexion…", "");
+        try{
+          const r = await window.DIGIY_GUARD.loginWithPin(slug, phone, pin);
+          if(r?.ok){
+            toast("✅ Connecté.", "ok");
+            setTimeout(()=> location.href = next, 220);
+            return;
+          }
+          toast(r?.error || "Refus.", "bad");
+        }catch(e){
+          console.error(e);
+          toast("Erreur: " + (e?.message || "inconnue"), "bad");
+        }
+      };
+    })();
+  </script>
+</body>
+</html>
