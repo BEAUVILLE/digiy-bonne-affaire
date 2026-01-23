@@ -170,55 +170,53 @@
   }
 
   // =============================
-  // LOGIN (slug + phone + pin -> RPC)
-  // =============================
-  async function loginWithPin(slug, phone, pin){
-    const sb = getSb();
-    if(!sb) return { ok:false, error:"Supabase non initialisé (script Supabase manquant ou bloqué)" };
+// LOGIN (phone + pin -> RPC)
+// =============================
+async function loginWithPin(phone, pin){
+  const sb = getSb();
+  if(!sb) return { ok:false, error:"Supabase non initialisé (script Supabase manquant ou bloqué)" };
 
-    slug  = cleanSlug(slug || getSlug());
-    phone = String(phone || "").trim();
-    pin   = String(pin || "").trim();
+  phone = String(phone || "").trim();
+  pin   = String(pin || "").trim();
 
-    if(!slug || !phone || !pin){
-      return { ok:false, error:"Slug, téléphone et PIN requis" };
-    }
-
-    const payload = {
-      p_phone: phone,
-      p_pin: pin,
-      p_slug: slug,
-      p_module: "bonne_affaire"
-    };
-
-    const { data, error } = await sb.rpc("verify_access_pin", payload);
-    if(error) return { ok:false, error: error.message };
-
-    const res = (typeof data === "string") ? safeJsonParse(data) : data;
-    console.log("VERIFY_ACCESS_PIN_RES", res);
-
-    if(!res?.ok || !res?.owner_id){
-      return { ok:false, error: res?.reason || res?.error || "Accès refusé" };
-    }
-
-    const session = setSession({
-      ok: true,
-      module: "bonne_affaire",
-      owner_id: res.owner_id,
-      slug: cleanSlug(res.slug || slug),
-      title: res.title || "",
-      phone: res.phone || phone
-    });
-
-    // mirrors cross-modules (utile)
-    lsSet(K.PRO_ID, session.owner_id);
-    lsSet(K.SLUG, session.slug);
-    if(session.title) lsSet(K.TITLE, session.title);
-    if(session.phone) lsSet(K.PHONE, session.phone);
-
-    return { ok:true, session };
+  if(!phone || !pin){
+    return { ok:false, error:"Téléphone et PIN requis" };
   }
 
+  const payload = {
+    p_phone: phone,
+    p_pin: pin,
+    p_module: "bonne_affaire"
+  };
+
+  // ✅ RPC dédiée (sans slug)
+  const { data, error } = await sb.rpc("verify_access_pin_phone", payload);
+  if(error) return { ok:false, error: error.message };
+
+  const res = (typeof data === "string") ? safeJsonParse(data) : data;
+  console.log("VERIFY_ACCESS_PIN_PHONE_RES", res);
+
+  if(!res?.ok || !res?.owner_id){
+    return { ok:false, error: res?.reason || res?.error || "Accès refusé" };
+  }
+
+  const session = setSession({
+    ok: true,
+    module: "bonne_affaire",
+    owner_id: res.owner_id,
+    slug: cleanSlug(res.slug || ""),
+    title: res.title || "",
+    phone: res.phone || phone
+  });
+
+  // mirrors cross-modules
+  lsSet(K.PRO_ID, session.owner_id);
+  if(session.slug) lsSet(K.SLUG, session.slug);
+  if(session.title) lsSet(K.TITLE, session.title);
+  if(session.phone) lsSet(K.PHONE, session.phone);
+
+  return { ok:true, session };
+}
   // =============================
   // BOOT (Public safe)
   // =============================
