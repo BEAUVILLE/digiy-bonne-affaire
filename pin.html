@@ -46,14 +46,14 @@
     <div class="pill" id="pillNext">next: —</div>
 
     <div class="label">Téléphone</div>
-    <input class="input" id="phone" inputmode="tel" placeholder="+22177xxxxxxx" />
+    <input class="input" id="phone" inputmode="tel" placeholder="+22177xxxxxxx" autocomplete="tel" />
 
     <div class="label">PIN (auto = 4 derniers chiffres)</div>
-    <input class="input" id="pin" inputmode="numeric" placeholder="••••" />
+    <input class="input" id="pin" inputmode="numeric" placeholder="••••" autocomplete="one-time-code" />
 
     <div class="row">
-      <button class="btn btn-main" id="btnGo">🔓 Ouvrir</button>
-      <button class="btn btn-ghost" id="btnBack">← Retour</button>
+      <button class="btn btn-main" id="btnGo" type="button">🔓 Ouvrir</button>
+      <button class="btn btn-ghost" id="btnBack" type="button">← Retour</button>
     </div>
 
     <div class="toast" id="toast">Prêt.</div>
@@ -61,11 +61,14 @@
 
   <script>
     (function(){
+      "use strict";
       const $ = (id)=>document.getElementById(id);
 
       function qp(k){
-        try{ return (new URLSearchParams(location.search).get(k) || "").trim(); }catch(_){ return ""; }
+        try{ return (new URLSearchParams(location.search).get(k) || "").trim(); }
+        catch(_){ return ""; }
       }
+
       function toast(msg, kind){
         const el = $("toast");
         el.textContent = msg || "";
@@ -87,7 +90,7 @@
       const next = qp("next") || "./";
       $("pillNext").textContent = "next: " + next;
 
-      $("btnBack").onclick = ()=> location.href = next;
+      $("btnBack").addEventListener("click", ()=> location.href = next);
 
       // auto PIN sans écraser si déjà tapé
       $("phone").addEventListener("input", ()=>{
@@ -98,23 +101,36 @@
         }
       });
 
+      // Enter = ouvrir
+      ["phone","pin"].forEach((id)=>{
+        const el = $(id);
+        if(!el) return;
+        el.addEventListener("keydown", (e)=>{
+          if(e.key === "Enter"){
+            e.preventDefault();
+            $("btnGo").click();
+          }
+        });
+      });
+
       // =============================
       // LOGIN
       // =============================
-      $("btnGo").onclick = async ()=>{
+      $("btnGo").addEventListener("click", async ()=>{
         const phone = ($("phone").value || "").trim();
         const pin = ($("pin").value || "").trim();
 
         if(!phone) return toast("Téléphone requis.", "bad");
         if(!pin) return toast("PIN requis.", "bad");
 
-        if(!window.DIGIY_GUARD?.loginWithPin){
+        const guard = window.DIGIY_GUARD;
+        if(!guard?.loginWithPin){
           return toast("guard.js: loginWithPin introuvable.", "bad");
         }
 
         toast("Connexion…", "");
         try{
-          const r = await window.DIGIY_GUARD.loginWithPin(phone, pin);
+          const r = await guard.loginWithPin(phone, pin);
           if(r?.ok){
             toast("✅ Connecté.", "ok");
             setTimeout(()=> location.href = next, 220);
@@ -125,7 +141,10 @@
           console.error(e);
           toast("Erreur: " + (e?.message || "inconnue"), "bad");
         }
-      };
+      });
+
+      // focus direct
+      setTimeout(()=> $("phone")?.focus(), 50);
     })();
   </script>
 </body>
