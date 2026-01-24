@@ -613,10 +613,12 @@
     }
 
     function loadCtx(){
-      CTX.slug = (qp("slug") || localStorage.getItem("DIGIY_SLUG") || "").trim();
-      const pill = $("pillCtx");
-      if(pill) pill.textContent = "slug: " + (CTX.slug || "—");
-    }
+  // PUBLIC: jamais de slug persistant
+  CTX.slug = "";
+  const pill = $("pillCtx");
+  if(pill) pill.textContent = "slug: —";
+}
+
 
     // =============================
 // NAV (aucune redirection, jamais)
