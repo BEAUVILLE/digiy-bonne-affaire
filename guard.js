@@ -1,18 +1,21 @@
 /* =========================
-   DIGIY BONNE AFFAIRE — GUARD (GH PAGES SAFE)
-   - Public libre: aucune redirection automatique
-   - Slug source of truth: URL > session > localStorage
+   DIGIY BONNE AFFAIRE — GUARD (GH PAGES SAFE) ✅ V2
+   - PUBLIC libre: aucune redirection automatique
+   - Mode PUBLIC "NO-SLUG": purge slug + n’injecte jamais slug dans les liens
+   - Mode PRO: slug autorisé (URL > session > localStorage)
    - Login: phone + pin -> RPC verify_access_pin_phone (module: "bonne_affaire")
    - Session longue (90 jours) terrain
-   - Expose:
-     DIGIY_GUARD.boot({login})
+
+   Expose:
+     DIGIY_GUARD.boot({ login, publicNoSlug, requireAuth })
      DIGIY_GUARD.isAuth()
      DIGIY_GUARD.loginWithPin(phone, pin)
      DIGIY_GUARD.logout(redirect)
      DIGIY_GUARD.getSession()
      DIGIY_GUARD.getSlug()
-     DIGIY_GUARD.withSlug(url)
-     DIGIY_GUARD.go(url)
+     DIGIY_GUARD.withSlug(url, {force})
+     DIGIY_GUARD.go(url, {force})
+     DIGIY_GUARD.purgePublicSlug()
 ========================= */
 (function(){
   "use strict";
@@ -122,7 +125,19 @@
   }
 
   // =============================
-  // SLUG source of truth
+  // MODE FLAGS (publicNoSlug)
+  // =============================
+  const STATE = {
+    publicNoSlug: false
+  };
+
+  function purgePublicSlug(){
+    // ✅ on purge seulement le slug, pas la session
+    lsDel(K.SLUG);
+  }
+
+  // =============================
+  // SLUG source of truth (PRO)
   // =============================
   function safeSessionObj(){
     const s = getSession();
@@ -130,6 +145,7 @@
   }
 
   function getSlug(){
+    if(STATE.publicNoSlug) return ""; // ✅ PUBLIC: jamais
     const u = cleanSlug(urlSlug());
     if(u) return u;
 
@@ -141,6 +157,7 @@
   }
 
   function syncSlugFromUrl(){
+    if(STATE.publicNoSlug) return null; // ✅ PUBLIC: jamais
     const u = cleanSlug(urlSlug());
     if(!u) return null;
     const cur = cleanSlug(lsGet(K.SLUG) || "");
@@ -148,7 +165,13 @@
     return u;
   }
 
-  function withSlug(url){
+  function withSlug(url, opts){
+    // opts.force === false -> n’injecte jamais
+    if(opts && opts.force === false) return url;
+
+    // mode PUBLIC no-slug -> n’injecte jamais
+    if(STATE.publicNoSlug) return url;
+
     const s = getSlug();
     try{
       const u = new URL(url, location.href);
@@ -160,8 +183,8 @@
     }
   }
 
-  function go(url){
-    location.replace(withSlug(url));
+  function go(url, opts){
+    location.replace(withSlug(url, opts));
   }
 
   // =============================
@@ -184,7 +207,6 @@
       p_module: "bonne_affaire"
     };
 
-    // ✅ RPC dédiée (sans slug)
     const { data, error } = await sb.rpc("verify_access_pin_phone", payload);
     if(error) return { ok:false, error: error.message };
 
@@ -202,7 +224,7 @@
       phone: res.phone || phone
     });
 
-    // mirrors cross-modules
+    // mirrors cross-modules (PRO)
     lsSet(K.PRO_ID, session.owner_id);
     if(session.slug)  lsSet(K.SLUG, session.slug);
     if(session.title) lsSet(K.TITLE, session.title);
@@ -212,16 +234,24 @@
   }
 
   // =============================
-  // BOOT (Public safe)
+  // BOOT
   // =============================
   async function boot(options){
     const loginUrl = options?.login || "./pin.html";
-    syncSlugFromUrl();
 
-    // PUBLIC: on ne force jamais.
-    // Si session existe, on aligne juste le slug.
+    // ✅ PUBLIC NO-SLUG : purge et verrouille le mode
+    if(options?.publicNoSlug){
+      STATE.publicNoSlug = true;
+      purgePublicSlug();
+    }else{
+      STATE.publicNoSlug = false;
+      syncSlugFromUrl();
+    }
+
     const s = getSession();
-    if(s && s.owner_id){
+
+    // ✅ si connecté, on aligne le slug PRO (sauf publicNoSlug)
+    if(s && s.owner_id && !STATE.publicNoSlug){
       const urlS = cleanSlug(urlSlug());
       const finalSlug = urlS || cleanSlug(s.slug) || cleanSlug(lsGet(K.SLUG) || "");
       if(finalSlug && finalSlug !== cleanSlug(s.slug)){
@@ -232,7 +262,12 @@
       return { ok:true, session:s, slug: finalSlug || "" };
     }
 
-    // Pas connecté -> ok mais public
+    // ✅ requireAuth: si pas connecté, on propose le login (mais on ne force pas ici)
+    if(options?.requireAuth && !(s && s.owner_id)){
+      return { ok:false, requireAuth:true, login: loginUrl, slug: getSlug() };
+    }
+
+    // Public
     return { ok:false, public:true, login: loginUrl, slug: getSlug() };
   }
 
@@ -241,11 +276,13 @@
   // =============================
   function logout(redirect){
     clearSession();
+    // optionnel: purge slug aussi
+    purgePublicSlug();
     location.replace(redirect || "./pin.html");
   }
 
   // =============================
-  // EXPORT (ne casse pas si déjà existant)
+  // EXPORT
   // =============================
   window.DIGIY_GUARD = window.DIGIY_GUARD || {};
   window.DIGIY_GUARD.getSb = getSb;
@@ -258,7 +295,8 @@
   window.DIGIY_GUARD.withSlug = withSlug;
   window.DIGIY_GUARD.go = go;
   window.DIGIY_GUARD.syncSlugFromUrl = syncSlugFromUrl;
+  window.DIGIY_GUARD.purgePublicSlug = purgePublicSlug;
 
-  // init
+  // init (ne fait rien si publicNoSlug pas activé)
   syncSlugFromUrl();
 })();
