@@ -295,7 +295,6 @@
         <div class="pill" id="pillSlug">slug: —</div>
         <div class="pill" id="pillOwner">owner: —</div>
 
-        <!-- ✅ Liens slug-safe appliqués au boot -->
         <a class="btn btn-ghost" id="btnBackAds" href="./index.html">← Retour annonces</a>
         <a class="btn btn-ghost" id="btnGoPublic" href="./index.html">🏪 Vitrine</a>
 
@@ -358,7 +357,6 @@
     </div>
   </div>
 
-  <!-- bottom mobile nav -->
   <div class="bottomNav">
     <div class="bar">
       <a class="btn btn-ghost" id="mBackAds" href="./index.html">← Annonces</a>
@@ -396,7 +394,6 @@
       if(kind) el.classList.add(kind);
     }
 
-    // ✅ money() n'ajoute plus la devise en dur
     function money(x){
       const n = Number(x||0);
       if(!isFinite(n) || n<=0) return "";
@@ -424,66 +421,71 @@
       location.href = "./pin.html?next=" + next;
     }
 
+    // ==========================
+    // ✅ BOOT (FIX: fonction bien fermée)
+    // ==========================
     async function boot(){
       toast("🔐 Vérification…", "");
 
-   // Boot guard (cockpit = PRO strict)
-try{
-  if(window.DIGIY_GUARD?.boot){
-    await window.DIGIY_GUARD.boot({ login: "./pin.html" });
-  }
-}catch(e){
-  console.warn("GUARD boot failed:", e);
-  toast("⛔ Guard indisponible — redirection GO PIN…", "bad");
-  setTimeout(requireAuthOrGoPin, 250);
-  return false;
-}
+      try{
+        if(window.DIGIY_GUARD?.boot){
+          // cockpit = PRO strict (si ta V2 guard est en place, tu peux mettre requireAuth:true)
+          await window.DIGIY_GUARD.boot({ login: "./pin.html", requireAuth: true });
+        }
+      }catch(e){
+        console.warn("GUARD boot failed:", e);
+        toast("⛔ Guard indisponible — redirection GO PIN…", "bad");
+        setTimeout(requireAuthOrGoPin, 250);
+        return false;
+      }
 
-const sess = (window.DIGIY_GUARD?.getSession ? window.DIGIY_GUARD.getSession() : null);
+      const sess = (window.DIGIY_GUARD?.getSession ? window.DIGIY_GUARD.getSession() : null);
 
-// owner_id = clé PRO
-CTX.owner_id = (sess?.owner_id || localStorage.getItem("DIGIY_PRO_ID") || "").trim();
+      // owner_id = clé PRO
+      CTX.owner_id = (sess?.owner_id || localStorage.getItem("DIGIY_PRO_ID") || "").trim();
 
-// slug = BONUS (affichage seulement)
-CTX.slug  = (qp("slug") || localStorage.getItem("DIGIY_SLUG") || "").trim();
-CTX.phone = (sess?.phone || localStorage.getItem("DIGIY_PHONE") || "").trim();
-CTX.title = (sess?.title || localStorage.getItem("DIGIY_TITLE") || "").trim();
+      // slug = BONUS (affichage seulement)
+      CTX.slug  = (qp("slug") || localStorage.getItem("DIGIY_SLUG") || "").trim();
+      CTX.phone = (sess?.phone || localStorage.getItem("DIGIY_PHONE") || "").trim();
+      CTX.title = (sess?.title || localStorage.getItem("DIGIY_TITLE") || "").trim();
 
-setPills();
+      setPills();
 
-if(!CTX.owner_id){
-  toast("⛔ Accès PRO requis — redirection GO PIN…", "bad");
-  setTimeout(requireAuthOrGoPin, 250);
-  return false;
-}
+      if(!CTX.owner_id){
+        toast("⛔ Accès PRO requis — redirection GO PIN…", "bad");
+        setTimeout(requireAuthOrGoPin, 250);
+        return false;
+      }
 
-// ✅ Links vers PUBLIC : pas besoin de slug ici (cockpit doit marcher sans)
-const links = [
-  ["btnBackAds","./index.html"],
-  ["btnGoPublic","./index.html"],
-  ["mBackAds","./index.html"],
-  ["mGoPublic","./index.html"]
-];
+      // ✅ Liens vers PUBLIC: cockpit doit marcher sans slug
+      const links = [
+        ["btnBackAds","./index.html"],
+        ["btnGoPublic","./index.html"],
+        ["mBackAds","./index.html"],
+        ["mGoPublic","./index.html"]
+      ];
 
-// si tu veux garder slug quand il existe → optionnel
-const addSlug = (href)=>{
-  if(!CTX.slug) return href;
-  try{
-    const u = new URL(href, location.href);
-    u.searchParams.set("slug", CTX.slug);
-    return u.toString();
-  }catch(_){
-    return href + (href.includes("?") ? "&" : "?") + "slug=" + encodeURIComponent(CTX.slug);
-  }
-};
+      // optionnel: si tu veux garder slug seulement quand il existe
+      const addSlug = (href)=>{
+        if(!CTX.slug) return href;
+        try{
+          const u = new URL(href, location.href);
+          u.searchParams.set("slug", CTX.slug);
+          return u.toString();
+        }catch(_){
+          return href + (href.includes("?") ? "&" : "?") + "slug=" + encodeURIComponent(CTX.slug);
+        }
+      };
 
-for(const [id, href] of links){
-  const el = $(id);
-  if(el) el.href = addSlug(href);
-}
+      for(const [id, href] of links){
+        const el = $(id);
+        if(el) el.href = addSlug(href);
+      }
 
-toast("✅ Connecté. Chargement cockpit…", "ok");
-return true;
+      toast("✅ Connecté. Chargement cockpit…", "ok");
+      return true;
+    } // ✅ FIN boot()
+
     // ==============
     // SUPABASE CLIENT
     // ==============
@@ -603,7 +605,6 @@ return true;
         el.appendChild(card);
       }
 
-      // actions
       el.querySelectorAll("button[data-act]").forEach(btn=>{
         btn.addEventListener("click", async ()=>{
           const act = btn.getAttribute("data-act");
@@ -707,7 +708,6 @@ return true;
 
       toast("⏳ Chargement de tes annonces…", "");
 
-      // list
       const r1 = await callRpc(RPC.listMine, { p_owner_id: CTX.owner_id });
       if(r1.ok){
         ALL = (r1.data && r1.data.items) ? r1.data.items : (Array.isArray(r1.data) ? r1.data : []);
@@ -715,10 +715,14 @@ return true;
         ALL = [];
       }
 
-      // stats
       const rS = await callRpc(RPC.stats, { p_owner_id: CTX.owner_id });
       if(rS.ok && rS.data && typeof rS.data === "object") setKpi(rS.data);
-      else setKpi({ total: ALL.length, active: ALL.filter(x=>String(x.status||"").toLowerCase()==="active").length, draft: ALL.filter(x=>String(x.status||"").toLowerCase()==="draft").length, exp_soon: 0 });
+      else setKpi({
+        total: ALL.length,
+        active: ALL.filter(x=>String(x.status||"").toLowerCase()==="active").length,
+        draft: ALL.filter(x=>String(x.status||"").toLowerCase()==="draft").length,
+        exp_soon: 0
+      });
 
       applyFilters();
     }
