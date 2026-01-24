@@ -912,17 +912,23 @@ function wireNav(){
     }
 
     // =============================
-    // INIT
-    // =============================
-    document.addEventListener("DOMContentLoaded", ()=>{
-      loadCtx();
-      wireNav();        // ✅ Cockpit PRO OK
-      bindButtons();
-      render([]);       // vitrine jamais vide
-      refresh();        // annonces si dispo
-      console.log("🚆 DIGIY BA READY (NO GUARD)", { slug: CTX.slug });
-    });
-  })();
+// INIT (PUBLIC — NEUTRE)
+// =============================
+document.addEventListener("DOMContentLoaded", ()=>{
+
+  // ✅ PUBLIC : purge totale du slug (aucun business ne doit coller)
+  localStorage.removeItem("DIGIY_SLUG");
+
+  // ✅ Boot page publique
+  loadCtx();        // slug affichage seulement (sera vide)
+  wireNav();        // navigation neutre
+  bindButtons();    // packs + refresh + reset
+  render([]);       // vitrine jamais vide
+  refresh();        // charge annonces publiques
+
+  console.log("🚆 DIGIY BA READY — PUBLIC SLUG PURGÉ ✅");
+});
+
   </script>
 </body>
 </html>
