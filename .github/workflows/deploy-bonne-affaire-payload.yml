@@ -1,0 +1,63 @@
+name: Deploy Bonne Affaire 7 langues
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/deploy-bonne-affaire-payload.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupérer le dépôt
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Reconstituer et installer le module
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat deploy_payload/part-*.txt | tr -d '\n\r ' | base64 -d > /tmp/bonne-affaire.zip
+          echo "c334158ca7dadbb93cfe7f506e8f2df4b92b595192ad9a382ee2834c7be46242  /tmp/bonne-affaire.zip" | sha256sum -c -
+          rm -rf /tmp/bonne-affaire
+          mkdir -p /tmp/bonne-affaire
+          unzip -q /tmp/bonne-affaire.zip -d /tmp/bonne-affaire
+          SRC="/tmp/bonne-affaire/DIGIY_BONNE_AFFAIRE_PIERRE_DOREE_7_LANGUES_REELLES"
+          test -f "$SRC/index.html"
+          cp "$SRC/index.html" ./index.html
+          for lang in fr en es de it nl ar; do
+            mkdir -p "$lang"
+            cp "$SRC/$lang/index.html" "$lang/index.html"
+          done
+          rm -rf deploy_payload
+          rm -f .github/workflows/deploy-bonne-affaire-payload.yml
+
+      - name: Vérifier les sept portes
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f index.html
+          for lang in fr en es de it nl ar; do
+            test -s "$lang/index.html"
+            grep -q "lang=\"$lang\"" "$lang/index.html"
+          done
+          grep -q 'dir="rtl"' ar/index.html
+
+      - name: Publier
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Aucun changement à publier."
+            exit 0
+          fi
+          git commit -m "Déployer Bonne Affaire pierre dorée en 7 langues"
+          git push
