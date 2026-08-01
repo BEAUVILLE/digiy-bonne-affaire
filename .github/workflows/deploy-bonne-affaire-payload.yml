@@ -3,8 +3,7 @@ name: Deploy Bonne Affaire 7 langues
 on:
   push:
     branches: [main]
-    paths:
-      - ".github/workflows/deploy-bonne-affaire-payload.yml"
+  workflow_dispatch:
 
 permissions:
   contents: write
