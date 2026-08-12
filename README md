@@ -1,140 +1,90 @@
-# DIGIY BONNE AFFAIRE — Particulier à Particulier (0% Commission)
+# DIGIY BONNE AFFAIRE — annonces directes, 0 % commission
 
-DIGIY BONNE AFFAIRE est la vitrine officielle de l’écosystème **DIGIYLYFE**, dédiée aux annonces entre particuliers et vendeurs professionnels.
+DIGIY BONNE AFFAIRE est la vitrine de l’écosystème **DIGIYLYFE** dédiée aux annonces entre particuliers et aux vendeurs professionnels.
 
-Achetez, vendez, échangez :  
-- **Voitures**  
-- **Terrains & immobilier**  
-- **Scooters et équipements**  
-- **Matériel professionnel**  
+Achetez, vendez, échangez :
+- **Voitures**
+- **Terrains & immobilier**
+- **Scooters et équipements**
+- **Matériel professionnel**
 - **Objets d'occasion**
+- **Services et autres bonnes affaires**
 
-Avec un principe simple :  
-## 🎯 Paiement direct entre vendeur et acheteur — **DIGIY ne prend **0% de commission**.
-
----
-
-## 🚀 Fonctionnalités
-
-### 👥 Pour les particuliers
-- Publier une annonce à l’unité (ticket simple)  
-- Contact direct par WhatsApp ou Appel  
-- Mise en avant de l’annonce pendant 30 jours  
-- Parfait pour vendre un véhicule, un terrain, un appareil ou tout objet ponctuel
-
-### 🧰 Pour les professionnels (autos, agences, marchands, pros)
-Abonnements mensuels :
-
-- **Starter — 9 900 F / mois**  
-  Jusqu’à 10 annonces + mise en avant simple
-
-- **Business — 20 000 F / mois**  
-  Jusqu’à 30 annonces + 3 annonces boostées / mois + badge Vendeur Confiance
-
-- **Premium — 28 000 F / mois**  
-  Annonces illimitées + priorité + badge Boutique Premium
-
-Les PRO profitent d’une vitrine DIGIY, d’un badge de confiance et d’un trafic continu venant de DIGIYLYFE.
+Principe : **paiement direct entre vendeur et acheteur — DIGIY prend 0 % de commission sur la vente.**
 
 ---
 
-## 🧱 Structure du projet
+## Doctrine commerciale actuelle
 
-Ce dépôt contient une page **HTML statique** :
+BONNE AFFAIRE distingue deux usages.
 
-- `index.html` → page principale DIGIY BONNE AFFAIRE  
-  - Hero + présentation
-  - Boutons “Déposer une annonce (Particulier)” et “Je suis PRO”
-  - Section Abonnements PRO
-  - Exemples d’annonces (cartes)
-  - Boutons contact WhatsApp / Appel
-  - Footer DIGIYLYFE
+### 👥 Vente ponctuelle — annonce à l’unité
 
-Aucun backend n’est requis pour cette page.  
-Elle peut être intégrée dans DIGIY HUB ou dans n’importe quel site DIGIY.
+Pour le particulier ou le vendeur occasionnel :
+- **3 000 FCFA — 7 jours**
+- **5 000 FCFA — 14 jours**
+- **10 000 FCFA — 30 jours**
+
+Europe :
+- **9 € — 7 jours**
+- **15 € — 14 jours**
+- **25 € — 30 jours**
+
+Le paiement couvre la publication, la modération et la durée de visibilité. La vente, le paiement du bien et les vérifications restent directs entre les utilisateurs.
+
+### 🧰 Vente régulière — professionnel
+
+Pour les vendeurs dont l’activité est régulière :
+
+- **ADHÉRENT 2 — 28 000 FCFA / mois**
+- présence professionnelle stable ;
+- identité vendeur clairement identifiable ;
+- contact direct avec les clients ;
+- 0 % commission DIGIY sur les ventes.
+
+La présence PRO ne remplace pas les annonces ponctuelles : elle répond à un usage professionnel récurrent.
+
+**Règle commerciale :**
+> Une vente ponctuelle ? Payez seulement votre annonce.  
+> Vous en faites votre métier ? Prenez votre place professionnelle.
+
+Les anciennes formules **Starter 9 900 FCFA** et **Business 20 000 FCFA** sont retirées de la doctrine commerciale active afin de conserver une offre simple.
 
 ---
 
-## 🌍 Déployer sur GitHub Pages
+## Fonctionnalités
 
-1. Cloner le repo :
+- Parcours des annonces
+- Recherche par catégorie et territoire
+- Recherche texte et vocale
+- Contact direct par WhatsApp ou appel
+- Publication préparée avant diffusion
+- Photos demandées par WhatsApp
+- Tarification à la durée pour les annonces ponctuelles
+- Porte professionnelle vers ADHÉRENT 2
+- 0 % commission DIGIY sur la vente
 
-```bash
-git clone https://github.com/<ton-repo>/digiy-bonne-affaire.git
-cd digiy-bonne-affaire
-Vérifier que index.html fonctionne en local
+---
 
-Pousser sur GitHub :
+## Structure principale
 
-bash
-Copier le code
-git add .
-git commit -m "Initial DIGIY BONNE AFFAIRE"
-git push origin main
-Activer GitHub Pages :
+- `index.html` — accueil BONNE AFFAIRE
+- `annonces.html` — consultation des annonces
+- `publier.html` — préparation d’une annonce
+- `tarifs-annonce.html` — tarifs annonces + porte PRO
+- `cockpit-pro.html` — espace professionnel existant
+- `assets/tarifs-annonce.js` — logique commerciale et tarifs
 
-Settings → Pages
+---
 
-Source : Deploy from branch
+## Protection DIGIY
 
-Branch : main / root
+DIGIYLYFE facilite la mise en relation. Chaque utilisateur doit vérifier l’état du bien, les documents et les modalités de paiement. Ne jamais payer sans preuve ou garantie suffisante.
 
-Sauvegarder
+---
 
-GitHub génère ensuite une URL publique :
+## Positionnement DIGIYLYFE
 
-arduino
-Copier le code
-https://<ton-pseudo>.github.io/digiy-bonne-affaire/
-Cette URL peut être intégrée :
+BONNE AFFAIRE fait partie de l’écosystème DIGIYLYFE aux côtés de DRIVER, LOC, RESTO, MARKET, JOBS, EXPLORE, RÉSEAU et des autres portes métier.
 
-dans DIGIY HUB
-
-sur digiylyfe.com
-
-partagée aux utilisateurs
-
-🔧 Personnalisation
-Modifier les boutons
-Les liens suivants peuvent être adaptés :
-
-Inscription PRO →
-https://beauville.github.io/inscription-digiy/?module=bonne_affaire&plan=starter
-
-Annonce Particulier →
-https://wa.me/221771342889?text=Bonjour%20DIGIY,%20je%20veux%20poser%20une%20annonce%20(Bonne%20Affaire).
-
-Modifier les numéros WhatsApp
-Changer directement dans les href="https://wa.me/..." dans les blocs annonces.
-
-Modifier les annonces
-Localiser les <article class="shop-card"> dans index.html.
-
-⚠️ Disclaimer (Protection DIGIY)
-DIGIYLYFE facilite la mise en relation.
-Chaque utilisateur doit vérifier l’état du bien, les papiers et les modalités de paiement.
-Ne jamais payer sans garantie.
-
-🦅 DIGIYLYFE — Super App Africaine 0% Commission
-DIGIY BONNE AFFAIRE fait partie de l’écosystème :
-
-DIGIY DRIVER
-
-DIGIY LOC
-
-DIGIY RESTO
-
-DIGIY MARKET
-
-DIGIY JOBS
-
-DIGIY STORE PRO
-
-DIGIY PAY
-
-DIGIY HUB
-
-DIGIYLYFE — L’aigle qui survole toutes les apps.
-
-yaml
-Copier le code
+**Contact direct · Paiement direct · 0 % commission.**
