@@ -1,0 +1,100 @@
+/* DIGIY BONNE AFFAIRE — thème DIGIY clair · 2026-08-12 */
+:root{
+  --paper:#fffdf7;
+  --paper2:#f7f1e4;
+  --sand:#edf4e9;
+  --gold:#b98724;
+  --gold2:#f0d277;
+  --sage:#2f7d5d;
+  --ink:#173227;
+  --muted:#66756d;
+  --line:rgba(34,112,80,.17);
+  --shadow:0 16px 38px rgba(38,92,68,.11);
+}
+body{
+  color:var(--ink)!important;
+  background:
+    radial-gradient(820px 420px at 12% -6%,rgba(240,210,119,.20),transparent 58%),
+    radial-gradient(760px 460px at 100% 8%,rgba(86,160,123,.12),transparent 56%),
+    linear-gradient(180deg,#fffdf8 0%,#f7f3e8 52%,#edf4e9 100%)!important;
+}
+.topbar{
+  background:rgba(255,253,247,.94)!important;
+  border-bottom:1px solid rgba(47,125,93,.10);
+}
+.icon-btn,.btn,.chip,.field,.search,.tab,.card,.step{
+  border-color:var(--line)!important;
+  background:#fffef9!important;
+  color:var(--ink)!important;
+}
+.btn.primary,.mic,.tab.active,.langbar a.active{
+  background:linear-gradient(135deg,#f4dc93,#dfb850)!important;
+  border-color:#c89a39!important;
+  color:#26361d!important;
+}
+.btn.sage,.chip.active{
+  background:#e6f1e8!important;
+  border-color:rgba(47,125,93,.28)!important;
+  color:#245e48!important;
+}
+.langbar a{
+  background:#fffef9!important;
+  border-color:rgba(47,125,93,.16)!important;
+  color:#315947!important;
+}
+.hero{
+  background:
+    radial-gradient(420px 180px at 100% 0%,rgba(240,210,119,.17),transparent 62%),
+    linear-gradient(180deg,rgba(255,254,249,.98),rgba(249,247,238,.98))!important;
+  border-color:rgba(47,125,93,.16)!important;
+  box-shadow:0 16px 38px rgba(38,92,68,.10)!important;
+}
+.eyebrow{
+  background:#e8f2e9!important;
+  color:#2d6c51!important;
+  border:1px solid rgba(47,125,93,.14);
+}
+.hero h1,.action-card strong,.section h2,.ad h3,.card h3,.step strong{
+  color:#236b4d!important;
+}
+.hero p,.desc,.card ul{
+  color:#4e6258!important;
+}
+.proof,.price,.card .amount{
+  color:#b17e1d!important;
+}
+.action-card,.section,.ad,.card,.step{
+  background:rgba(255,254,249,.96)!important;
+  border-color:rgba(47,125,93,.15)!important;
+  box-shadow:0 9px 24px rgba(38,92,68,.08)!important;
+}
+.action-card .arrow{
+  color:#b98724!important;
+}
+.ad-visual{
+  background:
+    radial-gradient(circle at 84% 0%,rgba(255,255,255,.78),transparent 42%),
+    linear-gradient(145deg,#f3d989,#8bc19e)!important;
+  color:#173227!important;
+}
+.badge{
+  background:rgba(255,253,247,.86)!important;
+  color:#315947!important;
+}
+.note{
+  background:#eef5ec!important;
+  color:#53685d!important;
+}
+.bottomnav{
+  background:rgba(255,253,247,.96)!important;
+  border-color:rgba(47,125,93,.15)!important;
+  box-shadow:0 14px 35px rgba(38,92,68,.14)!important;
+}
+.bottomnav a.active{
+  background:linear-gradient(135deg,#e9f3e8,#f4df9c)!important;
+  color:#285d47!important;
+}
+.search:focus,.field:focus{
+  border-color:#4d9a74!important;
+  box-shadow:0 0 0 3px rgba(77,154,116,.14)!important;
+}
