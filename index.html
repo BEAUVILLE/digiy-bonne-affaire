@@ -1,1 +1,539 @@
-<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#eef4e9"><title>DIGIY BONNE AFFAIRE — Contact direct</title><meta name="description" content="Parcourir, rechercher et publier des annonces en contact direct. 0 % commission DIGIY."><link rel="stylesheet" href="./assets/mobile.css"><link rel="stylesheet" href="./assets/digiy-light-theme.css?v=20260812-digiy-light-v1"><script src="./assets/mobile-i18n.js" defer></script><script src="./assets/photos-only.js" defer></script></head><body><div class="shell"><header class="topbar"><div class="langbar" aria-label="Langues"><a data-lang-link="fr" href="?lang=fr">FR</a><a data-lang-link="en" href="?lang=en">EN</a><a data-lang-link="es" href="?lang=es">ES</a><a data-lang-link="de" href="?lang=de">DE</a><a data-lang-link="it" href="?lang=it">IT</a><a data-lang-link="nl" href="?lang=nl">NL</a><a data-lang-link="ar" href="?lang=ar">AR</a></div></header><main><section class="hero"><span class="eyebrow" data-i18n="tag"></span><h1 data-i18n="hero"></h1><p data-i18n="lead"></p><p class="proof" data-i18n="proof"></p></section><nav class="action-grid" aria-label="Accès directs"><a class="action-card" data-nav="./annonces.html" href="./annonces.html"><span><strong data-i18n="openAds"></strong><small data-i18n="openAdsSub"></small></span><span class="arrow">→</span></a><a class="action-card" data-nav="./publier.html" href="./publier.html"><span><strong data-i18n="openPublish"></strong><small data-i18n="openPublishSub"></small></span><span class="arrow">→</span></a><a class="action-card" data-nav="./tarifs-annonce.html" href="./tarifs-annonce.html"><span><strong data-i18n="openPrices"></strong></span><span class="arrow">→</span></a></nav></main></div></body></html>
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DIGIY BONNE AFFAIRE · Standard DIGIYLYFE V2 · Tarifs + Publier · Atelier</title>
+<style>
+:root{--green:#073f32;--green2:#0d634b;--gold:#d8ad46;--cream:#f6f1e5;--paper:#fffefa;--ink:#173b31;--muted:#6e8179;--line:#dfe8e2}
+*{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--cream);color:var(--ink)}
+header{background:var(--green);color:#fff;border-bottom:4px solid var(--gold);padding:16px 14px}
+.wrap{max-width:980px;margin:auto}
+.headtop{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.brandmark{font-size:26px} .brand{font-weight:950;font-size:22px} .sub{font-size:11px;color:#eadfae;margin-top:3px}
+.zero{border:1px solid var(--gold);border-radius:999px;padding:7px 10px;color:#f2d77e;font-size:10px;font-weight:900;text-align:center;white-space:nowrap}
+.nav,.langs{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.nav a,.langs button{border:1px solid rgba(255,255,255,.25);background:transparent;color:#fff;border-radius:999px;padding:6px 9px;font-size:9px;font-weight:850;text-decoration:none;cursor:pointer}
+.langs button{background:#fffefa;color:var(--green);border-color:#e1e8e4} .langs button.active{background:var(--gold);border-color:var(--gold)}
+.join{margin-top:10px;display:flex;justify-content:space-between;gap:10px;align-items:center;background:rgba(255,255,255,.08);border:1px solid rgba(216,173,70,.55);border-radius:13px;padding:9px 10px}
+.join div{display:flex;flex-direction:column;gap:2px} .join strong{font-size:11px} .join span{font-size:9px;color:#e8e2ca}
+.join a{background:var(--gold);color:var(--green);text-decoration:none;border-radius:999px;padding:8px 10px;font-size:9px;font-weight:950;text-align:center}
+main{max-width:980px;margin:auto;padding:16px 8px 40px}
+.section{display:flex;align-items:center;gap:9px;margin-bottom:9px} .section .ico{width:38px;height:38px;background:#e4efe8;border-radius:50%;display:grid;place-items:center}
+.section h1{font-size:18px;margin:0} .section p{font-size:10px;color:var(--muted);margin:2px 0 0}
+.doctrine{background:#fff8df;border:1px solid #ead28a;border-left:4px solid var(--gold);border-radius:11px;padding:9px 10px;font-size:9px;line-height:1.35;color:#5e5124;margin-bottom:10px}
+.doctrine strong{display:block;color:var(--green);font-size:10px;margin-bottom:3px}
+.listing{display:grid;grid-template-columns:34% 66%;background:var(--paper);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin:10px 0;box-shadow:0 7px 18px rgba(7,63,50,.07)}
+.visual{position:relative;display:block;min-height:390px;background:#dce5df;overflow:hidden} .visual img{width:100%;height:100%;object-fit:cover;display:block}
+.visual-hint{position:absolute;bottom:7px;left:6px;right:6px;background:rgba(7,63,50,.9);color:#fff;border-radius:999px;padding:6px 5px;text-align:center;font-size:8px;font-weight:900}
+.info{padding:10px 9px} .eyebrow{color:var(--gold);font-size:7px;font-weight:950;letter-spacing:.7px;margin:0 0 3px}
+.name-row{display:block} h2{font-size:17px;margin:0;color:var(--green);line-height:1.05} .activity{font-size:9px;color:var(--muted);margin:3px 0}
+.area{display:inline-block;background:#e8f1eb;border-radius:999px;padding:4px 6px;font-size:8px;font-weight:850}
+.chips{display:flex;flex-wrap:wrap;gap:4px;margin:7px 0 5px} .chip{font-size:7.5px;background:#eef4f0;border:1px solid #dfe8e2;border-radius:999px;padding:4px 5px;font-weight:750}
+.desc,.rule{font-size:8.5px;line-height:1.3;color:var(--muted);margin:5px 0} .rule{border-left:2px solid var(--gold);padding-left:6px}
+.direct{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:7px 0;margin:7px 0;display:grid;gap:3px}
+.direct div{display:grid;grid-template-columns:1.05fr .95fr;gap:4px;font-size:8px} .direct strong{color:var(--green);font-size:8.5px}
+.qrrow{display:flex;gap:7px;align-items:center;background:#edf5ef;border-radius:9px;padding:7px} .qr{width:54px;height:54px;background:white;padding:2px;border-radius:5px}
+.qrrow div{display:flex;flex-direction:column;gap:3px} .qrrow strong{font-size:8.5px} .qrrow span{font-size:7.5px;color:var(--muted);line-height:1.2}
+.actions{display:grid;grid-template-columns:1fr;gap:5px;margin-top:7px} .btn{text-decoration:none;border-radius:999px;padding:8px 7px;text-align:center;font-size:9px;font-weight:950}
+.primary{background:var(--green);color:#fff} .secondary{border:1px solid var(--green2);color:var(--green2);background:#fff} .whatsapp{border:1px solid #1d8b57;color:#1d8b57;background:#fff}
+footer{text-align:center;color:var(--muted);font-size:8px;padding:18px 5px}
+html[dir="rtl"] body{direction:rtl} html[dir="rtl"] .rule{border-left:0;border-right:2px solid var(--gold);padding-left:0;padding-right:6px}
+@media(min-width:651px){
+  main{padding:22px 14px 50px} .listing{grid-template-columns:34% 66%;border-radius:20px} .visual{min-height:440px} .info{padding:18px}
+  h2{font-size:25px} .activity{font-size:13px} .area{font-size:11px} .chip{font-size:11px;padding:6px 9px}
+  .desc,.rule{font-size:12px} .direct{grid-template-columns:repeat(3,1fr);gap:7px;padding:12px 0;margin:13px 0} .direct div{display:flex;flex-direction:column;text-align:center;font-size:10px}
+  .direct strong{font-size:11px} .qr{width:74px;height:74px} .qrrow strong{font-size:12px} .qrrow span{font-size:11px}
+  .actions{grid-template-columns:repeat(2,1fr);gap:8px} .btn{font-size:11px;padding:10px}
+  .doctrine{font-size:11px;padding:11px 12px} .section h1{font-size:22px} .section p{font-size:13px}
+}
+@media(max-width:380px){.listing{grid-template-columns:32% 68%} .visual{min-height:370px} .info{padding:8px 7px} h2{font-size:16px} .chip{font-size:7px;padding:3px 4px} .qr{width:48px;height:48px}}
+</style>
+
+<style id="bonne-affaire-extra">
+.category-band{margin:10px 0 14px;padding:10px;border-radius:14px;border:1px solid #e0c36c;background:#fff9e8}
+.category-band strong{display:block;font-size:9px;color:#5e4912;margin-bottom:7px}
+.category-row{display:flex;gap:7px;overflow-x:auto;scrollbar-width:none}.category-row::-webkit-scrollbar{display:none}
+.category-pill{flex:0 0 auto;padding:7px 11px;border-radius:999px;background:#fff;border:1px solid #cad7d0;color:#073f32;font-size:8px;font-weight:950;white-space:nowrap}
+.status-empty{margin:10px 0 14px;padding:10px 12px;border-radius:13px;background:#fff8df;border:1px solid #ead28a;color:#6b571d;font-size:9px;font-weight:900;line-height:1.35}
+.placeholder-slot{border:2px dashed #d8ad46;background:linear-gradient(180deg,#fffefa,#fff7e6)}
+.placeholder-visual{position:relative;background:linear-gradient(145deg,#073f32,#0c6049);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.placeholder-core{min-height:100%;width:100%;padding:18px 8px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#fff}
+.placeholder-core .icon{font-size:44px;margin-bottom:10px}.placeholder-core strong{font-size:16px;line-height:1.08}.placeholder-core small{margin-top:8px;color:#eadfac;font-size:7px}
+.place-band{position:absolute;top:14px;left:-48px;right:-48px;transform:rotate(-12deg);background:#d8ad46;color:#073f32;text-align:center;font-size:10px;font-weight:1000;letter-spacing:.08em;padding:7px 0;box-shadow:0 10px 24px rgba(0,0,0,.18)}
+.qr-empty{display:grid;place-items:center;border:2px dashed #9db4a7;color:#6d7d77;font-size:9px;font-weight:950;background:#fff}
+.example-visual{background:linear-gradient(145deg,#124f3d,#0b6b4d);display:flex;align-items:center;justify-content:center;text-align:center;color:#fff}
+.example-core{padding:18px 8px}.example-core .ico{font-size:46px}.example-core strong{display:block;margin-top:8px;font-size:14px;line-height:1.1}.example-core small{display:block;margin-top:7px;color:#f5e7b1;font-size:7px}
+@media(min-width:651px){.category-band{padding:14px 16px}.category-band strong{font-size:12px}.category-pill{font-size:10px;padding:9px 14px}.status-empty{font-size:11px;padding:14px 16px}.placeholder-core .icon,.example-core .ico{font-size:62px}.placeholder-core strong{font-size:24px}.example-core strong{font-size:20px}.place-band{font-size:14px;padding:9px 0}}
+</style>
+
+
+<style id="bonne-affaire-pricing-v2">
+.ba-pricing{
+  margin:12px 0 16px;
+  padding:13px;
+  border-radius:18px;
+  border:1px solid rgba(216,173,70,.5);
+  background:linear-gradient(145deg,#fffaf0,#fff4d8);
+}
+.ba-pricing h2{
+  margin:0 0 5px;
+  color:#073f32;
+  font-size:15px;
+  line-height:1.1;
+}
+.ba-pricing .lead{
+  margin:0 0 11px;
+  color:#6b571d;
+  font-size:9px;
+  line-height:1.4;
+  font-weight:850;
+}
+.ba-paths{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:9px;
+}
+.ba-path{
+  border:1px solid #e2d49b;
+  background:#fff;
+  border-radius:14px;
+  padding:11px;
+}
+.ba-path strong{
+  display:block;
+  color:#073f32;
+  font-size:10px;
+  margin-bottom:7px;
+}
+.ba-packs{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:6px;
+}
+.ba-pack{
+  border:1px solid #d8e2dc;
+  background:#fdfefd;
+  border-radius:11px;
+  padding:8px 6px;
+  text-align:center;
+}
+.ba-pack b{
+  display:block;
+  font-size:10px;
+  color:#073f32;
+}
+.ba-pack span{
+  display:block;
+  margin-top:3px;
+  font-size:8px;
+  color:#6d7d77;
+  font-weight:800;
+}
+.ba-pro{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:8px;
+  align-items:center;
+}
+.ba-pro-price{
+  text-align:right;
+  color:#073f32;
+  font-weight:1000;
+  font-size:13px;
+}
+.ba-pro-price small{
+  display:block;
+  font-size:8px;
+  color:#6b571d;
+}
+.ba-pricing-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:7px;
+  margin-top:10px;
+}
+.ba-pricing-actions a{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:40px;
+  padding:8px 10px;
+  border-radius:999px;
+  text-decoration:none;
+  text-align:center;
+  font-size:8.5px;
+  font-weight:950;
+}
+.ba-pricing-actions a:first-child{
+  background:#073f32;
+  color:#fff;
+}
+.ba-pricing-actions a:last-child{
+  background:#d8ad46;
+  color:#073f32;
+}
+@media(min-width:651px){
+  .ba-pricing{padding:17px;border-radius:22px}
+  .ba-pricing h2{font-size:20px}
+  .ba-pricing .lead{font-size:11px}
+  .ba-path strong{font-size:12px}
+  .ba-pack b{font-size:12px}
+  .ba-pack span{font-size:9px}
+  .ba-pro-price{font-size:16px}
+  .ba-pricing-actions a{font-size:10.5px;min-height:46px}
+}
+</style>
+
+</head>
+<body>
+<header>
+<div class="wrap">
+  <div class="headtop">
+    <div><div class="brandmark">🏷️</div><div class="brand">DIGIY BONNE AFFAIRE</div><div class="sub">Annonces locales · contact direct · Sénégal & France</div></div>
+    <div class="zero">0 % COMMISSION<br>DIGIYLYFE</div>
+  </div>
+  <div class="nav">
+    <a href="https://digiylyfe.com/?lang=fr" target="_blank">🌍 DIGIYLYFE</a>
+    <a href="https://bonne-affaire.digiylyfe.com/" target="_blank">🏷️ BONNE AFFAIRE</a>
+  </div>
+  <div class="langs" id="langs">
+    <button data-lang="fr" class="active">🇫🇷 FR</button><button data-lang="en">🇬🇧 EN</button><button data-lang="es">🇪🇸 ES</button><button data-lang="pt">🇵🇹 PT</button>
+    <button data-lang="de">🇩🇪 DE</button><button data-lang="it">🇮🇹 IT</button><button data-lang="nl">🇳🇱 NL</button><button data-lang="ar">🇸🇦 AR</button>
+  </div>
+  <div class="join">
+    <div><strong data-i18n="joinq">Vous avez quelque chose à vendre ou un service à proposer ?</strong><span data-i18n="jointext">Une annonce doit rester claire, locale et en contact direct. La présence de l’annonceur est validée avant publication.</span></div>
+    <a href="https://digiylyfe.com/" target="_blank" data-i18n="join">DEMANDE D’ADHÉSION · 19 900 FCFA / mois</a>
+  </div>
+</div>
+</header>
+<main>
+  <section class="section"><div class="ico">🛍️</div><div><h1 data-i18n="title">DIGIY BONNE AFFAIRE · ANNONCES</h1><p data-i18n="subtitle">Occasion · Services · Immobilier · Véhicules · Contact direct</p></div></section>
+  <div class="doctrine"><strong>🛡️ <span data-i18n="role">RÔLE DE DIGIYLYFE</span></strong><span data-i18n="doctrine">DIGIY BONNE AFFAIRE présente des annonces et facilite le contact direct. Chaque annonceur reste seul responsable de l’objet, du service, du prix, de l’état réel, des documents nécessaires, de la disponibilité, de la transaction et de ses obligations. DIGIYLYFE ne garantit pas la vente, n’encaisse pas la transaction et ne conclut pas à la place des parties.</span></div>
+  
+    
+    
+    <section class="ba-pricing" aria-label="Tarifs DIGIY BONNE AFFAIRE">
+      <h2>CHOISISSEZ VOTRE FAÇON DE VENDRE</h2>
+      <p class="lead">Vente ponctuelle : payez uniquement votre annonce. Vente régulière : prenez votre présence professionnelle DIGIYLYFE. 0 % commission DIGIY sur la vente.</p>
+
+      <div class="ba-paths">
+        <div class="ba-path">
+          <strong>PARTICULIER · ANNONCE À L’UNITÉ</strong>
+          <div class="ba-packs">
+            <div class="ba-pack"><b>PACK A · 3 000 FCFA</b><span>7 jours</span></div>
+            <div class="ba-pack"><b>PACK B · 5 000 FCFA</b><span>14 jours</span></div>
+            <div class="ba-pack"><b>PACK C · 10 000 FCFA</b><span>30 jours</span></div>
+          </div>
+        </div>
+
+        <div class="ba-path">
+          <div class="ba-pro">
+            <div>
+              <strong>PROFESSIONNEL · ADHÉRENT 2</strong>
+              <span style="font-size:8.5px;color:#6d7d77;font-weight:850">Présence commerciale régulière · identité vendeur · contact direct · 0 % commission</span>
+            </div>
+            <div class="ba-pro-price">28 000 FCFA<small>/ mois</small></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ba-pricing-actions">
+        <a href="https://bonne-affaire.digiylyfe.com/tarifs-annonce.html?lang=fr" target="_blank" rel="noopener">🏷️ VOIR LES TARIFS ANNONCE</a>
+        <a href="https://bonne-affaire.digiylyfe.com/publier.html?lang=fr" target="_blank" rel="noopener">＋ PRÉPARER / PUBLIER UNE ANNONCE</a>
+      </div>
+      <div class="ba-pricing-actions" style="grid-template-columns:1fr;margin-top:7px">
+        <a href="https://digiylyfe.com/tarifs-adherents.html?lang=fr" target="_blank" rel="noopener" style="background:#fff;border:1px solid #d8ad46;color:#073f32">🤝 VENDEUR RÉGULIER · VOIR L’ADHÉSION 2 · 28 000 FCFA / mois</a>
+      </div>
+    </section>
+
+<div class="category-band">
+      <strong>CATÉGORIES VISIBLES DANS BONNE AFFAIRE</strong>
+      <div class="category-row">
+        <span class="category-pill">📱 Occasion</span>
+        <span class="category-pill">🛠️ Service</span>
+        <span class="category-pill">🏠 Immobilier</span>
+        <span class="category-pill">🚗 Véhicule</span>
+        <span class="category-pill">🏢 Pro</span>
+        <span class="category-pill">💼 Emploi / mission</span>
+      </div>
+    </div>
+    <div class="status-empty">
+      📭 <strong>Aucune annonce active actuellement.</strong>
+      Les cartes ci-dessous reprennent les exemples déjà prévus sur le site, puis montrent les futurs emplacements libres.
+    </div>
+
+    <article class="listing">
+      <a class="visual example-visual" href="https://bonne-affaire.digiylyfe.com/annonces.html" target="_blank" rel="noopener">
+        <div class="example-core">
+          <div class="ico">📱</div>
+          <strong>IPHONE 12 · TRÈS BON ÉTAT</strong>
+          <small>EXEMPLE BONNE AFFAIRE</small>
+        </div>
+      </a>
+      <div class="info">
+        <p class="eyebrow">EXEMPLE PRÉVU SUR LE SITE · PAS UNE ANNONCE ACTIVE</p>
+        <div class="name-row">
+          <div><h2>IPHONE 12 · TRÈS BON ÉTAT</h2><p class="activity">Occasion</p></div>
+          <span class="area">📍 Dakar · Sénégal</span>
+        </div>
+        <div class="chips">
+          <span class="chip">Occasion</span>
+          <span class="chip">180 000 FCFA</span>
+          <span class="chip">Contact direct</span>
+        </div>
+        <p class="desc">Exemple de fiche claire avec prix et localisation.</p>
+        <p class="rule">Cette carte est un exemple de présentation. Elle ne constitue pas une offre réelle ni une disponibilité confirmée.</p>
+        <div class="direct">
+          <div><strong>Statut</strong><span>Exemple uniquement</span></div>
+          <div><strong>Transaction</strong><span>Directe entre les parties si l’annonce devient réelle</span></div>
+          <div><strong>DIGIYLYFE</strong><span>ne garantit pas la vente</span></div>
+        </div>
+        <div class="qrrow">
+          <img class="qr" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeAQAAAAB6HIMaAAACAElEQVR4nO2YQW7cMAxFH0cGZkkDPcAcRbpZ0IMV4BwlN5CXAWj8LuRJCzSZrAprEcILWX/zQZCfnzLxaeyXzzH4Br8CUQcoHSmKovRaegWg5oxsq6TSUaf0ikeRiqQ+IdsLYNag2sq+klsD2Gw5kdCXoP9Ur8C1PwifTOgpuLV9JSFd/4JnEPowFkCweJS+LrD/6PutLy62Cdm+a0L9+wMm1YQjAg+oRYI6rmZk22uOg1QUktRRr9PmFpDiSK8HLnXKnLmVxnTAI13q5FHME+b2AuxmSU0oHbvpKtlNZxJ6Am4ND1tZtgb3hFHGeRqhZzHaKj3SYwgCHukxqSYoioQrXbgSisSkbC9sL4BeG1Be27XX5J6wbG3OSiiK99wOQRv3M+YWRmeV1wZ3s1ak0uusuQ18TLFIDzySmh5lRjeOek2PpJbhDahjRuATVgJ6+C6NpewgHFNuOqhXPIbkSiEdOjZtl6ljK8PWmjXgKplN2GXDJ7yo193M1oc4bIbHfGwZ5hDqYcIfdjdn9GCP3aHXsfMWxXGeURMubGZmy/jzeLO2ryxnEnoO1jFtl4dPAJI726RdNnTg7fYTSFi421qn9Lfv4L10cjwsjBF8NqGP4qhQXAZ50241ga39OonQl7Ps2M17lZQ+3AJTbpF/3m/T4xi4MFpvPrb2/ZL/38DfEFGN/Qhli6YAAAAASUVORK5CYII=" alt="QR Bonne Affaire">
+          <div><strong>QR · BONNE AFFAIRE</strong><span>Ouvre la vitrine publique des annonces.</span></div>
+        </div>
+        <div class="actions">
+          <a class="btn primary" href="https://bonne-affaire.digiylyfe.com/annonces.html" target="_blank" rel="noopener">VOIR LES ANNONCES</a>
+        </div>
+      </div>
+    </article>
+    
+
+    <article class="listing">
+      <a class="visual example-visual" href="https://bonne-affaire.digiylyfe.com/annonces.html" target="_blank" rel="noopener">
+        <div class="example-core">
+          <div class="ico">🔧</div>
+          <strong>PLOMBIER DISPONIBLE</strong>
+          <small>EXEMPLE BONNE AFFAIRE</small>
+        </div>
+      </a>
+      <div class="info">
+        <p class="eyebrow">EXEMPLE PRÉVU SUR LE SITE · PAS UNE ANNONCE ACTIVE</p>
+        <div class="name-row">
+          <div><h2>PLOMBIER DISPONIBLE</h2><p class="activity">Service</p></div>
+          <span class="area">📍 Mbour · Sénégal</span>
+        </div>
+        <div class="chips">
+          <span class="chip">Service</span>
+          <span class="chip">Prix à confirmer</span>
+          <span class="chip">Contact direct</span>
+        </div>
+        <p class="desc">Intervention directe sur Mbour et Saly.</p>
+        <p class="rule">Cette carte est un exemple de présentation. Elle ne constitue pas une offre réelle ni une disponibilité confirmée.</p>
+        <div class="direct">
+          <div><strong>Statut</strong><span>Exemple uniquement</span></div>
+          <div><strong>Transaction</strong><span>Directe entre les parties si l’annonce devient réelle</span></div>
+          <div><strong>DIGIYLYFE</strong><span>ne garantit pas la vente</span></div>
+        </div>
+        <div class="qrrow">
+          <img class="qr" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeAQAAAAB6HIMaAAACAElEQVR4nO2YQW7cMAxFH0cGZkkDPcAcRbpZ0IMV4BwlN5CXAWj8LuRJCzSZrAprEcILWX/zQZCfnzLxaeyXzzH4Br8CUQcoHSmKovRaegWg5oxsq6TSUaf0ikeRiqQ+IdsLYNag2sq+klsD2Gw5kdCXoP9Ur8C1PwifTOgpuLV9JSFd/4JnEPowFkCweJS+LrD/6PutLy62Cdm+a0L9+wMm1YQjAg+oRYI6rmZk22uOg1QUktRRr9PmFpDiSK8HLnXKnLmVxnTAI13q5FHME+b2AuxmSU0oHbvpKtlNZxJ6Am4ND1tZtgb3hFHGeRqhZzHaKj3SYwgCHukxqSYoioQrXbgSisSkbC9sL4BeG1Be27XX5J6wbG3OSiiK99wOQRv3M+YWRmeV1wZ3s1ak0uusuQ18TLFIDzySmh5lRjeOek2PpJbhDahjRuATVgJ6+C6NpewgHFNuOqhXPIbkSiEdOjZtl6ljK8PWmjXgKplN2GXDJ7yo193M1oc4bIbHfGwZ5hDqYcIfdjdn9GCP3aHXsfMWxXGeURMubGZmy/jzeLO2ryxnEnoO1jFtl4dPAJI726RdNnTg7fYTSFi421qn9Lfv4L10cjwsjBF8NqGP4qhQXAZ50241ga39OonQl7Ps2M17lZQ+3AJTbpF/3m/T4xi4MFpvPrb2/ZL/38DfEFGN/Qhli6YAAAAASUVORK5CYII=" alt="QR Bonne Affaire">
+          <div><strong>QR · BONNE AFFAIRE</strong><span>Ouvre la vitrine publique des annonces.</span></div>
+        </div>
+        <div class="actions">
+          <a class="btn primary" href="https://bonne-affaire.digiylyfe.com/annonces.html" target="_blank" rel="noopener">VOIR LES ANNONCES</a>
+        </div>
+      </div>
+    </article>
+    
+
+    <article class="listing">
+      <a class="visual example-visual" href="https://bonne-affaire.digiylyfe.com/annonces.html" target="_blank" rel="noopener">
+        <div class="example-core">
+          <div class="ico">🏠</div>
+          <strong>APPARTEMENT MEUBLÉ</strong>
+          <small>EXEMPLE BONNE AFFAIRE</small>
+        </div>
+      </a>
+      <div class="info">
+        <p class="eyebrow">EXEMPLE PRÉVU SUR LE SITE · PAS UNE ANNONCE ACTIVE</p>
+        <div class="name-row">
+          <div><h2>APPARTEMENT MEUBLÉ</h2><p class="activity">Immobilier</p></div>
+          <span class="area">📍 Saly · Sénégal</span>
+        </div>
+        <div class="chips">
+          <span class="chip">Immobilier</span>
+          <span class="chip">45 000 FCFA</span>
+          <span class="chip">Contact direct</span>
+        </div>
+        <p class="desc">Contact direct avec le propriétaire.</p>
+        <p class="rule">Cette carte est un exemple de présentation. Elle ne constitue pas une offre réelle ni une disponibilité confirmée.</p>
+        <div class="direct">
+          <div><strong>Statut</strong><span>Exemple uniquement</span></div>
+          <div><strong>Transaction</strong><span>Directe entre les parties si l’annonce devient réelle</span></div>
+          <div><strong>DIGIYLYFE</strong><span>ne garantit pas la vente</span></div>
+        </div>
+        <div class="qrrow">
+          <img class="qr" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeAQAAAAB6HIMaAAACAElEQVR4nO2YQW7cMAxFH0cGZkkDPcAcRbpZ0IMV4BwlN5CXAWj8LuRJCzSZrAprEcILWX/zQZCfnzLxaeyXzzH4Br8CUQcoHSmKovRaegWg5oxsq6TSUaf0ikeRiqQ+IdsLYNag2sq+klsD2Gw5kdCXoP9Ur8C1PwifTOgpuLV9JSFd/4JnEPowFkCweJS+LrD/6PutLy62Cdm+a0L9+wMm1YQjAg+oRYI6rmZk22uOg1QUktRRr9PmFpDiSK8HLnXKnLmVxnTAI13q5FHME+b2AuxmSU0oHbvpKtlNZxJ6Am4ND1tZtgb3hFHGeRqhZzHaKj3SYwgCHukxqSYoioQrXbgSisSkbC9sL4BeG1Be27XX5J6wbG3OSiiK99wOQRv3M+YWRmeV1wZ3s1ak0uusuQ18TLFIDzySmh5lRjeOek2PpJbhDahjRuATVgJ6+C6NpewgHFNuOqhXPIbkSiEdOjZtl6ljK8PWmjXgKplN2GXDJ7yo193M1oc4bIbHfGwZ5hDqYcIfdjdn9GCP3aHXsfMWxXGeURMubGZmy/jzeLO2ryxnEnoO1jFtl4dPAJI726RdNnTg7fYTSFi421qn9Lfv4L10cjwsjBF8NqGP4qhQXAZ50241ga39OonQl7Ps2M17lZQ+3AJTbpF/3m/T4xi4MFpvPrb2/ZL/38DfEFGN/Qhli6YAAAAASUVORK5CYII=" alt="QR Bonne Affaire">
+          <div><strong>QR · BONNE AFFAIRE</strong><span>Ouvre la vitrine publique des annonces.</span></div>
+        </div>
+        <div class="actions">
+          <a class="btn primary" href="https://bonne-affaire.digiylyfe.com/annonces.html" target="_blank" rel="noopener">VOIR LES ANNONCES</a>
+        </div>
+      </div>
+    </article>
+    
+
+    <article class="listing">
+      <a class="visual example-visual" href="https://bonne-affaire.digiylyfe.com/annonces.html" target="_blank" rel="noopener">
+        <div class="example-core">
+          <div class="ico">🚲</div>
+          <strong>VÉLO ÉLECTRIQUE · BON ÉTAT</strong>
+          <small>EXEMPLE BONNE AFFAIRE</small>
+        </div>
+      </a>
+      <div class="info">
+        <p class="eyebrow">EXEMPLE PRÉVU SUR LE SITE · PAS UNE ANNONCE ACTIVE</p>
+        <div class="name-row">
+          <div><h2>VÉLO ÉLECTRIQUE · BON ÉTAT</h2><p class="activity">Occasion</p></div>
+          <span class="area">📍 Sarlat-la-Canéda · France</span>
+        </div>
+        <div class="chips">
+          <span class="chip">Occasion</span>
+          <span class="chip">850 €</span>
+          <span class="chip">Contact direct</span>
+        </div>
+        <p class="desc">Exemple de fiche France.</p>
+        <p class="rule">Cette carte est un exemple de présentation. Elle ne constitue pas une offre réelle ni une disponibilité confirmée.</p>
+        <div class="direct">
+          <div><strong>Statut</strong><span>Exemple uniquement</span></div>
+          <div><strong>Transaction</strong><span>Directe entre les parties si l’annonce devient réelle</span></div>
+          <div><strong>DIGIYLYFE</strong><span>ne garantit pas la vente</span></div>
+        </div>
+        <div class="qrrow">
+          <img class="qr" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeAQAAAAB6HIMaAAACAElEQVR4nO2YQW7cMAxFH0cGZkkDPcAcRbpZ0IMV4BwlN5CXAWj8LuRJCzSZrAprEcILWX/zQZCfnzLxaeyXzzH4Br8CUQcoHSmKovRaegWg5oxsq6TSUaf0ikeRiqQ+IdsLYNag2sq+klsD2Gw5kdCXoP9Ur8C1PwifTOgpuLV9JSFd/4JnEPowFkCweJS+LrD/6PutLy62Cdm+a0L9+wMm1YQjAg+oRYI6rmZk22uOg1QUktRRr9PmFpDiSK8HLnXKnLmVxnTAI13q5FHME+b2AuxmSU0oHbvpKtlNZxJ6Am4ND1tZtgb3hFHGeRqhZzHaKj3SYwgCHukxqSYoioQrXbgSisSkbC9sL4BeG1Be27XX5J6wbG3OSiiK99wOQRv3M+YWRmeV1wZ3s1ak0uusuQ18TLFIDzySmh5lRjeOek2PpJbhDahjRuATVgJ6+C6NpewgHFNuOqhXPIbkSiEdOjZtl6ljK8PWmjXgKplN2GXDJ7yo193M1oc4bIbHfGwZ5hDqYcIfdjdn9GCP3aHXsfMWxXGeURMubGZmy/jzeLO2ryxnEnoO1jFtl4dPAJI726RdNnTg7fYTSFi421qn9Lfv4L10cjwsjBF8NqGP4qhQXAZ50241ga39OonQl7Ps2M17lZQ+3AJTbpF/3m/T4xi4MFpvPrb2/ZL/38DfEFGN/Qhli6YAAAAASUVORK5CYII=" alt="QR Bonne Affaire">
+          <div><strong>QR · BONNE AFFAIRE</strong><span>Ouvre la vitrine publique des annonces.</span></div>
+        </div>
+        <div class="actions">
+          <a class="btn primary" href="https://bonne-affaire.digiylyfe.com/annonces.html" target="_blank" rel="noopener">VOIR LES ANNONCES</a>
+        </div>
+      </div>
+    </article>
+    
+
+    <article class="listing">
+      <a class="visual example-visual" href="https://bonne-affaire.digiylyfe.com/annonces.html" target="_blank" rel="noopener">
+        <div class="example-core">
+          <div class="ico">🛠️</div>
+          <strong>ARTISAN DISPONIBLE CETTE SEMAINE</strong>
+          <small>EXEMPLE BONNE AFFAIRE</small>
+        </div>
+      </a>
+      <div class="info">
+        <p class="eyebrow">EXEMPLE PRÉVU SUR LE SITE · PAS UNE ANNONCE ACTIVE</p>
+        <div class="name-row">
+          <div><h2>ARTISAN DISPONIBLE CETTE SEMAINE</h2><p class="activity">Service</p></div>
+          <span class="area">📍 Périgueux · France</span>
+        </div>
+        <div class="chips">
+          <span class="chip">Service</span>
+          <span class="chip">Prix à confirmer</span>
+          <span class="chip">Contact direct</span>
+        </div>
+        <p class="desc">Service local en contact direct.</p>
+        <p class="rule">Cette carte est un exemple de présentation. Elle ne constitue pas une offre réelle ni une disponibilité confirmée.</p>
+        <div class="direct">
+          <div><strong>Statut</strong><span>Exemple uniquement</span></div>
+          <div><strong>Transaction</strong><span>Directe entre les parties si l’annonce devient réelle</span></div>
+          <div><strong>DIGIYLYFE</strong><span>ne garantit pas la vente</span></div>
+        </div>
+        <div class="qrrow">
+          <img class="qr" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeAQAAAAB6HIMaAAACAElEQVR4nO2YQW7cMAxFH0cGZkkDPcAcRbpZ0IMV4BwlN5CXAWj8LuRJCzSZrAprEcILWX/zQZCfnzLxaeyXzzH4Br8CUQcoHSmKovRaegWg5oxsq6TSUaf0ikeRiqQ+IdsLYNag2sq+klsD2Gw5kdCXoP9Ur8C1PwifTOgpuLV9JSFd/4JnEPowFkCweJS+LrD/6PutLy62Cdm+a0L9+wMm1YQjAg+oRYI6rmZk22uOg1QUktRRr9PmFpDiSK8HLnXKnLmVxnTAI13q5FHME+b2AuxmSU0oHbvpKtlNZxJ6Am4ND1tZtgb3hFHGeRqhZzHaKj3SYwgCHukxqSYoioQrXbgSisSkbC9sL4BeG1Be27XX5J6wbG3OSiiK99wOQRv3M+YWRmeV1wZ3s1ak0uusuQ18TLFIDzySmh5lRjeOek2PpJbhDahjRuATVgJ6+C6NpewgHFNuOqhXPIbkSiEdOjZtl6ljK8PWmjXgKplN2GXDJ7yo193M1oc4bIbHfGwZ5hDqYcIfdjdn9GCP3aHXsfMWxXGeURMubGZmy/jzeLO2ryxnEnoO1jFtl4dPAJI726RdNnTg7fYTSFi421qn9Lfv4L10cjwsjBF8NqGP4qhQXAZ50241ga39OonQl7Ps2M17lZQ+3AJTbpF/3m/T4xi4MFpvPrb2/ZL/38DfEFGN/Qhli6YAAAAASUVORK5CYII=" alt="QR Bonne Affaire">
+          <div><strong>QR · BONNE AFFAIRE</strong><span>Ouvre la vitrine publique des annonces.</span></div>
+        </div>
+        <div class="actions">
+          <a class="btn primary" href="https://bonne-affaire.digiylyfe.com/annonces.html" target="_blank" rel="noopener">VOIR LES ANNONCES</a>
+        </div>
+      </div>
+    </article>
+    
+
+    <article class="listing">
+      <a class="visual example-visual" href="https://bonne-affaire.digiylyfe.com/annonces.html" target="_blank" rel="noopener">
+        <div class="example-core">
+          <div class="ico">🍽️</div>
+          <strong>MATÉRIEL DE RESTAURANT</strong>
+          <small>EXEMPLE BONNE AFFAIRE</small>
+        </div>
+      </a>
+      <div class="info">
+        <p class="eyebrow">EXEMPLE PRÉVU SUR LE SITE · PAS UNE ANNONCE ACTIVE</p>
+        <div class="name-row">
+          <div><h2>MATÉRIEL DE RESTAURANT</h2><p class="activity">Pro</p></div>
+          <span class="area">📍 Bergerac · France</span>
+        </div>
+        <div class="chips">
+          <span class="chip">Pro</span>
+          <span class="chip">2 400 €</span>
+          <span class="chip">Contact direct</span>
+        </div>
+        <p class="desc">Matériel professionnel à vendre.</p>
+        <p class="rule">Cette carte est un exemple de présentation. Elle ne constitue pas une offre réelle ni une disponibilité confirmée.</p>
+        <div class="direct">
+          <div><strong>Statut</strong><span>Exemple uniquement</span></div>
+          <div><strong>Transaction</strong><span>Directe entre les parties si l’annonce devient réelle</span></div>
+          <div><strong>DIGIYLYFE</strong><span>ne garantit pas la vente</span></div>
+        </div>
+        <div class="qrrow">
+          <img class="qr" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeAQAAAAB6HIMaAAACAElEQVR4nO2YQW7cMAxFH0cGZkkDPcAcRbpZ0IMV4BwlN5CXAWj8LuRJCzSZrAprEcILWX/zQZCfnzLxaeyXzzH4Br8CUQcoHSmKovRaegWg5oxsq6TSUaf0ikeRiqQ+IdsLYNag2sq+klsD2Gw5kdCXoP9Ur8C1PwifTOgpuLV9JSFd/4JnEPowFkCweJS+LrD/6PutLy62Cdm+a0L9+wMm1YQjAg+oRYI6rmZk22uOg1QUktRRr9PmFpDiSK8HLnXKnLmVxnTAI13q5FHME+b2AuxmSU0oHbvpKtlNZxJ6Am4ND1tZtgb3hFHGeRqhZzHaKj3SYwgCHukxqSYoioQrXbgSisSkbC9sL4BeG1Be27XX5J6wbG3OSiiK99wOQRv3M+YWRmeV1wZ3s1ak0uusuQ18TLFIDzySmh5lRjeOek2PpJbhDahjRuATVgJ6+C6NpewgHFNuOqhXPIbkSiEdOjZtl6ljK8PWmjXgKplN2GXDJ7yo193M1oc4bIbHfGwZ5hDqYcIfdjdn9GCP3aHXsfMWxXGeURMubGZmy/jzeLO2ryxnEnoO1jFtl4dPAJI726RdNnTg7fYTSFi421qn9Lfv4L10cjwsjBF8NqGP4qhQXAZ50241ga39OonQl7Ps2M17lZQ+3AJTbpF/3m/T4xi4MFpvPrb2/ZL/38DfEFGN/Qhli6YAAAAASUVORK5CYII=" alt="QR Bonne Affaire">
+          <div><strong>QR · BONNE AFFAIRE</strong><span>Ouvre la vitrine publique des annonces.</span></div>
+        </div>
+        <div class="actions">
+          <a class="btn primary" href="https://bonne-affaire.digiylyfe.com/annonces.html" target="_blank" rel="noopener">VOIR LES ANNONCES</a>
+        </div>
+      </div>
+    </article>
+    
+    <article class="listing placeholder-slot">
+      <a class="visual placeholder-visual" href="https://digiylyfe.com/" target="_blank" rel="noopener">
+        <div class="place-band">PLACE À PRENDRE</div>
+        <div class="placeholder-core"><div class="icon">📦</div><strong>VOTRE ANNONCE<br>ICI</strong><small>Photo · prix · zone · contact</small></div>
+      </a>
+      <div class="info">
+        <p class="eyebrow">EMPLACEMENT FUTUR · BONNE AFFAIRE</p>
+        <div class="name-row"><div><h2>PLACE À PRENDRE</h2><p class="activity">Objet · Occasion · Vente locale</p></div><span class="area">📍 Votre zone</span></div>
+        <div class="chips"><span class="chip">Votre photo</span><span class="chip">Votre prix</span><span class="chip">Votre zone</span><span class="chip">Votre contact</span></div>
+        <p class="desc">Emplacement libre pour une future annonce réelle, claire et directement joignable.</p>
+        <p class="rule">Aucune fausse annonce n’est utilisée pour remplir la vitrine.</p>
+        <div class="direct"><div><strong>Statut</strong><span>Place à prendre</span></div><div><strong>Contact</strong><span>À renseigner</span></div><div><strong>Transaction</strong><span>Directe</span></div></div>
+        <div class="qrrow"><div class="qr qr-empty">QR</div><div><strong>QR · FUTURE ANNONCE</strong><span>Le QR sera posé après validation de l’annonce.</span></div></div>
+        <div class="actions"><a class="btn primary" href="https://bonne-affaire.digiylyfe.com/tarifs-annonce.html?lang=fr" target="_blank" rel="noopener">🏷️ VOIR LES TARIFS ANNONCE</a></div>
+      </div>
+    </article>
+
+    <article class="listing placeholder-slot">
+      <a class="visual placeholder-visual" href="https://digiylyfe.com/" target="_blank" rel="noopener">
+        <div class="place-band">PLACE À PRENDRE</div>
+        <div class="placeholder-core"><div class="icon">🛠️</div><strong>VOTRE SERVICE<br>ICI</strong><small>Métier · zone · disponibilité · contact</small></div>
+      </a>
+      <div class="info">
+        <p class="eyebrow">EMPLACEMENT FUTUR · BONNE AFFAIRE</p>
+        <div class="name-row"><div><h2>PLACE À PRENDRE</h2><p class="activity">Service · Mission · Besoin local</p></div><span class="area">📍 Votre territoire</span></div>
+        <div class="chips"><span class="chip">Votre service</span><span class="chip">Votre zone</span><span class="chip">Votre disponibilité</span><span class="chip">Votre contact</span></div>
+        <p class="desc">Emplacement libre pour une offre de service ou un besoin local réellement validé.</p>
+        <p class="rule">L’annonceur reste responsable de son service, de ses conditions et de ses engagements.</p>
+        <div class="direct"><div><strong>Statut</strong><span>Place à prendre</span></div><div><strong>Contact</strong><span>À renseigner</span></div><div><strong>Relation</strong><span>Directe</span></div></div>
+        <div class="qrrow"><div class="qr qr-empty">QR</div><div><strong>QR · FUTUR SERVICE</strong><span>Le QR sera activé avec la présence validée.</span></div></div>
+        <div class="actions"><a class="btn primary" href="https://bonne-affaire.digiylyfe.com/tarifs-annonce.html?lang=fr" target="_blank" rel="noopener">🏷️ VOIR LES TARIFS ANNONCE</a></div>
+      </div>
+    </article>
+
+  <footer data-i18n="footer">MAQUETTE ATELIER BONNE AFFAIRE V2 · 2 PORTES COMMERCIALES RÉELLES : ANNONCE À L’UNITÉ A/B/C + ADHÉRENT 2 À 28 000 · BOUTON TARIFS + PUBLIER · 6 EXEMPLES OFFICIELS + 2 PLACEHOLDERS · MÊME MOULE STANDARD · MOBILE-FIRST · 8 LANGUES · Aucun push.</footer>
+</main>
+<script>
+const T = {"fr": {"tag": "ADHÉRENT DIGIYLYFE", "title": "DIGIY BONNE AFFAIRE · ANNONCES", "subtitle": "Occasion · Services · Immobilier · Véhicules · Contact direct", "joinq": "Vous avez quelque chose à vendre ou un service à proposer ?", "join": "DEMANDE D’ADHÉSION · 19 900 FCFA / mois", "jointext": "Une annonce doit rester claire, locale et en contact direct. La présence de l’annonceur est validée avant publication.", "role": "RÔLE DE DIGIYLYFE", "doctrine": "DIGIY BONNE AFFAIRE présente des annonces et facilite le contact direct. Chaque annonceur reste seul responsable de l’objet, du service, du prix, de l’état réel, des documents nécessaires, de la disponibilité, de la transaction et de ses obligations. DIGIYLYFE ne garantit pas la vente, n’encaisse pas la transaction et ne conclut pas à la place des parties.", "contact": "Contact direct", "payment": "Paiement direct", "merchant": "au commerçant", "commission": "commission DIGIYLYFE", "availability": "Produits, disponibilité, prix et conditions : accord direct avec le commerçant, sous sa responsabilité.", "qr": "Scannez pour ouvrir et conserver sa présence DIGIYLYFE.", "card": "VOIR LA CARTE", "fiche": "VOIR LA FICHE", "site": "VOIR LE SITE", "wa": "WhatsApp direct", "footer": "MAQUETTE ATELIER BONNE AFFAIRE V2 · 2 PORTES COMMERCIALES RÉELLES : ANNONCE À L’UNITÉ A/B/C + ADHÉRENT 2 À 28 000 · BOUTON TARIFS + PUBLIER · 6 EXEMPLES OFFICIELS + 2 PLACEHOLDERS · MÊME MOULE STANDARD · MOBILE-FIRST · 8 LANGUES · Aucun push."}, "en": {"tag": "DIGIYLYFE MEMBER", "title": "DIGIY BONNE AFFAIRE · LISTINGS", "subtitle": "Used goods · Services · Property · Vehicles · Direct contact", "joinq": "Do you have something to sell or a service to offer?", "join": "MEMBERSHIP REQUEST · 19,900 FCFA / month", "jointext": "A listing should stay clear, local and direct-contact. The advertiser's presence is validated before publication.", "role": "ROLE OF DIGIYLYFE", "doctrine": "DIGIYLYFE publishes the digital presence of its members. Each merchant remains solely responsible for their business, products, prices, professional and administrative obligations, stock, sales, deliveries and commitments to customers. DIGIYLYFE does not sell on their behalf and does not collect payment for their sales.", "contact": "Direct contact", "payment": "Direct payment", "merchant": "to merchant", "commission": "DIGIYLYFE commission", "availability": "Products, availability, prices and conditions: agreed directly with the merchant, under their responsibility.", "qr": "Scan to open and save their DIGIYLYFE presence.", "card": "VIEW CARD", "fiche": "VIEW PROFILE", "site": "VIEW SITE", "wa": "Direct WhatsApp", "footer": "WORKSHOP MOCKUP · MOBILE-FIRST · 8 LANGUAGES · MEMBERS · No public software · No push."}, "es": {"tag": "MIEMBRO DIGIYLYFE", "title": "DIGIY BONNE AFFAIRE · ANUNCIOS", "subtitle": "Ocasión · Servicios · Inmuebles · Vehículos · Contacto directo", "joinq": "¿Tienes algo que vender o un servicio que ofrecer?", "join": "SOLICITUD DE ADHESIÓN · 19 900 FCFA / mes", "jointext": "Únete a DIGIYLYFE como miembro y prepara tu tarjeta de visita digital.", "role": "PAPEL DE DIGIYLYFE", "doctrine": "DIGIYLYFE publica la presencia digital de sus miembros. Cada comerciante es el único responsable de su actividad, productos, precios, obligaciones, stock, ventas, entregas y compromisos con sus clientes. DIGIYLYFE no vende en su nombre ni cobra sus ventas.", "contact": "Contacto directo", "payment": "Pago directo", "merchant": "al comerciante", "commission": "comisión DIGIYLYFE", "availability": "Productos, disponibilidad, precios y condiciones: acuerdo directo con el comerciante, bajo su responsabilidad.", "qr": "Escanea para abrir y guardar su presencia DIGIYLYFE.", "card": "VER TARJETA", "fiche": "VER FICHA", "site": "VER SITIO", "wa": "WhatsApp directo", "footer": "MAQUETA DE TALLER · MOBILE-FIRST · 8 IDIOMAS · MIEMBROS · Sin software público · Sin push."}, "pt": {"tag": "MEMBRO DIGIYLYFE", "title": "DIGIY BONNE AFFAIRE · ANÚNCIOS", "subtitle": "Usados · Serviços · Imóveis · Veículos · Contacto direto", "joinq": "Tem algo para vender ou um serviço para oferecer?", "join": "PEDIDO DE ADESÃO · 19 900 FCFA / mês", "jointext": "Junte-se à DIGIYLYFE como membro e prepare o seu cartão de visita digital.", "role": "PAPEL DA DIGIYLYFE", "doctrine": "A DIGIYLYFE publica a presença digital dos seus membros. Cada comerciante é o único responsável pela sua atividade, produtos, preços, obrigações, stock, vendas, entregas e compromissos com os clientes. A DIGIYLYFE não vende em seu nome nem recebe o pagamento das suas vendas.", "contact": "Contacto direto", "payment": "Pagamento direto", "merchant": "ao comerciante", "commission": "comissão DIGIYLYFE", "availability": "Produtos, disponibilidade, preços e condições: acordo direto com o comerciante, sob a sua responsabilidade.", "qr": "Digitalize para abrir e guardar a presença DIGIYLYFE.", "card": "VER CARTÃO", "fiche": "VER FICHA", "site": "VER SITE", "wa": "WhatsApp direto", "footer": "MAQUETE DE OFICINA · MOBILE-FIRST · 8 IDIOMAS · MEMBROS · Sem software público · Sem push."}, "de": {"tag": "DIGIYLYFE MITGLIED", "title": "DIGIY BONNE AFFAIRE · ANZEIGEN", "subtitle": "Gebraucht · Dienstleistungen · Immobilien · Fahrzeuge · Direktkontakt", "joinq": "Möchten Sie etwas verkaufen oder eine Dienstleistung anbieten?", "join": "MITGLIEDSCHAFT ANFRAGEN · 19.900 FCFA / Monat", "jointext": "Werden Sie DIGIYLYFE-Mitglied und erstellen Sie Ihre digitale Visitenkarte.", "role": "ROLLE VON DIGIYLYFE", "doctrine": "DIGIYLYFE veröffentlicht die digitale Präsenz seiner Mitglieder. Jeder Händler ist allein verantwortlich für Tätigkeit, Produkte, Preise, Pflichten, Bestand, Verkäufe, Lieferungen und Zusagen gegenüber Kunden. DIGIYLYFE verkauft nicht in seinem Namen und nimmt keine Zahlungen für seine Verkäufe entgegen.", "contact": "Direkter Kontakt", "payment": "Direkte Zahlung", "merchant": "an den Händler", "commission": "DIGIYLYFE Provision", "availability": "Produkte, Verfügbarkeit, Preise und Bedingungen: direkte Vereinbarung mit dem Händler in dessen Verantwortung.", "qr": "Scannen, um die DIGIYLYFE-Präsenz zu öffnen und zu speichern.", "card": "KARTE ANSEHEN", "fiche": "PROFIL ANSEHEN", "site": "WEBSITE", "wa": "WhatsApp direkt", "footer": "WERKSTATT-MOCKUP · MOBILE-FIRST · 8 SPRACHEN · MITGLIEDER · Keine öffentliche Software · Kein Push."}, "it": {"tag": "ADERENTE DIGIYLYFE", "title": "DIGIY BONNE AFFAIRE · ANNUNCI", "subtitle": "Usato · Servizi · Immobili · Veicoli · Contatto diretto", "joinq": "Hai qualcosa da vendere o un servizio da proporre?", "join": "RICHIESTA DI ADESIONE · 19 900 FCFA / mese", "jointext": "Entra in DIGIYLYFE come aderente e prepara il tuo biglietto da visita digitale.", "role": "RUOLO DI DIGIYLYFE", "doctrine": "DIGIYLYFE pubblica la presenza digitale dei suoi aderenti. Ogni commerciante resta l'unico responsabile della propria attività, prodotti, prezzi, obblighi, scorte, vendite, consegne e impegni verso i clienti. DIGIYLYFE non vende al suo posto e non incassa i pagamenti delle sue vendite.", "contact": "Contatto diretto", "payment": "Pagamento diretto", "merchant": "al commerciante", "commission": "commissione DIGIYLYFE", "availability": "Prodotti, disponibilità, prezzi e condizioni: accordo diretto con il commerciante, sotto la sua responsabilità.", "qr": "Scansiona per aprire e salvare la presenza DIGIYLYFE.", "card": "VEDI BIGLIETTO", "fiche": "VEDI SCHEDA", "site": "VEDI SITO", "wa": "WhatsApp diretto", "footer": "MOCKUP OFFICINA · MOBILE-FIRST · 8 LINGUE · ADERENTI · Nessun software pubblico · Nessun push."}, "nl": {"tag": "DIGIYLYFE LID", "title": "DIGIY BONNE AFFAIRE · ADVERTENTIES", "subtitle": "Tweedehands · Diensten · Vastgoed · Voertuigen · Direct contact", "joinq": "Heb je iets te verkopen of een dienst aan te bieden?", "join": "LIDMAATSCHAP AANVRAGEN · 19.900 FCFA / maand", "jointext": "Word lid van DIGIYLYFE en maak je digitale visitekaart klaar.", "role": "ROL VAN DIGIYLYFE", "doctrine": "DIGIYLYFE publiceert de digitale aanwezigheid van zijn leden. Elke handelaar blijft zelf verantwoordelijk voor zijn activiteit, producten, prijzen, verplichtingen, voorraad, verkoop, leveringen en afspraken met klanten. DIGIYLYFE verkoopt niet namens hem en ontvangt geen betalingen voor zijn verkopen.", "contact": "Direct contact", "payment": "Direct betalen", "merchant": "aan handelaar", "commission": "DIGIYLYFE commissie", "availability": "Producten, beschikbaarheid, prijzen en voorwaarden: rechtstreeks afgesproken met de handelaar, onder diens verantwoordelijkheid.", "qr": "Scan om de DIGIYLYFE-pagina te openen en te bewaren.", "card": "BEKIJK KAART", "fiche": "BEKIJK FICHE", "site": "BEKIJK SITE", "wa": "WhatsApp direct", "footer": "WERKPLAATS MOCKUP · MOBILE-FIRST · 8 TALEN · LEDEN · Geen publieke software · Geen push."}, "ar": {"tag": "عضو DIGIYLYFE", "title": "DIGIY BONNE AFFAIRE · إعلانات", "subtitle": "مستعمل · خدمات · عقار · مركبات · تواصل مباشر", "joinq": "هل لديك شيء للبيع أو خدمة لتقديمها؟", "join": "طلب العضوية · 19,900 فرنك CFA / شهر", "jointext": "انضم إلى DIGIYLYFE كعضو وجهّز بطاقة عملك الرقمية.", "role": "دور DIGIYLYFE", "doctrine": "تنشر DIGIYLYFE الحضور الرقمي لأعضائها. يبقى كل تاجر مسؤولاً وحده عن نشاطه ومنتجاته وأسعاره والتزاماته ومخزونه ومبيعاته وتسليماته وتعهداته تجاه العملاء. لا تبيع DIGIYLYFE نيابة عنه ولا تستلم مدفوعات مبيعاته.", "contact": "تواصل مباشر", "payment": "دفع مباشر", "merchant": "للتاجر", "commission": "عمولة DIGIYLYFE", "availability": "المنتجات والتوفر والأسعار والشروط: اتفاق مباشر مع التاجر وتحت مسؤوليته.", "qr": "امسح الرمز لفتح وحفظ حضور DIGIYLYFE.", "card": "عرض البطاقة", "fiche": "عرض الصفحة", "site": "عرض الموقع", "wa": "واتساب مباشر", "footer": "نموذج ورشة · للهاتف أولاً · 8 لغات · أعضاء · بدون برنامج عام · بدون نشر."}};
+function setLang(lang){
+  if(!T[lang]) lang='fr';
+  document.documentElement.lang=lang;
+  document.documentElement.dir=lang==='ar'?'rtl':'ltr';
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const k=el.dataset.i18n; if(T[lang][k]) el.textContent=T[lang][k];
+  });
+  document.querySelectorAll('#langs button').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));
+  const u=new URL(location.href); u.searchParams.set('lang',lang); history.replaceState(null,'',u);
+}
+document.querySelectorAll('#langs button').forEach(b=>b.addEventListener('click',()=>setLang(b.dataset.lang)));
+setLang(new URLSearchParams(location.search).get('lang')||'fr');
+</script>
+</body>
+</html>
