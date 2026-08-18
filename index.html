@@ -185,6 +185,19 @@ html[dir="rtl"] body{direction:rtl} html[dir="rtl"] .rule{border-left:0;border-r
 }
 </style>
 
+
+<style id="bonne-affaire-live-v2">
+.ba-live-head{display:flex;justify-content:space-between;gap:8px;align-items:center;margin:12px 0 8px}
+.ba-live-head strong{font-size:11px;color:#073f32}
+.ba-live-count{font-size:8px;font-weight:950;background:#e8f1eb;border-radius:999px;padding:5px 8px}
+.ba-live-loading,.ba-live-error{padding:11px;border-radius:12px;border:1px solid #dfe8e2;background:#fffefa;font-size:9px;margin:8px 0}
+.ba-live-error{border-color:#e3b4a9;background:#fff4f1;color:#7a3425}
+.ba-live-badge{display:inline-block;background:#d8ad46;color:#073f32;font-size:7px;font-weight:1000;border-radius:999px;padding:4px 6px;margin-bottom:5px}
+.ba-live-photo-fallback{width:100%;height:100%;min-height:390px;display:grid;place-items:center;background:linear-gradient(145deg,#073f32,#0d634b);color:#fff;text-align:center;padding:20px;font-size:44px}
+.ba-live-photo-fallback small{display:block;font-size:8px;color:#f2d77e;margin-top:8px}
+@media(min-width:651px){.ba-live-head strong{font-size:14px}.ba-live-count{font-size:10px}.ba-live-loading,.ba-live-error{font-size:11px}.ba-live-photo-fallback{min-height:440px}}
+</style>
+
 </head>
 <body>
 <header>
@@ -203,7 +216,7 @@ html[dir="rtl"] body{direction:rtl} html[dir="rtl"] .rule{border-left:0;border-r
   </div>
   <div class="join">
     <div><strong data-i18n="joinq">Vous avez quelque chose à vendre ou un service à proposer ?</strong><span data-i18n="jointext">Une annonce doit rester claire, locale et en contact direct. La présence de l’annonceur est validée avant publication.</span></div>
-    <a href="https://bonne-affaire.digiylyfe.com/publier.html?lang=fr" target="_blank" rel="noopener" data-i18n="join">VENDRE / PUBLIER</a>
+    <a href="https://bonne-affaire.digiylyfe.com/publier-auto.html?lang=fr" target="_blank" rel="noopener" data-i18n="join">VENDRE / PUBLIER</a>
   </div>
 </div>
 </header>
@@ -240,12 +253,22 @@ html[dir="rtl"] body{direction:rtl} html[dir="rtl"] .rule{border-left:0;border-r
 
       <div class="ba-pricing-actions">
         <a href="https://bonne-affaire.digiylyfe.com/tarifs-annonce.html?lang=fr" target="_blank" rel="noopener">🏷️ VOIR LES TARIFS ANNONCE</a>
-        <a href="https://bonne-affaire.digiylyfe.com/publier.html?lang=fr" target="_blank" rel="noopener">＋ PRÉPARER / PUBLIER UNE ANNONCE</a>
+        <a href="https://bonne-affaire.digiylyfe.com/publier-auto.html?lang=fr" target="_blank" rel="noopener">＋ PRÉPARER / PUBLIER UNE ANNONCE</a>
       </div>
       <div class="ba-pricing-actions" style="grid-template-columns:1fr;margin-top:7px">
         <a href="https://digiylyfe.com/tarifs-adherents.html?lang=fr" target="_blank" rel="noopener" style="background:#fff;border:1px solid #d8ad46;color:#073f32">🤝 VENDEUR RÉGULIER · VOIR L’ADHÉSION 2 · 28 000 FCFA / mois</a>
       </div>
     </section>
+
+
+<section id="ba-live-section" aria-live="polite">
+  <div class="ba-live-head">
+    <strong>🔥 ANNONCES ACTIVES</strong>
+    <span class="ba-live-count" id="ba-live-count">Chargement…</span>
+  </div>
+  <div id="ba-live-message" class="ba-live-loading">Connexion aux annonces DIGIY BONNE AFFAIRE…</div>
+  <div id="ba-live-listings"></div>
+</section>
 
 <div class="category-band">
       <strong>CATÉGORIES VISIBLES DANS BONNE AFFAIRE</strong>
@@ -258,12 +281,12 @@ html[dir="rtl"] body{direction:rtl} html[dir="rtl"] .rule{border-left:0;border-r
         <span class="category-pill">💼 Emploi / mission</span>
       </div>
     </div>
-    <div class="status-empty">
+    <div class="status-empty" id="ba-static-status">
       📭 <strong>Aucune annonce active actuellement.</strong>
       Les cartes ci-dessous reprennent les exemples déjà prévus sur le site, puis montrent les futurs emplacements libres.
     </div>
 
-    <article class="listing">
+    <article class="listing ba-static-demo">
       <a class="visual example-visual" href="https://bonne-affaire.digiylyfe.com/annonces.html" target="_blank" rel="noopener">
         <div class="example-core">
           <div class="ico">📱</div>
@@ -300,7 +323,7 @@ html[dir="rtl"] body{direction:rtl} html[dir="rtl"] .rule{border-left:0;border-r
     </article>
     
 
-    <article class="listing">
+    <article class="listing ba-static-demo">
       <a class="visual example-visual" href="https://bonne-affaire.digiylyfe.com/annonces.html" target="_blank" rel="noopener">
         <div class="example-core">
           <div class="ico">🔧</div>
@@ -337,7 +360,7 @@ html[dir="rtl"] body{direction:rtl} html[dir="rtl"] .rule{border-left:0;border-r
     </article>
     
 
-    <article class="listing">
+    <article class="listing ba-static-demo">
       <a class="visual example-visual" href="https://bonne-affaire.digiylyfe.com/annonces.html" target="_blank" rel="noopener">
         <div class="example-core">
           <div class="ico">🏠</div>
@@ -374,7 +397,7 @@ html[dir="rtl"] body{direction:rtl} html[dir="rtl"] .rule{border-left:0;border-r
     </article>
     
 
-    <article class="listing">
+    <article class="listing ba-static-demo">
       <a class="visual example-visual" href="https://bonne-affaire.digiylyfe.com/annonces.html" target="_blank" rel="noopener">
         <div class="example-core">
           <div class="ico">🚲</div>
@@ -411,7 +434,7 @@ html[dir="rtl"] body{direction:rtl} html[dir="rtl"] .rule{border-left:0;border-r
     </article>
     
 
-    <article class="listing">
+    <article class="listing ba-static-demo">
       <a class="visual example-visual" href="https://bonne-affaire.digiylyfe.com/annonces.html" target="_blank" rel="noopener">
         <div class="example-core">
           <div class="ico">🛠️</div>
@@ -448,7 +471,7 @@ html[dir="rtl"] body{direction:rtl} html[dir="rtl"] .rule{border-left:0;border-r
     </article>
     
 
-    <article class="listing">
+    <article class="listing ba-static-demo">
       <a class="visual example-visual" href="https://bonne-affaire.digiylyfe.com/annonces.html" target="_blank" rel="noopener">
         <div class="example-core">
           <div class="ico">🍽️</div>
@@ -484,7 +507,7 @@ html[dir="rtl"] body{direction:rtl} html[dir="rtl"] .rule{border-left:0;border-r
       </div>
     </article>
     
-    <article class="listing placeholder-slot">
+    <article class="listing placeholder-slot ba-static-demo">
       <a class="visual placeholder-visual" href="https://digiylyfe.com/" target="_blank" rel="noopener">
         <div class="place-band">PLACE À PRENDRE</div>
         <div class="placeholder-core"><div class="icon">📦</div><strong>VOTRE ANNONCE<br>ICI</strong><small>Photo · prix · zone · contact</small></div>
@@ -501,7 +524,7 @@ html[dir="rtl"] body{direction:rtl} html[dir="rtl"] .rule{border-left:0;border-r
       </div>
     </article>
 
-    <article class="listing placeholder-slot">
+    <article class="listing placeholder-slot ba-static-demo">
       <a class="visual placeholder-visual" href="https://digiylyfe.com/" target="_blank" rel="noopener">
         <div class="place-band">PLACE À PRENDRE</div>
         <div class="placeholder-core"><div class="icon">🛠️</div><strong>VOTRE SERVICE<br>ICI</strong><small>Métier · zone · disponibilité · contact</small></div>
@@ -535,5 +558,104 @@ function setLang(lang){
 document.querySelectorAll('#langs button').forEach(b=>b.addEventListener('click',()=>setLang(b.dataset.lang)));
 setLang(new URLSearchParams(location.search).get('lang')||'fr');
 </script>
+
+<script id="bonne-affaire-live-engine-v2">
+(() => {
+  const SB_URL = 'https://wesqmwjjtsefyjnluosj.supabase.co';
+  const SB_KEY = 'sb_publishable_2KVRayr3oWcewu0Y7xMkOQ_D6522h1E';
+  const endpoint = SB_URL + '/rest/v1/digiy_bonne_affaire_annonces?select=id,type_publication,pack,titre,categorie,description,prix_affiche,zone,ville,pays,photo_url,contact_nom,telephone,whatsapp,fiche_url,published_at,expires_at,is_featured,sort_order,created_at&order=is_featured.desc,sort_order.asc,created_at.desc';
+
+  const esc = (v='') => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+  const safeUrl = (v='') => { try { const u = new URL(v); return /^https?:$/.test(u.protocol) ? u.href : ''; } catch { return ''; } };
+  const digits = (v='') => String(v).replace(/\D/g,'');
+  const categoryIcon = (cat='') => {
+    const c = cat.toLowerCase();
+    if(c.includes('véhic') || c.includes('voiture') || c.includes('auto')) return '🚗';
+    if(c.includes('immob')) return '🏠';
+    if(c.includes('service')) return '🛠️';
+    if(c.includes('emploi') || c.includes('mission')) return '💼';
+    if(c.includes('pro')) return '🏢';
+    return '📦';
+  };
+
+  function card(a) {
+    const pic = safeUrl(a.photo_url);
+    const wa = digits(a.whatsapp || a.telephone);
+    const tel = digits(a.telephone || a.whatsapp);
+    const fiche = safeUrl(a.fiche_url);
+    const pro = a.type_publication === 'pro_28000';
+    const location = [a.ville, a.pays].filter(Boolean).join(' · ');
+    const expires = a.expires_at ? new Date(a.expires_at).toLocaleDateString('fr-FR') : '';
+    const visual = pic
+      ? `<img src="${esc(pic)}" alt="${esc(a.titre)}" loading="lazy">`
+      : `<div class="ba-live-photo-fallback"><div>${categoryIcon(a.categorie)}<small>PHOTO À VENIR</small></div></div>`;
+    const actions = [
+      wa ? `<a class="btn whatsapp" href="https://wa.me/${wa}" target="_blank" rel="noopener">WHATSAPP DIRECT</a>` : '',
+      tel ? `<a class="btn secondary" href="tel:+${tel}">APPELER</a>` : '',
+      fiche ? `<a class="btn primary" href="${esc(fiche)}" target="_blank" rel="noopener">VOIR LA FICHE</a>` : ''
+    ].filter(Boolean).join('');
+
+    return `<article class="listing ba-live-card">
+      <div class="visual">${visual}</div>
+      <div class="info">
+        <span class="ba-live-badge">${pro ? 'PRO · ADHÉRENT 2' : 'ANNONCE ACTIVE · PACK ' + esc(a.pack)}</span>
+        <div class="name-row">
+          <div><h2>${esc(a.titre)}</h2><p class="activity">${esc(a.categorie)}</p></div>
+          <span class="area">📍 ${esc(location)}</span>
+        </div>
+        <div class="chips">
+          <span class="chip">${esc(a.categorie)}</span>
+          ${a.prix_affiche ? `<span class="chip">${esc(a.prix_affiche)}</span>` : ''}
+          <span class="chip">Contact direct</span>
+        </div>
+        ${a.description ? `<p class="desc">${esc(a.description)}</p>` : ''}
+        <p class="rule">Annonce publiée après validation DIGIYLYFE. L’annonceur reste responsable de l’objet, du prix, de l’état réel et de la transaction.</p>
+        <div class="direct">
+          <div><strong>Vendeur</strong><span>${esc(a.contact_nom)}</span></div>
+          <div><strong>Contact</strong><span>Direct</span></div>
+          <div><strong>Visible jusqu’au</strong><span>${esc(expires)}</span></div>
+        </div>
+        <div class="actions">${actions}</div>
+      </div>
+    </article>`;
+  }
+
+  async function loadListings() {
+    const box = document.getElementById('ba-live-listings');
+    const msg = document.getElementById('ba-live-message');
+    const count = document.getElementById('ba-live-count');
+    const staticCards = document.querySelectorAll('.ba-static-demo');
+    const staticStatus = document.getElementById('ba-static-status');
+    try {
+      const r = await fetch(endpoint, {
+        headers: { 'apikey': SB_KEY, 'Accept': 'application/json' },
+        cache: 'no-store'
+      });
+      if(!r.ok) throw new Error('HTTP ' + r.status);
+      const rows = await r.json();
+      count.textContent = rows.length + (rows.length > 1 ? ' annonces' : ' annonce');
+      if(rows.length) {
+        box.innerHTML = rows.map(card).join('');
+        msg.hidden = true;
+        staticCards.forEach(el => el.hidden = true);
+        if(staticStatus) staticStatus.hidden = true;
+      } else {
+        box.innerHTML = '';
+        msg.className = 'ba-live-loading';
+        msg.textContent = '📭 Aucune annonce réelle active actuellement. Les exemples restent visibles ci-dessous.';
+        staticCards.forEach(el => el.hidden = false);
+        if(staticStatus) staticStatus.hidden = false;
+      }
+    } catch(e) {
+      count.textContent = 'hors connexion';
+      msg.className = 'ba-live-error';
+      msg.textContent = 'Les annonces actives n’ont pas pu être chargées. Les exemples restent visibles.';
+      staticCards.forEach(el => el.hidden = false);
+    }
+  }
+  loadListings();
+})();
+</script>
+
 </body>
 </html>
