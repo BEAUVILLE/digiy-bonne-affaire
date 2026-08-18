@@ -136,7 +136,8 @@ button{background:var(--green);color:#fff;margin-top:14px}.cta{background:var(--
       err.style.display='block';console.error(ex);
     }finally{btn.disabled=false;btn.textContent='ENVOYER POUR CONTRÔLE'}
   });
-  updatePack('A');
+  const requestedPack=(new URLSearchParams(location.search).get('pack')||'A').toUpperCase();
+  updatePack(packs[requestedPack]?requestedPack:'A');
 })();
 </script>
 </body>
