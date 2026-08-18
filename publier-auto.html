@@ -2,40 +2,38 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>DIGIY BONNE AFFAIRE · Publier</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>DIGIY BONNE AFFAIRE · Publier & règlement</title>
+<meta name="robots" content="index,follow">
 <style>
-:root{--green:#073f32;--green2:#0d634b;--gold:#d8ad46;--cream:#f6f1e5;--paper:#fffefa;--ink:#173b31;--muted:#6e8179;--line:#dfe8e2}
-*{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--cream);color:var(--ink)}
-header{background:var(--green);color:white;border-bottom:4px solid var(--gold);padding:18px 14px} .wrap{max-width:760px;margin:auto}
-h1{margin:0;font-size:22px} .sub{color:#eadfae;font-size:11px;margin-top:4px}
-main{max-width:760px;margin:auto;padding:16px 10px 42px}
-.card{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:14px;margin:12px 0;box-shadow:0 7px 18px rgba(7,63,50,.06)}
-.doors{display:grid;grid-template-columns:1fr;gap:10px} .door{border:2px solid #e2d49b;border-radius:16px;padding:13px;background:white}
-.door h2{font-size:15px;margin:0 0 5px;color:var(--green)} .door p{font-size:10px;color:var(--muted);line-height:1.4}
-.packs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:9px} .pack{border:1px solid #d8e2dc;border-radius:11px;padding:9px 5px;text-align:center;font-size:9px;font-weight:900;cursor:pointer;background:#fff}
-.pack.active{background:var(--gold);border-color:var(--gold)} .pack small{display:block;font-weight:700;margin-top:3px}
-label{display:block;font-size:10px;font-weight:900;margin:11px 0 5px} input,select,textarea{width:100%;border:1px solid #cad7d0;border-radius:11px;padding:11px;background:#fff;font:inherit;font-size:12px}
-textarea{min-height:105px;resize:vertical} .grid{display:grid;grid-template-columns:1fr;gap:8px}
-button,.cta{display:flex;width:100%;justify-content:center;align-items:center;text-align:center;border:0;border-radius:999px;padding:12px;text-decoration:none;font-weight:950;font-size:11px;cursor:pointer}
-button{background:var(--green);color:#fff;margin-top:14px} .cta{background:var(--gold);color:var(--green)} .note{font-size:9px;color:var(--muted);line-height:1.45}
-.ok,.err{display:none;margin-top:12px;border-radius:12px;padding:11px;font-size:10px;font-weight:800} .ok{background:#e8f5ec;border:1px solid #abd0b6} .err{background:#fff1ee;border:1px solid #e0aaa0}
-@media(min-width:651px){main{padding:24px 14px 50px} .doors{grid-template-columns:1.25fr .75fr} .grid.two{grid-template-columns:1fr 1fr} .door h2{font-size:18px} .door p,.note{font-size:11px}}
+:root{--green:#073f32;--green2:#0d634b;--gold:#d8ad46;--cream:#f6f1e5;--paper:#fffefa;--ink:#173b31;--muted:#6e8179;--line:#dfe8e2;--danger:#b42318}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--cream);color:var(--ink)}
+header{background:var(--green);color:#fff;border-bottom:4px solid var(--gold);padding:18px 14px}.wrap,main{max-width:760px;margin:auto}
+h1{margin:0;font-size:22px}.sub{color:#eadfae;font-size:11px;margin-top:4px}
+main{padding:16px 10px 42px}.card{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:14px;margin:12px 0;box-shadow:0 7px 18px rgba(7,63,50,.06)}
+.doors{display:grid;grid-template-columns:1fr;gap:10px}.door{border:2px solid #e2d49b;border-radius:16px;padding:13px;background:#fff}.door h2{font-size:15px;margin:0 0 5px;color:var(--green)}.door p{font-size:10px;color:var(--muted);line-height:1.45}
+.packs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:9px}.pack{border:1px solid #d8e2dc;border-radius:11px;padding:9px 5px;text-align:center;font-size:9px;font-weight:900;cursor:pointer;background:#fff}.pack.active{background:var(--gold);border-color:var(--gold)}.pack small{display:block;font-weight:700;margin-top:3px}
+.paybox{border:1px solid #e1c266;background:#fff8df;border-radius:15px;padding:12px;margin-top:12px}.paybox strong{display:block;color:var(--green);font-size:12px}.paybox p{font-size:10px;line-height:1.45;margin:6px 0}.payline{display:grid;grid-template-columns:1fr;gap:6px;margin-top:8px}.payitem{border:1px solid #ead9a0;border-radius:11px;padding:9px;background:#fff;font-size:10px;line-height:1.45}
+label{display:grid;gap:6px;font-size:10px;font-weight:900;margin:11px 0 5px}input,select,textarea{width:100%;border:1px solid #cad7d0;border-radius:11px;padding:11px;background:#fff;font:inherit;font-size:12px}textarea{min-height:105px;resize:vertical}.grid{display:grid;grid-template-columns:1fr;gap:8px}
+.file-help,.note{font-size:9px;color:var(--muted);line-height:1.45}.required{color:var(--danger)}button,.cta{display:flex;width:100%;justify-content:center;align-items:center;text-align:center;border:0;border-radius:999px;padding:12px;text-decoration:none;font-weight:950;font-size:11px;cursor:pointer}
+button{background:var(--green);color:#fff;margin-top:14px}.cta{background:var(--gold);color:var(--green)}button:disabled{opacity:.55;cursor:not-allowed}.ok,.err{display:none;margin-top:12px;border-radius:12px;padding:11px;font-size:10px;font-weight:800}.ok{background:#e8f5ec;border:1px solid #abd0b6}.err{background:#fff1ee;border:1px solid #e0aaa0;color:#7a3425}
+.summary{border:1px solid var(--line);border-radius:13px;padding:10px;background:#f7faf8;font-size:10px;line-height:1.5}
+@media(min-width:651px){main{padding:24px 14px 50px}.doors{grid-template-columns:1.25fr .75fr}.grid.two{grid-template-columns:1fr 1fr}.payline{grid-template-columns:1fr 1fr}.door h2{font-size:18px}.door p,.note,.file-help{font-size:11px}}
 </style>
 </head>
 <body>
-<header><div class="wrap"><h1>🏷️ DIGIY BONNE AFFAIRE</h1><div class="sub">Publier · contact direct · 0 % commission DIGIY sur la transaction</div></div></header>
+<header><div class="wrap"><h1>🏷️ DIGIY BONNE AFFAIRE</h1><div class="sub">Publier · règlement contrôlé humainement · 0 % commission DIGIY sur la transaction</div></div></header>
 <main>
 <section class="card">
   <strong>CHOISISSEZ VOTRE PORTE</strong>
   <div class="doors">
     <div class="door">
       <h2>👤 PARTICULIER · VENTE PONCTUELLE</h2>
-      <p>Une annonce à l’unité. Elle entre d’abord en attente de validation DIGIYLYFE.</p>
+      <p>Choisissez la durée de votre annonce. Après règlement, envoyez votre preuve : DIGIYLYFE contrôle le paiement puis contrôle l’annonce avant publication.</p>
       <div class="packs" id="packs">
-        <div class="pack active" data-pack="A">3 000 FCFA<small>7 jours</small></div>
-        <div class="pack" data-pack="B">5 000 FCFA<small>14 jours</small></div>
-        <div class="pack" data-pack="C">10 000 FCFA<small>30 jours</small></div>
+        <div class="pack active" data-pack="A" data-price="3000">3 000 FCFA<small>7 jours</small></div>
+        <div class="pack" data-pack="B" data-price="5000">5 000 FCFA<small>14 jours</small></div>
+        <div class="pack" data-pack="C" data-price="10000">10 000 FCFA<small>30 jours</small></div>
       </div>
     </div>
     <div class="door">
@@ -44,70 +42,102 @@ button{background:var(--green);color:#fff;margin-top:14px} .cta{background:var(-
       <a class="cta" href="https://digiylyfe.com/tarifs-adherents.html?lang=fr" target="_blank" rel="noopener">VOIR LA FORMULE 28 000</a>
     </div>
   </div>
+
+  <div class="paybox">
+    <strong>💳 RÈGLEMENT DE L’ANNONCE</strong>
+    <p id="packSummary">PACK A · 3 000 FCFA · 7 jours</p>
+    <div class="payline">
+      <div class="payitem"><b>🇸🇳 Sénégal · Wave</b><br>JB BEAVILLE<br>+221 77 134 28 89</div>
+      <div class="payitem"><b>🇪🇺 Europe · Sendwave → Wave Sénégal</b><br>Jean Baptiste Beauville<br>+221 77 134 28 89</div>
+    </div>
+    <p>Le système ne valide pas l’argent. <strong>Une personne DIGIYLYFE contrôle votre preuve avant publication.</strong></p>
+  </div>
 </section>
 
 <form class="card" id="form">
-  <strong>PRÉPARER MON ANNONCE PONCTUELLE</strong>
-  <input type="hidden" id="pack" value="A">
+  <strong>PRÉPARER MON ANNONCE + MA PREUVE</strong>
+  <input type="hidden" id="pack" name="pack" value="A">
+
   <div class="grid two">
-    <div><label for="titre">Titre *</label><input id="titre" maxlength="120" required placeholder="Ex. Toyota Corolla 2018"></div>
-    <div><label for="categorie">Catégorie *</label><select id="categorie" required>
+    <label>Titre <span class="required">*</span><input name="titre" maxlength="120" required placeholder="Ex. Toyota Corolla 2018"></label>
+    <label>Catégorie <span class="required">*</span><select name="categorie" required>
       <option>Occasion</option><option>Service</option><option>Immobilier</option><option>Véhicule</option><option>Pro</option><option>Emploi / mission</option>
-    </select></div>
+    </select></label>
   </div>
-  <label for="description">Description</label><textarea id="description" maxlength="1500" placeholder="État, caractéristiques, conditions utiles…"></textarea>
+
+  <label>Description<textarea name="description" maxlength="1500" placeholder="État réel, caractéristiques, conditions utiles…"></textarea></label>
   <div class="grid two">
-    <div><label for="prix">Prix affiché</label><input id="prix" maxlength="80" placeholder="Ex. 4 500 000 FCFA"></div>
-    <div><label for="photo">Lien photo (optionnel)</label><input id="photo" type="url" placeholder="https://…"></div>
+    <label>Prix de l’objet<input name="prix_affiche" maxlength="80" placeholder="Ex. 4 500 000 FCFA"></label>
+    <label>Zone<input name="zone" maxlength="120" placeholder="Petite Côte, Dakar…"></label>
   </div>
+
   <div class="grid two">
-    <div><label for="ville">Ville *</label><input id="ville" maxlength="100" required placeholder="Saly"></div>
-    <div><label for="pays">Pays *</label><input id="pays" maxlength="100" required value="Sénégal"></div>
+    <label>Ville <span class="required">*</span><input name="ville" maxlength="100" required placeholder="Saly"></label>
+    <label>Pays <span class="required">*</span><input name="pays" maxlength="100" required value="Sénégal"></label>
   </div>
+
   <div class="grid two">
-    <div><label for="nom">Nom du vendeur *</label><input id="nom" maxlength="120" required></div>
-    <div><label for="zone">Zone</label><input id="zone" maxlength="120" placeholder="Petite Côte, Dakar…"></div>
+    <label>Nom du vendeur <span class="required">*</span><input name="contact_nom" maxlength="120" required></label>
+    <label>Méthode de paiement<select name="payment_method"><option value="Wave">Wave</option><option value="Sendwave">Sendwave → Wave</option><option value="Autre">Autre</option></select></label>
   </div>
+
   <div class="grid two">
-    <div><label for="whatsapp">WhatsApp</label><input id="whatsapp" inputmode="tel" placeholder="+221…"></div>
-    <div><label for="telephone">Téléphone</label><input id="telephone" inputmode="tel" placeholder="+221…"></div>
+    <label>WhatsApp<input name="whatsapp" inputmode="tel" placeholder="+221…"></label>
+    <label>Téléphone<input name="telephone" inputmode="tel" placeholder="+221…"></label>
   </div>
-  <p class="note">Au moins WhatsApp ou téléphone est obligatoire. L’envoi ne publie pas immédiatement : DIGIYLYFE valide d’abord la présence et l’annonce. Le paiement de la transaction reste direct entre les parties.</p>
-  <button type="submit" id="submit">ENVOYER POUR VALIDATION</button>
-  <div class="ok" id="ok">✅ Demande reçue. L’annonce est en attente de validation DIGIYLYFE.</div>
+
+  <label>Référence / nom du paiement<input name="payment_reference" maxlength="120" placeholder="Optionnel : nom affiché, référence Wave…"></label>
+
+  <label>Photo de l’annonce<input name="photo" type="file" accept="image/jpeg,image/png,image/webp"></label>
+  <div class="file-help">Optionnelle · JPG, PNG ou WEBP · 5 Mo maximum.</div>
+
+  <label>Preuve de paiement <span class="required">*</span><input name="payment_proof" type="file" accept="image/jpeg,image/png,image/webp,application/pdf" required></label>
+  <div class="file-help">Obligatoire · capture Wave / Sendwave ou PDF · 5 Mo maximum. La preuve reste privée et n’est visible que dans le cockpit DIGIYLYFE.</div>
+
+  <label style="display:none">Ne pas remplir<input name="website" autocomplete="off" tabindex="-1"></label>
+
+  <div class="summary" id="finalSummary">Votre demande : PACK A · 3 000 FCFA · 7 jours. Elle entrera en attente de contrôle humain.</div>
+  <p class="note">L’envoi ne publie jamais immédiatement. DIGIYLYFE contrôle d’abord la preuve de paiement, puis l’annonce. La vente reste ensuite directe entre vendeur et acheteur.</p>
+  <button type="submit" id="submit">ENVOYER POUR CONTRÔLE</button>
+  <div class="ok" id="ok">✅ Demande reçue. Paiement à contrôler par DIGIYLYFE. Votre annonce n’est pas encore publiée.</div>
   <div class="err" id="err"></div>
 </form>
 </main>
 <script>
 (() => {
- const SB_URL='https://wesqmwjjtsefyjnluosj.supabase.co', SB_KEY='sb_publishable_2KVRayr3oWcewu0Y7xMkOQ_D6522h1E';
- const packs=document.querySelectorAll('.pack'), pack=document.getElementById('pack');
- packs.forEach(p=>p.addEventListener('click',()=>{packs.forEach(x=>x.classList.remove('active'));p.classList.add('active');pack.value=p.dataset.pack;}));
- const val=id=>document.getElementById(id).value.trim();
- document.getElementById('form').addEventListener('submit',async e=>{
-   e.preventDefault();
-   const ok=document.getElementById('ok'), err=document.getElementById('err'), btn=document.getElementById('submit');
-   ok.style.display='none';err.style.display='none';
-   if(!val('whatsapp')&&!val('telephone')){err.textContent='Ajoutez un WhatsApp ou un téléphone.';err.style.display='block';return;}
-   const payload={
-     type_publication:'ponctuelle', pack:pack.value, titre:val('titre'), categorie:val('categorie'),
-     description:val('description')||null, prix_affiche:val('prix')||null, zone:val('zone')||null,
-     ville:val('ville'), pays:val('pays'), photo_url:val('photo')||null, contact_nom:val('nom'),
-     telephone:val('telephone')||null, whatsapp:val('whatsapp')||null
-   };
-   btn.disabled=true;btn.textContent='ENVOI…';
-   try {
-     const r=await fetch(SB_URL+'/rest/v1/digiy_bonne_affaire_annonces',{
-       method:'POST', headers:{'apikey':SB_KEY,'Content-Type':'application/json','Prefer':'return=minimal'},
-       body:JSON.stringify(payload)
-     });
-     if(!r.ok) throw new Error(await r.text());
-     ok.style.display='block'; e.target.reset(); pack.value='A'; packs.forEach((x,i)=>x.classList.toggle('active',i===0));
-   } catch(ex) {
-     err.textContent='Envoi impossible pour le moment. Vérifiez les champs puis réessayez.';
-     err.style.display='block'; console.error(ex);
-   } finally {btn.disabled=false;btn.textContent='ENVOYER POUR VALIDATION';}
- });
+  const API="https://wesqmwjjtsefyjnluosj.supabase.co/functions/v1/digiy-bonne-affaire-submit";
+  const packs={A:{price:3000,days:7},B:{price:5000,days:14},C:{price:10000,days:30}};
+  const packInput=document.getElementById('pack'), packSummary=document.getElementById('packSummary'), finalSummary=document.getElementById('finalSummary');
+  function updatePack(p){
+    const x=packs[p]||packs.A;packInput.value=p;
+    document.querySelectorAll('.pack').forEach(el=>el.classList.toggle('active',el.dataset.pack===p));
+    const price=x.price.toLocaleString('fr-FR');
+    packSummary.textContent=`PACK ${p} · ${price} FCFA · ${x.days} jours`;
+    finalSummary.textContent=`Votre demande : PACK ${p} · ${price} FCFA · ${x.days} jours. Elle entrera en attente de contrôle humain.`;
+  }
+  document.querySelectorAll('.pack').forEach(el=>el.addEventListener('click',()=>updatePack(el.dataset.pack)));
+  document.getElementById('form').addEventListener('submit',async e=>{
+    e.preventDefault();
+    const form=e.currentTarget, ok=document.getElementById('ok'), err=document.getElementById('err'), btn=document.getElementById('submit');
+    ok.style.display='none';err.style.display='none';
+    const fd=new FormData(form);fd.set('pack',packInput.value);
+    const wa=String(fd.get('whatsapp')||'').trim(),tel=String(fd.get('telephone')||'').trim();
+    if(!wa&&!tel){err.textContent='Ajoutez un WhatsApp ou un téléphone.';err.style.display='block';return}
+    const proof=fd.get('payment_proof');
+    if(!(proof instanceof File)||!proof.size){err.textContent='Ajoutez la preuve de paiement.';err.style.display='block';return}
+    btn.disabled=true;btn.textContent='ENVOI…';
+    try{
+      const res=await fetch(API,{method:'POST',body:fd,headers:{'Accept':'application/json'}});
+      let data=null;try{data=await res.json()}catch{}
+      if(!res.ok||!data?.ok)throw new Error(data?.error||`HTTP ${res.status}`);
+      ok.style.display='block';form.reset();updatePack('A');window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'});
+    }catch(ex){
+      err.textContent='Envoi impossible pour le moment. Vérifiez les champs et la connexion puis réessayez.';
+      err.style.display='block';console.error(ex);
+    }finally{btn.disabled=false;btn.textContent='ENVOYER POUR CONTRÔLE'}
+  });
+  updatePack('A');
 })();
 </script>
-</body></html>
+</body>
+</html>
