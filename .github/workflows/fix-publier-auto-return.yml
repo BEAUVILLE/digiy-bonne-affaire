@@ -1,0 +1,36 @@
+name: Fix publier-auto return
+
+on:
+  push:
+    paths:
+      - '.github/workflows/fix-publier-auto-return.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Add DIGIYLYFE return button to publier-auto
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('publier-auto.html')
+          s = p.read_text(encoding='utf-8')
+          marker = 'data-digiy-return-home="1"'
+          if marker not in s:
+              anchor = '<main>'
+              button = '\n<a data-digiy-return-home="1" href="https://digiylyfe.com/" aria-label="Retour DIGIYLYFE.COM" style="width:100%;min-height:52px;display:flex;align-items:center;justify-content:center;margin:0 0 14px;padding:11px 18px;border:2px solid #d8ad46;border-radius:999px;background:#073f32;color:#fff;text-decoration:none;font:950 15px/1.2 system-ui,-apple-system,Segoe UI,sans-serif;letter-spacing:.02em;box-shadow:0 8px 20px rgba(7,63,50,.20);box-sizing:border-box">← RETOUR DIGIYLYFE.COM</a>'
+              if anchor not in s:
+                  raise SystemExit('Balise <main> introuvable')
+              s = s.replace(anchor, anchor + button, 1)
+              p.write_text(s, encoding='utf-8')
+          PY
+          git config user.name "DIGIY LYFE"
+          git config user.email "actions@users.noreply.github.com"
+          git add publier-auto.html
+          git rm .github/workflows/fix-publier-auto-return.yml
+          git commit -m "UI: add DIGIYLYFE return on publier-auto"
+          git push
