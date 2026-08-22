@@ -1,0 +1,33 @@
+name: Clean public wording
+on:
+  push:
+    paths:
+      - '.github/workflows/clean-public-copy-20260822.yml'
+permissions:
+  contents: write
+jobs:
+  clean:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Clean BONNE AFFAIRE public wording
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          p=Path('index.html')
+          s=p.read_text(encoding='utf-8')
+          s=s.replace('<title>DIGIY BONNE AFFAIRE · V1 2 PORTES · AUTOMATISATION PRÊTE · Atelier</title>','<title>DIGIY BONNE AFFAIRE — Annonces · Contact direct</title>')
+          footer='DIGIYLYFE.COM · BONNE AFFAIRE · 0 % COMMISSION'
+          s=re.sub(r'<footer data-i18n="footer">.*?</footer>',f'<footer data-i18n="footer">{footer}</footer>',s,count=1,flags=re.S)
+          s=re.sub(r'("footer"\s*:\s*")[^"]*(")',lambda m:m.group(1)+footer+m.group(2),s)
+          p.write_text(s,encoding='utf-8')
+          PY
+      - name: Commit cleanup
+        run: |
+          git config user.name "DIGIYLYFE"
+          git config user.email "actions@users.noreply.github.com"
+          git rm .github/workflows/clean-public-copy-20260822.yml
+          git add index.html
+          git diff --cached --quiet || git commit -m "UI: clean public wording on BONNE AFFAIRE"
+          git push
