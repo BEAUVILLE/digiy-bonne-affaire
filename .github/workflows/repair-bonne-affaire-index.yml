@@ -1,0 +1,48 @@
+name: Repair BONNE AFFAIRE index
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/repair-bonne-affaire-index.yml
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Restore QR integrity and verify exact target
+        shell: python
+        run: |
+          from pathlib import Path
+          import re, subprocess
+
+          path = Path("index.html")
+          text = path.read_text(encoding="utf-8")
+          pattern = r'(<img class="qr" src=")(data:image/png;base64,[^"]+)(" alt="QR Bonne Affaire">)'
+          matches = list(re.finditer(pattern, text))
+          if len(matches) < 2:
+              raise SystemExit(f"Expected several demo QR images, found {len(matches)}")
+          canonical = matches[0].group(2)
+          fixed = re.sub(pattern, lambda m: m.group(1) + canonical + m.group(3), text)
+          path.write_text(fixed, encoding="utf-8")
+
+          blob = subprocess.check_output(["git", "hash-object", "index.html"], text=True).strip()
+          expected = "39c668b6d93178394bf81924f557431e1be1b6fc"
+          if blob != expected:
+              raise SystemExit(f"Safety stop: target blob mismatch {blob} != {expected}")
+
+          Path(".github/workflows/repair-bonne-affaire-index.yml").unlink()
+      - name: Commit exact repair
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html .github/workflows/repair-bonne-affaire-index.yml
+          git diff --cached --check
+          git commit -m "fix(bonne-affaire): restaurer le QR sans toucher au reste"
+          git push
