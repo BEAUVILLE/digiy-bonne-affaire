@@ -173,6 +173,26 @@ html[dir="rtl"] body{direction:rtl} html[dir="rtl"] .rule{border-left:0;border-r
   background:#d8ad46;
   color:#073f32;
 }
+.ba-country-switch{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:7px;
+  margin:0 0 10px;
+}
+.ba-country-btn{
+  border:1px solid #d8e2dc;
+  background:#fff;
+  color:#073f32;
+  border-radius:999px;
+  padding:9px 8px;
+  font:950 9px/1.1 system-ui,-apple-system,"Segoe UI",sans-serif;
+  cursor:pointer;
+}
+.ba-country-btn.active{
+  background:#073f32;
+  color:#fff;
+  border-color:#073f32;
+}
 @media(min-width:651px){
   .ba-pricing{padding:17px;border-radius:22px}
   .ba-pricing h2{font-size:20px}
@@ -229,15 +249,20 @@ html[dir="rtl"] body{direction:rtl} html[dir="rtl"] .rule{border-left:0;border-r
     
     <section class="ba-pricing" aria-label="Tarifs DIGIY BONNE AFFAIRE">
       <h2>CHOISISSEZ VOTRE FAÇON DE VENDRE</h2>
-      <p class="lead">Vente ponctuelle : Sénégal en FCFA · France en €. Vendeur ou loueur professionnel régulier : formule ADHÉRENT 2 à 28 000 FCFA / mois au Sénégal · 75 € / mois en France. 0 % commission DIGIY sur la vente.</p>
+      <p class="lead">Choisissez votre pays : une seule devise et les tarifs correspondants s’affichent. 0 % commission DIGIY sur la vente.</p>
+
+      <div class="ba-country-switch" role="group" aria-label="Choisir le pays pour les tarifs">
+        <button type="button" class="ba-country-btn active" data-ba-country="SN">🇸🇳 SÉNÉGAL · FCFA</button>
+        <button type="button" class="ba-country-btn" data-ba-country="FR">🇫🇷 FRANCE · €</button>
+      </div>
 
       <div class="ba-paths">
         <div class="ba-path">
-          <strong>PARTICULIER · ANNONCE À L’UNITÉ</strong>
+          <strong id="baMarketTitle">🇸🇳 SÉNÉGAL · PARTICULIER · ANNONCE À L’UNITÉ</strong>
           <div class="ba-packs">
-            <div class="ba-pack"><b>PACK A · 3 000 FCFA / 9 €</b><span>7 jours</span></div>
-            <div class="ba-pack"><b>PACK B · 5 000 FCFA / 15 €</b><span>14 jours</span></div>
-            <div class="ba-pack"><b>PACK C · 10 000 FCFA / 25 €</b><span>30 jours</span></div>
+            <div class="ba-pack"><b id="baPackA">PACK A · 3 000 FCFA</b><span>7 jours</span></div>
+            <div class="ba-pack"><b id="baPackB">PACK B · 5 000 FCFA</b><span>14 jours</span></div>
+            <div class="ba-pack"><b id="baPackC">PACK C · 10 000 FCFA</b><span>30 jours</span></div>
           </div>
         </div>
 
@@ -247,17 +272,17 @@ html[dir="rtl"] body{direction:rtl} html[dir="rtl"] .rule{border-left:0;border-r
               <strong>PROFESSIONNEL · ADHÉRENT 2</strong>
               <span style="font-size:8.5px;color:#6d7d77;font-weight:850">Présence commerciale régulière · identité vendeur · contact direct · 0 % commission</span>
             </div>
-            <div class="ba-pro-price">28 000 FCFA / 75 €<small>/ mois selon pays</small></div>
+            <div class="ba-pro-price" id="baProPrice">28 000 FCFA<small>/ mois</small></div>
           </div>
         </div>
       </div>
 
       <div class="ba-pricing-actions">
-        <a href="https://bonne-affaire.digiylyfe.com/tarifs-annonce.html?lang=fr" target="_blank" rel="noopener">🏷️ VOIR LES TARIFS ANNONCE</a>
-        <a href="https://bonne-affaire.digiylyfe.com/publier-auto.html?lang=fr" target="_blank" rel="noopener">＋ PRÉPARER / PUBLIER UNE ANNONCE</a>
+        <a id="baTarifsLink" href="https://bonne-affaire.digiylyfe.com/tarifs-annonce.html?lang=fr&country=sn" target="_blank" rel="noopener">🏷️ VOIR LES TARIFS ANNONCE</a>
+        <a id="baPublishLink" href="https://bonne-affaire.digiylyfe.com/publier-auto.html?lang=fr&country=sn" target="_blank" rel="noopener">＋ PRÉPARER / PUBLIER UNE ANNONCE</a>
       </div>
       <div class="ba-pricing-actions" style="grid-template-columns:1fr;margin-top:7px">
-        <a href="https://digiylyfe.com/tarifs-adherents.html?lang=fr" target="_blank" rel="noopener" style="background:#fff;border:1px solid #d8ad46;color:#073f32">🤝 VENDEUR RÉGULIER · VOIR L’ADHÉSION 2 · 28 000 FCFA / 75 € / mois</a>
+        <a id="baAdhesionLink" href="https://digiylyfe.com/tarifs-adherents.html?lang=fr&country=sn" target="_blank" rel="noopener" style="background:#fff;border:1px solid #d8ad46;color:#073f32">🤝 VENDEUR RÉGULIER · VOIR L’ADHÉSION 2 · 28 000 FCFA / mois</a>
       </div>
     </section>
 
@@ -351,7 +376,7 @@ html[dir="rtl"] body{direction:rtl} html[dir="rtl"] .rule{border-left:0;border-r
           <div><strong>DIGIYLYFE</strong><span>ne garantit pas la vente</span></div>
         </div>
         <div class="qrrow">
-          <img class="qr" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeAQAAAAB6HIMaAAACAElEQVR4nO2YQW7cMAxFH0cGZkkDPcAcRbpZ0IMV4BwlN5CXAWj8LuRJCzSZrAprEcILWX/zQZCfnzLxaeyXzzH4Br8CUQcoHSmKovRaegWg5oxsq6TSUaf0ikeRiqQ+IdsLYNag2sq+klsD2Gw5kdCXoP9Ur8C1PwifTOgpuLV9JSFd/4JnEPowFkCweJS+LrD/6PutLy62Cdm+a0L9+wMm1YQjAg+oRYI6rmZk22uOg1QUktRRr9PmFpDiSK8HLnXKnLmVxnTAI13q5FHME+b2AuxmSU0oHbvpKtlNZxJ6Am4ND1tZtgb3hFHGeRqhZzHaKj3SYwgCHukxqSYoioQrXbgSisSkbC9sL4BeG1Be27XX5J6wbG3OSiiK99wOQRv3M+YWRmeV1wZ3s1ak0uusuQ18TLFIDzySmh5lRjeOek2PpJbhDahjRuATVgJ6+C6NpewgHFNuOqhXPIbkSiEdOjZtl6ljK8PWmjXgKplN2GXDJ7yo193M1oc4bIbHfGwZ5hDqYcIfdjdn9GCP3aHXsfMWxXGeURMubGZmy/jzeLO2ryxnEnoO1jFtl4dPAJI726RdNnTg7fYTSFi421qn9Lfv4L10cjwsjBF8NqGP4qhQXAZ50241ga39OonQl7Ps2M17lZQ+3AJTbpF/3m/T4xi4MFpvPrb2/ZL/38DfEFGN/Qhli6YAAAAASUVORK5CYII=" alt="QR Bonne Affaire">
+          <img class="qr" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeAQAAAAB6HIMaAAACAElEQVR4nO2YQW7cMAxFH0cGZkkDPcAcRbpZ0IMV4BwlN5CXAWj8LuRJCzSZrAprEcILWX/zQZCfnzLxaeyXzzH4Br8CUQcoHSmKovRaegWg5oxsq6TSUaf0ikeRiqQ+IdsLYNag2sq+klsD2Gw5kdCXoP9Ur8C1PwifTOgpuLV9JSFd/4JnEPowFkCweJS+LrD/6PutLy62Cdm+a0L9+wMm1YQjAg+oRYI6rmZk22uOg1QUktRRr9PmFpDiSK8HLnXKnLmVxnTAI13q5FHME+b2AuxmSU0oHbvpKtlNZxJ6Am4ND1tZtgb3hFHGeRqhZzHaKj3SYwgCHukxqSYoioQrXbgSisSkbC9sL4BeG1Be27XX5J6wbG3OSiiK99wOQRv3M+YWRmeV1wZ3s1ak0uusuQ18TLFIDzySmh5lRjeOek2PpJbhDahjRuATVgJ6+C6NpewgHFNuOqhXPIbkSiEdOjZtl6ljK8PWmjXgKplN2GXDJ7yo193M1oc4bIbHfGwZ5hDqYcIfdjdn9GCP3aHXsfMWxXGeURMubGZmy/jzeLO2ryxnEnoO1jFtl4dPAJI726RdNnTg7fYTSFi421qn9Lfv4L10cjwsjBF8NqGP4qhQXAZ50241ga39Oek2PpJbhDahjRuATVgJ6+C6NpewgHFNuOqhXPIbkSiEdOjZtl6ljK8PWmjXgKplN2GXDJ7yo193M1oc4bIbHfGwZ5hDqYcIfdjdn9GCP3aHXsfMWxXGeURMubGZmy/jzeLO2ryxnEnoO1jFtl4dPAJI726RdNnTg7fYTSFi421qn9Lfv4L10cjwsjBF8NqGP4qhQXAZ50241ga39OonQl7Ps2M17lZQ+3AJTbpF/3m/T4xi4MFpvPrb2/ZL/38DfEFGN/Qhli6YAAAAASUVORK5CYII=" alt="QR Bonne Affaire">
           <div><strong>QR · BONNE AFFAIRE</strong><span>Ouvre la vitrine publique des annonces.</span></div>
         </div>
         <div class="actions">
@@ -558,6 +583,45 @@ function setLang(lang){
 }
 document.querySelectorAll('#langs button').forEach(b=>b.addEventListener('click',()=>setLang(b.dataset.lang)));
 setLang(new URLSearchParams(location.search).get('lang')||'fr');
+</script>
+
+<script id="bonne-affaire-country-pricing-v3">
+(() => {
+  const MARKETS = {
+    SN:{label:'🇸🇳 SÉNÉGAL',country:'sn',packs:{A:'3 000 FCFA',B:'5 000 FCFA',C:'10 000 FCFA'},pro:'28 000 FCFA'},
+    FR:{label:'🇫🇷 FRANCE',country:'fr',packs:{A:'9 €',B:'15 €',C:'25 €'},pro:'75 €'}
+  };
+  const q = new URLSearchParams(location.search);
+  let country = (q.get('country') || 'sn').toUpperCase();
+  if(!MARKETS[country]) country = 'SN';
+
+  function render(){
+    const m = MARKETS[country];
+    document.querySelectorAll('[data-ba-country]').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.baCountry === country);
+      btn.setAttribute('aria-pressed', btn.dataset.baCountry === country ? 'true' : 'false');
+    });
+    document.getElementById('baMarketTitle').textContent = `${m.label} · PARTICULIER · ANNONCE À L’UNITÉ`;
+    document.getElementById('baPackA').textContent = `PACK A · ${m.packs.A}`;
+    document.getElementById('baPackB').textContent = `PACK B · ${m.packs.B}`;
+    document.getElementById('baPackC').textContent = `PACK C · ${m.packs.C}`;
+    document.getElementById('baProPrice').innerHTML = `${m.pro}<small>/ mois</small>`;
+    const lang = new URLSearchParams(location.search).get('lang') || 'fr';
+    document.getElementById('baTarifsLink').href = `https://bonne-affaire.digiylyfe.com/tarifs-annonce.html?lang=${encodeURIComponent(lang)}&country=${m.country}`;
+    document.getElementById('baPublishLink').href = `https://bonne-affaire.digiylyfe.com/publier-auto.html?lang=${encodeURIComponent(lang)}&country=${m.country}`;
+    const adhesion = document.getElementById('baAdhesionLink');
+    adhesion.href = `https://digiylyfe.com/tarifs-adherents.html?lang=${encodeURIComponent(lang)}&country=${m.country}`;
+    adhesion.textContent = `🤝 VENDEUR RÉGULIER · VOIR L’ADHÉSION 2 · ${m.pro} / mois`;
+    const u = new URL(location.href);
+    u.searchParams.set('country', m.country);
+    history.replaceState(null,'',u);
+  }
+
+  document.querySelectorAll('[data-ba-country]').forEach(btn => {
+    btn.addEventListener('click', () => { country = btn.dataset.baCountry; render(); });
+  });
+  render();
+})();
 </script>
 
 <script id="bonne-affaire-live-engine-v2">
