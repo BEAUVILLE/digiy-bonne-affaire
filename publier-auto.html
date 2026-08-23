@@ -11,13 +11,14 @@
 header{background:var(--green);color:#fff;border-bottom:4px solid var(--gold);padding:18px 14px}.wrap,main{max-width:760px;margin:auto}
 h1{margin:0;font-size:22px}.sub{color:#eadfae;font-size:11px;margin-top:4px}
 main{padding:16px 10px 42px}.card{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:14px;margin:12px 0;box-shadow:0 7px 18px rgba(7,63,50,.06)}
+.countrybar{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}.country{border:2px solid #d8e2dc;border-radius:14px;padding:11px;background:#fff;color:var(--green);font-weight:950;cursor:pointer}.country.active{background:var(--green);color:#fff;border-color:var(--green)}
 .doors{display:grid;grid-template-columns:1fr;gap:10px}.door{border:2px solid #e2d49b;border-radius:16px;padding:13px;background:#fff}.door h2{font-size:15px;margin:0 0 5px;color:var(--green)}.door p{font-size:10px;color:var(--muted);line-height:1.45}
 .packs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:9px}.pack{border:1px solid #d8e2dc;border-radius:11px;padding:9px 5px;text-align:center;font-size:9px;font-weight:900;cursor:pointer;background:#fff}.pack.active{background:var(--gold);border-color:var(--gold)}.pack small{display:block;font-weight:700;margin-top:3px}
 .paybox{border:1px solid #e1c266;background:#fff8df;border-radius:15px;padding:12px;margin-top:12px}.paybox strong{display:block;color:var(--green);font-size:12px}.paybox p{font-size:10px;line-height:1.45;margin:6px 0}.payline{display:grid;grid-template-columns:1fr;gap:6px;margin-top:8px}.payitem{border:1px solid #ead9a0;border-radius:11px;padding:9px;background:#fff;font-size:10px;line-height:1.45}
 label{display:grid;gap:6px;font-size:10px;font-weight:900;margin:11px 0 5px}input,select,textarea{width:100%;border:1px solid #cad7d0;border-radius:11px;padding:11px;background:#fff;font:inherit;font-size:12px}textarea{min-height:105px;resize:vertical}.grid{display:grid;grid-template-columns:1fr;gap:8px}
 .file-help,.note{font-size:9px;color:var(--muted);line-height:1.45}.required{color:var(--danger)}button,.cta{display:flex;width:100%;justify-content:center;align-items:center;text-align:center;border:0;border-radius:999px;padding:12px;text-decoration:none;font-weight:950;font-size:11px;cursor:pointer}
 button{background:var(--green);color:#fff;margin-top:14px}.cta{background:var(--gold);color:var(--green)}button:disabled{opacity:.55;cursor:not-allowed}.ok,.err{display:none;margin-top:12px;border-radius:12px;padding:11px;font-size:10px;font-weight:800}.ok{background:#e8f5ec;border:1px solid #abd0b6}.err{background:#fff1ee;border:1px solid #e0aaa0;color:#7a3425}
-.summary{border:1px solid var(--line);border-radius:13px;padding:10px;background:#f7faf8;font-size:10px;line-height:1.5}
+.summary{border:1px solid var(--line);border-radius:13px;padding:10px;background:#f7faf8;font-size:10px;line-height:1.5}.marketmeta{margin-top:9px;padding:9px;border-radius:12px;background:#edf5ef;font-size:9px;color:#49695d;font-weight:800}
 @media(min-width:651px){main{padding:24px 14px 50px}.doors{grid-template-columns:1.25fr .75fr}.grid.two{grid-template-columns:1fr 1fr}.payline{grid-template-columns:1fr 1fr}.door h2{font-size:18px}.door p,.note,.file-help{font-size:11px}}
 </style>
 </head>
@@ -25,32 +26,35 @@ button{background:var(--green);color:#fff;margin-top:14px}.cta{background:var(--
 <header><div class="wrap"><h1>🏷️ DIGIY BONNE AFFAIRE</h1><div class="sub">Publier · règlement contrôlé humainement · 0 % commission DIGIY sur la transaction</div></div></header>
 <main>
 <a data-digiy-return-home="1" href="https://digiylyfe.com/" aria-label="Retour DIGIYLYFE.COM" style="width:100%;min-height:52px;display:flex;align-items:center;justify-content:center;margin:0 0 14px;padding:11px 18px;border:2px solid #d8ad46;border-radius:999px;background:#073f32;color:#fff;text-decoration:none;font:950 15px/1.2 system-ui,-apple-system,Segoe UI,sans-serif;letter-spacing:.02em;box-shadow:0 8px 20px rgba(7,63,50,.20);box-sizing:border-box">← RETOUR DIGIYLYFE.COM</a>
+
+<section class="card">
+  <strong>CHOISISSEZ VOTRE PAYS</strong>
+  <div class="countrybar">
+    <button type="button" class="country active" data-country="SN">🇸🇳 Sénégal · FCFA</button>
+    <button type="button" class="country" data-country="FR">🇫🇷 France · €</button>
+  </div>
+  <div class="marketmeta" id="marketMeta">La devise et les tarifs sont déterminés automatiquement par le pays.</div>
+</section>
+
 <section class="card">
   <strong>CHOISISSEZ VOTRE PORTE</strong>
   <div class="doors">
     <div class="door">
       <h2>👤 PARTICULIER · VENTE PONCTUELLE</h2>
       <p>Choisissez la durée de votre annonce. Après règlement, envoyez votre preuve : DIGIYLYFE contrôle le paiement puis contrôle l’annonce avant publication.</p>
-      <div class="packs" id="packs">
-        <div class="pack active" data-pack="A" data-price="3000">3 000 FCFA<small>7 jours</small></div>
-        <div class="pack" data-pack="B" data-price="5000">5 000 FCFA<small>14 jours</small></div>
-        <div class="pack" data-pack="C" data-price="10000">10 000 FCFA<small>30 jours</small></div>
-      </div>
+      <div class="packs" id="packs"></div>
     </div>
     <div class="door">
       <h2>🚗 VENDEUR / LOUEUR PRO</h2>
-      <p>Activité régulière : ADHÉRENT 2 · 28 000 FCFA / mois.</p>
-      <a class="cta" href="https://digiylyfe.com/tarifs-adherents.html?lang=fr" target="_blank" rel="noopener">VOIR LA FORMULE 28 000</a>
+      <p id="proText">Activité régulière : ADHÉRENT 2.</p>
+      <a class="cta" id="proLink" href="https://digiylyfe.com/tarifs-adherents.html?lang=fr" target="_blank" rel="noopener">VOIR L’ADHÉSION PRO</a>
     </div>
   </div>
 
   <div class="paybox">
     <strong>💳 RÈGLEMENT DE L’ANNONCE</strong>
-    <p id="packSummary">PACK A · 3 000 FCFA · 7 jours</p>
-    <div class="payline">
-      <div class="payitem"><b>🇸🇳 Sénégal · Wave</b><br>JB BEAVILLE<br>+221 77 134 28 89</div>
-      <div class="payitem"><b>🇪🇺 Europe · Sendwave → Wave Sénégal</b><br>Jean Baptiste Beauville<br>+221 77 134 28 89</div>
-    </div>
+    <p id="packSummary"></p>
+    <div class="payline" id="payLine"></div>
     <p>Le système ne valide pas l’argent. <strong>Une personne DIGIYLYFE contrôle votre preuve avant publication.</strong></p>
   </div>
 </section>
@@ -58,6 +62,7 @@ button{background:var(--green);color:#fff;margin-top:14px}.cta{background:var(--
 <form class="card" id="form">
   <strong>PRÉPARER MON ANNONCE + MA PREUVE</strong>
   <input type="hidden" id="pack" name="pack" value="A">
+  <input type="hidden" id="countryId" name="country_id" value="SN">
 
   <div class="grid two">
     <label>Titre <span class="required">*</span><input name="titre" maxlength="120" required placeholder="Ex. Toyota Corolla 2018"></label>
@@ -68,23 +73,23 @@ button{background:var(--green);color:#fff;margin-top:14px}.cta{background:var(--
 
   <label>Description<textarea name="description" maxlength="1500" placeholder="État réel, caractéristiques, conditions utiles…"></textarea></label>
   <div class="grid two">
-    <label>Prix de l’objet<input name="prix_affiche" maxlength="80" placeholder="Ex. 4 500 000 FCFA"></label>
-    <label>Zone<input name="zone" maxlength="120" placeholder="Petite Côte, Dakar…"></label>
+    <label>Prix de l’objet<input name="prix_affiche" maxlength="80" id="itemPrice" placeholder="Ex. 4 500 000 FCFA"></label>
+    <label>Zone<input name="zone" maxlength="120" id="zone" placeholder="Petite Côte, Dakar…"></label>
   </div>
 
   <div class="grid two">
-    <label>Ville <span class="required">*</span><input name="ville" maxlength="100" required placeholder="Saly"></label>
-    <label>Pays <span class="required">*</span><input name="pays" maxlength="100" required value="Sénégal"></label>
+    <label>Ville <span class="required">*</span><input name="ville" maxlength="100" required id="city" placeholder="Saly"></label>
+    <label>Pays <input id="countryLabel" value="Sénégal" readonly></label>
   </div>
 
   <div class="grid two">
     <label>Nom du vendeur <span class="required">*</span><input name="contact_nom" maxlength="120" required></label>
-    <label>Méthode de paiement<select name="payment_method"><option value="Wave">Wave</option><option value="Sendwave">Sendwave → Wave</option><option value="Autre">Autre</option></select></label>
+    <label>Méthode de paiement<select name="payment_method" id="paymentMethod"><option value="Wave">Wave</option><option value="Sendwave">Sendwave → Wave</option><option value="Autre">Autre</option></select></label>
   </div>
 
   <div class="grid two">
-    <label>WhatsApp<input name="whatsapp" inputmode="tel" placeholder="+221…"></label>
-    <label>Téléphone<input name="telephone" inputmode="tel" placeholder="+221…"></label>
+    <label>WhatsApp<input name="whatsapp" inputmode="tel" id="whatsapp" placeholder="+221…"></label>
+    <label>Téléphone<input name="telephone" inputmode="tel" id="telephone" placeholder="+221…"></label>
   </div>
 
   <label>Référence / nom du paiement<input name="payment_reference" maxlength="120" placeholder="Optionnel : nom affiché, référence Wave…"></label>
@@ -93,11 +98,11 @@ button{background:var(--green);color:#fff;margin-top:14px}.cta{background:var(--
   <div class="file-help">Optionnelle · JPG, PNG ou WEBP · 5 Mo maximum.</div>
 
   <label>Preuve de paiement <span class="required">*</span><input name="payment_proof" type="file" accept="image/jpeg,image/png,image/webp,application/pdf" required></label>
-  <div class="file-help">Obligatoire · capture Wave / Sendwave ou PDF · 5 Mo maximum. La preuve reste privée et n’est visible que dans le cockpit DIGIYLYFE.</div>
+  <div class="file-help">Obligatoire · capture du règlement ou PDF · 5 Mo maximum. La preuve reste privée et n’est visible que dans le cockpit DIGIYLYFE.</div>
 
   <label style="display:none">Ne pas remplir<input name="website" autocomplete="off" tabindex="-1"></label>
 
-  <div class="summary" id="finalSummary">Votre demande : PACK A · 3 000 FCFA · 7 jours. Elle entrera en attente de contrôle humain.</div>
+  <div class="summary" id="finalSummary"></div>
   <p class="note">L’envoi ne publie jamais immédiatement. DIGIYLYFE contrôle d’abord la preuve de paiement, puis l’annonce. La vente reste ensuite directe entre vendeur et acheteur.</p>
   <button type="submit" id="submit">ENVOYER POUR CONTRÔLE</button>
   <div class="ok" id="ok">✅ Demande reçue. Paiement à contrôler par DIGIYLYFE. Votre annonce n’est pas encore publiée.</div>
@@ -107,21 +112,46 @@ button{background:var(--green);color:#fff;margin-top:14px}.cta{background:var(--
 <script>
 (() => {
   const API="https://wesqmwjjtsefyjnluosj.supabase.co/functions/v1/digiy-bonne-affaire-submit";
-  const packs={A:{price:3000,days:7},B:{price:5000,days:14},C:{price:10000,days:30}};
-  const packInput=document.getElementById('pack'), packSummary=document.getElementById('packSummary'), finalSummary=document.getElementById('finalSummary');
-  function updatePack(p){
-    const x=packs[p]||packs.A;packInput.value=p;
-    document.querySelectorAll('.pack').forEach(el=>el.classList.toggle('active',el.dataset.pack===p));
-    const price=x.price.toLocaleString('fr-FR');
-    packSummary.textContent=`PACK ${p} · ${price} FCFA · ${x.days} jours`;
-    finalSummary.textContent=`Votre demande : PACK ${p} · ${price} FCFA · ${x.days} jours. Elle entrera en attente de contrôle humain.`;
+  const MARKETS={
+    SN:{label:'Sénégal',currency:'XOF',calling:'+221',packs:{A:{price:3000,days:7},B:{price:5000,days:14},C:{price:10000,days:30}},pro:28000,city:'Saly',zone:'Petite Côte, Dakar…',item:'Ex. 4 500 000 FCFA',method:'Wave',pay:[['🇸🇳 Sénégal · Wave','JB BEAVILLE','+221 77 134 28 89'],['🇪🇺 Europe · Sendwave → Wave Sénégal','Jean Baptiste Beauville','+221 77 134 28 89']]},
+    FR:{label:'France',currency:'EUR',calling:'+33',packs:{A:{price:9,days:7},B:{price:15,days:14},C:{price:25,days:30}},pro:75,city:'Sarlat-la-Canéda',zone:'Périgord · Vallée de la Dordogne…',item:'Ex. 850 €',method:'Sendwave',pay:[['🇫🇷 France / Europe · Sendwave','Jean Baptiste Beauville','→ Wave Sénégal · +221 77 134 28 89'],['💶 Tarif affiché en euro','Le montant du pack est celui affiché ci-dessus','La preuve sera contrôlée humainement']]}
+  };
+  const Q=new URLSearchParams(location.search);
+  let country=(Q.get('country')||'sn').toUpperCase();if(!MARKETS[country])country='SN';
+  let selectedPack=(Q.get('pack')||'A').toUpperCase();if(!['A','B','C'].includes(selectedPack))selectedPack='A';
+  const packInput=document.getElementById('pack'),countryInput=document.getElementById('countryId'),packSummary=document.getElementById('packSummary'),finalSummary=document.getElementById('finalSummary');
+
+  function money(n,c){return new Intl.NumberFormat('fr-FR',{style:'currency',currency:c,maximumFractionDigits:0}).format(n)}
+  function current(){return MARKETS[country]}
+  function updateUrl(){const u=new URL(location.href);u.searchParams.set('country',country.toLowerCase());u.searchParams.set('pack',selectedPack);history.replaceState(null,'',u)}
+  function renderCountry(){
+    const m=current();countryInput.value=country;document.getElementById('countryLabel').value=m.label;
+    document.querySelectorAll('[data-country]').forEach(b=>b.classList.toggle('active',b.dataset.country===country));
+    document.getElementById('marketMeta').textContent=`${m.label} · devise ${m.currency} · indicatif ${m.calling} · tarifs appliqués automatiquement.`;
+    document.getElementById('proText').textContent=`Activité régulière : ADHÉRENT 2 · ${money(m.pro,m.currency)} / mois.`;
+    document.getElementById('packs').innerHTML=Object.entries(m.packs).map(([k,v])=>`<div class="pack ${k===selectedPack?'active':''}" data-pack="${k}">${money(v.price,m.currency)}<small>${v.days} jours</small></div>`).join('');
+    document.querySelectorAll('.pack').forEach(el=>el.addEventListener('click',()=>{selectedPack=el.dataset.pack;renderPack()}));
+    document.getElementById('payLine').innerHTML=m.pay.map(x=>`<div class="payitem"><b>${x[0]}</b><br>${x[1]}<br>${x[2]}</div>`).join('');
+    document.getElementById('paymentMethod').value=m.method;
+    document.getElementById('itemPrice').placeholder=m.item;document.getElementById('zone').placeholder=m.zone;document.getElementById('city').placeholder=m.city;
+    document.getElementById('whatsapp').placeholder=m.calling+'…';document.getElementById('telephone').placeholder=m.calling+'…';
+    renderPack();
   }
-  document.querySelectorAll('.pack').forEach(el=>el.addEventListener('click',()=>updatePack(el.dataset.pack)));
+  function renderPack(){
+    const m=current(),x=m.packs[selectedPack]||m.packs.A;packInput.value=selectedPack;
+    document.querySelectorAll('.pack').forEach(el=>el.classList.toggle('active',el.dataset.pack===selectedPack));
+    const price=money(x.price,m.currency);
+    packSummary.textContent=`PACK ${selectedPack} · ${price} · ${x.days} jours`;
+    finalSummary.textContent=`Votre demande : ${m.label} · PACK ${selectedPack} · ${price} · ${x.days} jours. Elle entrera en attente de contrôle humain.`;
+    updateUrl();
+  }
+  document.querySelectorAll('[data-country]').forEach(b=>b.addEventListener('click',()=>{country=b.dataset.country;selectedPack='A';renderCountry()}));
+
   document.getElementById('form').addEventListener('submit',async e=>{
     e.preventDefault();
-    const form=e.currentTarget, ok=document.getElementById('ok'), err=document.getElementById('err'), btn=document.getElementById('submit');
+    const form=e.currentTarget,ok=document.getElementById('ok'),err=document.getElementById('err'),btn=document.getElementById('submit');
     ok.style.display='none';err.style.display='none';
-    const fd=new FormData(form);fd.set('pack',packInput.value);
+    const fd=new FormData(form);fd.set('pack',selectedPack);fd.set('country_id',country);
     const wa=String(fd.get('whatsapp')||'').trim(),tel=String(fd.get('telephone')||'').trim();
     if(!wa&&!tel){err.textContent='Ajoutez un WhatsApp ou un téléphone.';err.style.display='block';return}
     const proof=fd.get('payment_proof');
@@ -131,14 +161,15 @@ button{background:var(--green);color:#fff;margin-top:14px}.cta{background:var(--
       const res=await fetch(API,{method:'POST',body:fd,headers:{'Accept':'application/json'}});
       let data=null;try{data=await res.json()}catch{}
       if(!res.ok||!data?.ok)throw new Error(data?.error||`HTTP ${res.status}`);
-      ok.style.display='block';form.reset();updatePack('A');window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'});
+      ok.textContent=`✅ Demande reçue · ${data.country_id||country} · PACK ${data.pack||selectedPack} · ${money(Number(data.amount||0),data.currency_code||current().currency)}. Paiement à contrôler par DIGIYLYFE.`;
+      ok.style.display='block';
+      form.reset();selectedPack='A';renderCountry();window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'});
     }catch(ex){
       err.textContent='Envoi impossible pour le moment. Vérifiez les champs et la connexion puis réessayez.';
       err.style.display='block';console.error(ex);
     }finally{btn.disabled=false;btn.textContent='ENVOYER POUR CONTRÔLE'}
   });
-  const requestedPack=(new URLSearchParams(location.search).get('pack')||'A').toUpperCase();
-  updatePack(packs[requestedPack]?requestedPack:'A');
+  renderCountry();
 })();
 </script>
 </body>
