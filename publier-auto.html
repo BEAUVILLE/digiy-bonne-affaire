@@ -46,8 +46,8 @@ button{background:var(--green);color:#fff;margin-top:14px}.cta{background:var(--
     </div>
     <div class="door">
       <h2>🚗 VENDEUR / LOUEUR PRO</h2>
-      <p id="proText">Activité régulière : ADHÉRENT 2.</p>
-      <a class="cta" id="proLink" href="https://digiylyfe.com/tarifs-adherents.html?lang=fr" target="_blank" rel="noopener">VOIR L’ADHÉSION PRO</a>
+      <p id="proText">Activité régulière : ADHÉRENT DIGIYLYFE.</p>
+      <a class="cta" id="proLink" href="https://digiylyfe.com/tarifs-adherents-1.html?lang=fr" target="_blank" rel="noopener">VOIR L’ADHÉSION PRO</a>
     </div>
   </div>
 
@@ -113,8 +113,8 @@ button{background:var(--green);color:#fff;margin-top:14px}.cta{background:var(--
 (() => {
   const API="https://wesqmwjjtsefyjnluosj.supabase.co/functions/v1/digiy-bonne-affaire-submit";
   const MARKETS={
-    SN:{label:'Sénégal',currency:'XOF',calling:'+221',packs:{A:{price:3000,days:7},B:{price:5000,days:14},C:{price:10000,days:30}},pro:28000,city:'Saly',zone:'Petite Côte, Dakar…',item:'Ex. 4 500 000 FCFA',method:'Wave',pay:[['🇸🇳 Sénégal · Wave','JB BEAVILLE','+221 77 134 28 89'],['🇪🇺 Europe · Sendwave → Wave Sénégal','Jean Baptiste Beauville','+221 77 134 28 89']]},
-    FR:{label:'France',currency:'EUR',calling:'+33',packs:{A:{price:9,days:7},B:{price:15,days:14},C:{price:25,days:30}},pro:75,city:'Sarlat-la-Canéda',zone:'Périgord · Vallée de la Dordogne…',item:'Ex. 850 €',method:'Sendwave',pay:[['🇫🇷 France / Europe · Sendwave','Jean Baptiste Beauville','→ Wave Sénégal · +221 77 134 28 89'],['💶 Tarif affiché en euro','Le montant du pack est celui affiché ci-dessus','La preuve sera contrôlée humainement']]}
+    SN:{label:'Sénégal',currency:'XOF',calling:'+221',packs:{A:{price:3000,days:7},B:{price:5000,days:14},C:{price:10000,days:30}},pro:19900,city:'Saly',zone:'Petite Côte, Dakar…',item:'Ex. 4 500 000 FCFA',method:'Wave',pay:[['🇸🇳 Sénégal · Wave','JB BEAVILLE','+221 77 134 28 89'],['🇪🇺 Europe · Sendwave → Wave Sénégal','Jean Baptiste Beauville','+221 77 134 28 89']]},
+    FR:{label:'France',currency:'EUR',calling:'+33',packs:{A:{price:9,days:7},B:{price:15,days:14},C:{price:25,days:30}},pro:45,city:'Sarlat-la-Canéda',zone:'Périgord · Vallée de la Dordogne…',item:'Ex. 850 €',method:'Sendwave',pay:[['🇫🇷 France / Europe · Sendwave','Jean Baptiste Beauville','→ Wave Sénégal · +221 77 134 28 89'],['💶 Tarif affiché en euro','Le montant du pack est celui affiché ci-dessus','La preuve sera contrôlée humainement']]}
   };
   const Q=new URLSearchParams(location.search);
   let country=(Q.get('country')||'sn').toUpperCase();if(!MARKETS[country])country='SN';
@@ -128,13 +128,14 @@ button{background:var(--green);color:#fff;margin-top:14px}.cta{background:var(--
     const m=current();countryInput.value=country;document.getElementById('countryLabel').value=m.label;
     document.querySelectorAll('[data-country]').forEach(b=>b.classList.toggle('active',b.dataset.country===country));
     document.getElementById('marketMeta').textContent=`${m.label} · devise ${m.currency} · indicatif ${m.calling} · tarifs appliqués automatiquement.`;
-    document.getElementById('proText').textContent=`Activité régulière : ADHÉRENT 2 · ${money(m.pro,m.currency)} / mois.`;
+    document.getElementById('proText').textContent=`Activité régulière : ADHÉRENT DIGIYLYFE · ${money(m.pro,m.currency)} / mois.`;
     document.getElementById('packs').innerHTML=Object.entries(m.packs).map(([k,v])=>`<div class="pack ${k===selectedPack?'active':''}" data-pack="${k}">${money(v.price,m.currency)}<small>${v.days} jours</small></div>`).join('');
     document.querySelectorAll('.pack').forEach(el=>el.addEventListener('click',()=>{selectedPack=el.dataset.pack;renderPack()}));
     document.getElementById('payLine').innerHTML=m.pay.map(x=>`<div class="payitem"><b>${x[0]}</b><br>${x[1]}<br>${x[2]}</div>`).join('');
     document.getElementById('paymentMethod').value=m.method;
     document.getElementById('itemPrice').placeholder=m.item;document.getElementById('zone').placeholder=m.zone;document.getElementById('city').placeholder=m.city;
     document.getElementById('whatsapp').placeholder=m.calling+'…';document.getElementById('telephone').placeholder=m.calling+'…';
+    document.getElementById('proLink').href=`https://digiylyfe.com/tarifs-adherents-1.html?lang=fr&country=${country.toLowerCase()}`;
     renderPack();
   }
   function renderPack(){
