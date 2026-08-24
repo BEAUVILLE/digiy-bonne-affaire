@@ -1,0 +1,47 @@
+name: One-time BONNE AFFAIRE pricing cleanup
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/one-time-pricing-cleanup.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Patch only stale professional membership copy
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+          replacements = [
+            ('PROFESSIONNEL · ADHÉRENT 2', 'PROFESSIONNEL · ADHÉRENT DIGIYLYFE'),
+            ('id="baProPrice">28 000 FCFA', 'id="baProPrice">19 900 FCFA'),
+            ('https://digiylyfe.com/tarifs-adherents.html?lang=fr&country=sn', 'https://digiylyfe.com/tarifs-adherents-1.html?lang=fr&country=sn'),
+            ('🤝 VENDEUR RÉGULIER · VOIR L’ADHÉSION 2 · 28 000 FCFA / mois', '🤝 VENDEUR RÉGULIER · VOIR L’ADHÉSION · 19 900 FCFA / mois'),
+            ("pro:'28 000 FCFA'", "pro:'19 900 FCFA'"),
+            ("pro:'75 €'", "pro:'45 €'"),
+            ('https://digiylyfe.com/tarifs-adherents.html?lang=${encodeURIComponent(lang)}&country=${m.country}', 'https://digiylyfe.com/tarifs-adherents-1.html?lang=${encodeURIComponent(lang)}&country=${m.country}'),
+            ('🤝 VENDEUR RÉGULIER · VOIR L’ADHÉSION 2 · ${m.pro} / mois', '🤝 VENDEUR RÉGULIER · VOIR L’ADHÉSION · ${m.pro} / mois'),
+            ("'PRO · ADHÉRENT 2'", "'PRO · ADHÉRENT DIGIYLYFE'"),
+          ]
+          for old, new in replacements:
+              if old not in s:
+                  raise SystemExit(f'Expected text not found: {old}')
+              s = s.replace(old, new)
+          p.write_text(s, encoding='utf-8')
+          PY
+          git diff --check
+          git diff -- index.html
+          git config user.name "DIGIYLYFE Automation"
+          git config user.email "actions@users.noreply.github.com"
+          git add index.html
+          git commit -m "Align BONNE AFFAIRE pro membership to 19900 / 45"
+          git push
