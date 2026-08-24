@@ -269,10 +269,10 @@ html[dir="rtl"] body{direction:rtl} html[dir="rtl"] .rule{border-left:0;border-r
         <div class="ba-path">
           <div class="ba-pro">
             <div>
-              <strong>PROFESSIONNEL · ADHÉRENT 2</strong>
+              <strong>PROFESSIONNEL · ADHÉRENT DIGIYLYFE</strong>
               <span style="font-size:8.5px;color:#6d7d77;font-weight:850">Présence commerciale régulière · identité vendeur · contact direct · 0 % commission</span>
             </div>
-            <div class="ba-pro-price" id="baProPrice">28 000 FCFA<small>/ mois</small></div>
+            <div class="ba-pro-price" id="baProPrice">19 900 FCFA<small>/ mois</small></div>
           </div>
         </div>
       </div>
@@ -282,7 +282,7 @@ html[dir="rtl"] body{direction:rtl} html[dir="rtl"] .rule{border-left:0;border-r
         <a id="baPublishLink" href="https://bonne-affaire.digiylyfe.com/publier-auto.html?lang=fr&country=sn" target="_blank" rel="noopener">＋ PRÉPARER / PUBLIER UNE ANNONCE</a>
       </div>
       <div class="ba-pricing-actions" style="grid-template-columns:1fr;margin-top:7px">
-        <a id="baAdhesionLink" href="https://digiylyfe.com/tarifs-adherents.html?lang=fr&country=sn" target="_blank" rel="noopener" style="background:#fff;border:1px solid #d8ad46;color:#073f32">🤝 VENDEUR RÉGULIER · VOIR L’ADHÉSION 2 · 28 000 FCFA / mois</a>
+        <a id="baAdhesionLink" href="https://digiylyfe.com/tarifs-adherents-1.html?lang=fr&country=sn" target="_blank" rel="noopener" style="background:#fff;border:1px solid #d8ad46;color:#073f32">🤝 VENDEUR RÉGULIER · VOIR L’ADHÉSION · 19 900 FCFA / mois</a>
       </div>
     </section>
 
@@ -588,8 +588,8 @@ setLang(new URLSearchParams(location.search).get('lang')||'fr');
 <script id="bonne-affaire-country-pricing-v3">
 (() => {
   const MARKETS = {
-    SN:{label:'🇸🇳 SÉNÉGAL',country:'sn',packs:{A:'3 000 FCFA',B:'5 000 FCFA',C:'10 000 FCFA'},pro:'28 000 FCFA'},
-    FR:{label:'🇫🇷 FRANCE',country:'fr',packs:{A:'9 €',B:'15 €',C:'25 €'},pro:'75 €'}
+    SN:{label:'🇸🇳 SÉNÉGAL',country:'sn',packs:{A:'3 000 FCFA',B:'5 000 FCFA',C:'10 000 FCFA'},pro:'19 900 FCFA'},
+    FR:{label:'🇫🇷 FRANCE',country:'fr',packs:{A:'9 €',B:'15 €',C:'25 €'},pro:'45 €'}
   };
   const q = new URLSearchParams(location.search);
   let country = (q.get('country') || 'sn').toUpperCase();
@@ -610,8 +610,8 @@ setLang(new URLSearchParams(location.search).get('lang')||'fr');
     document.getElementById('baTarifsLink').href = `https://bonne-affaire.digiylyfe.com/tarifs-annonce.html?lang=${encodeURIComponent(lang)}&country=${m.country}`;
     document.getElementById('baPublishLink').href = `https://bonne-affaire.digiylyfe.com/publier-auto.html?lang=${encodeURIComponent(lang)}&country=${m.country}`;
     const adhesion = document.getElementById('baAdhesionLink');
-    adhesion.href = `https://digiylyfe.com/tarifs-adherents.html?lang=${encodeURIComponent(lang)}&country=${m.country}`;
-    adhesion.textContent = `🤝 VENDEUR RÉGULIER · VOIR L’ADHÉSION 2 · ${m.pro} / mois`;
+    adhesion.href = `https://digiylyfe.com/tarifs-adherents-1.html?lang=${encodeURIComponent(lang)}&country=${m.country}`;
+    adhesion.textContent = `🤝 VENDEUR RÉGULIER · VOIR L’ADHÉSION · ${m.pro} / mois`;
     const u = new URL(location.href);
     u.searchParams.set('country', m.country);
     history.replaceState(null,'',u);
@@ -663,7 +663,7 @@ setLang(new URLSearchParams(location.search).get('lang')||'fr');
     return `<article class="listing ba-live-card">
       <div class="visual">${visual}</div>
       <div class="info">
-        <span class="ba-live-badge">${pro ? 'PRO · ADHÉRENT 2' : 'ANNONCE ACTIVE · PACK ' + esc(a.pack)}</span>
+        <span class="ba-live-badge">${pro ? 'PRO · ADHÉRENT DIGIYLYFE' : 'ANNONCE ACTIVE · PACK ' + esc(a.pack)}</span>
         <div class="name-row">
           <div><h2>${esc(a.titre)}</h2><p class="activity">${esc(a.categorie)}</p></div>
           <span class="area">📍 ${esc(location)}</span>
