@@ -237,6 +237,57 @@ html[dir="rtl"] body{direction:rtl} html[dir="rtl"] .rule{border-left:0;border-r
 .ba-share-note{grid-column:1/-1;font-size:7.5px;color:#6e8179;min-height:11px}
 @media(min-width:651px){.ba-vision{padding:20px}.ba-vision-kicker{font-size:10px}.ba-vision h2{font-size:28px}.ba-vision p{font-size:12px}.ba-flow-card{padding:13px 8px}.ba-flow-card b{font-size:11px}.ba-flow-card span{font-size:9px}.ba-story{padding:16px}.ba-story h3{font-size:16px}.ba-story p{font-size:11px}.ba-story-step{font-size:10px}.ba-share strong{font-size:11px}.ba-share span{font-size:9.5px}.ba-share button{font-size:10px;padding:11px 15px}}
 @media(max-width:520px){.ba-flow{grid-template-columns:repeat(2,1fr)}.ba-share{grid-template-columns:1fr}.ba-share button{width:100%}}
+
+<style id="bonne-affaire-edition-jeudi-v1">
+.ba-edition{
+  margin:0 0 14px;
+  padding:12px 14px;
+  border-radius:16px;
+  border:1px solid #d8ad46;
+  background:#fff8df;
+  display:grid;
+  grid-template-columns:auto 1fr;
+  gap:10px;
+  align-items:center;
+}
+.ba-edition-icon{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:#073f32;
+  color:#fff;
+  font-size:20px;
+}
+.ba-edition-kicker{
+  font-size:8px;
+  font-weight:1000;
+  letter-spacing:.08em;
+  color:#8a6a18;
+  margin-bottom:2px;
+}
+.ba-edition strong{
+  display:block;
+  color:#073f32;
+  font-size:13px;
+  line-height:1.15;
+}
+.ba-edition p{
+  margin:3px 0 0;
+  color:#6b571d;
+  font-size:8.5px;
+  line-height:1.35;
+}
+@media(min-width:651px){
+  .ba-edition{padding:15px 17px}
+  .ba-edition-icon{width:50px;height:50px;font-size:24px}
+  .ba-edition-kicker{font-size:10px}
+  .ba-edition strong{font-size:17px}
+  .ba-edition p{font-size:10.5px}
+}
+</style>
+
 </style>
 </head>
 <body>
@@ -271,6 +322,15 @@ html[dir="rtl"] body{direction:rtl} html[dir="rtl"] .rule{border-left:0;border-r
       <div class="ba-flow-card"><b>🧰 <span data-i18n="flowRent">LOUER</span></b><span data-i18n="flowRentSub">Matériel · équipement · courte durée</span></div>
       <div class="ba-flow-card"><b>🔎 <span data-i18n="flowSearch">RECHERCHER</span></b><span data-i18n="flowSearchSub">Besoin · objet · service</span></div>
       <div class="ba-flow-card"><b>📲 <span data-i18n="flowShare">PARTAGER</span></b><span data-i18n="flowShareSub">De téléphone en téléphone</span></div>
+    </div>
+  </section>
+
+  <section class="ba-edition" aria-label="Rendez-vous hebdomadaire BONNE AFFAIRE">
+    <div class="ba-edition-icon" aria-hidden="true">📅</div>
+    <div>
+      <div class="ba-edition-kicker" data-i18n="editionKicker">RENDEZ-VOUS HEBDOMADAIRE</div>
+      <strong data-i18n="editionTitle">NOUVELLE ÉDITION CHAQUE JEUDI</strong>
+      <p data-i18n="editionText">Les nouvelles annonces paraissent ensemble le jeudi pour préparer naturellement le week-end.</p>
     </div>
   </section>
 
@@ -623,6 +683,15 @@ Object.assign(T.de,{visionKicker:"DAS GEBIET IST EIN ANKER, KEINE GRENZE",vision
 Object.assign(T.it,{visionKicker:"IL TERRITORIO È UN PUNTO DI ANCORAGGIO, NON UN CONFINE",visionTitle:"Il quartiere sul web non ha muri.",visionText:"Un annuncio nasce in un luogo e poi può viaggiare: un parente lo condivide, qualcuno lo scopre a distanza, WhatsApp permette di vedere e parlare, e le persone concludono direttamente tra loro.",flowSell:"VENDERE",flowSellSub:"Oggetto · usato · veicolo",flowRent:"NOLEGGIARE",flowRentSub:"Materiale · attrezzatura · breve durata",flowSearch:"CERCARE",flowSearchSub:"Bisogno · oggetto · servizio",flowShare:"CONDIVIDERE",flowShareSub:"Da telefono a telefono",storyTitle:"🌍 UN ANNUNCIO LOCALE PUÒ VIAGGIARE",storyText:"Esempio: una bicicletta è proposta a Dakar. Uno zio lontano condivide l’annuncio con il nipote. Il nipote parla con il venditore su WhatsApp, chiede un video o organizza una visita. Se sono d’accordo, il pagamento avviene direttamente tra loro con il metodo scelto.",shareTitle:"FATE CIRCOLARE LA BUONA OCCASIONE",shareText:"Il web permette a un annuncio locale di viaggiare da telefono a telefono senza chiudere le persone in un territorio.",shareButton:"📲 CONDIVIDI BONNE AFFAIRE"});
 Object.assign(T.nl,{visionKicker:"HET GEBIED IS EEN ANKERPUNT, GEEN GRENS",visionTitle:"De buurt op het web heeft geen muren.",visionText:"Een advertentie ontstaat ergens en kan daarna reizen: een familielid deelt ze, iemand ontdekt ze van ver, WhatsApp maakt kijken en praten mogelijk, en mensen regelen de deal rechtstreeks met elkaar.",flowSell:"VERKOPEN",flowSellSub:"Voorwerp · tweedehands · voertuig",flowRent:"VERHUREN",flowRentSub:"Materiaal · uitrusting · korte duur",flowSearch:"ZOEKEN",flowSearchSub:"Behoefte · voorwerp · dienst",flowShare:"DELEN",flowShareSub:"Van telefoon naar telefoon",storyTitle:"🌍 EEN LOKALE ADVERTENTIE KAN REIZEN",storyText:"Voorbeeld: een fiets wordt aangeboden in Dakar. Een oom op afstand deelt de advertentie met zijn neef. De neef praat met de verkoper via WhatsApp, vraagt om een video of regelt een bezoek. Als ze akkoord zijn, betalen ze rechtstreeks via de methode die ze kiezen.",shareTitle:"LAAT DE GOEDE DEAL CIRCULEREN",shareText:"Het web laat een lokale advertentie van telefoon naar telefoon reizen zonder mensen binnen één gebied op te sluiten.",shareButton:"📲 BONNE AFFAIRE DELEN"});
 Object.assign(T.ar,{visionKicker:"الإقليم نقطة انطلاق وليس حدودًا",visionTitle:"الحي على الويب بلا جدران.",visionText:"يبدأ الإعلان من مكان ما ثم يمكنه أن ينتقل: يشاركه قريب، ويكتشفه شخص من بعيد، ويسمح واتساب بالمشاهدة والتواصل، ثم يتفق الأشخاص مباشرة فيما بينهم.",flowSell:"بيع",flowSellSub:"غرض · مستعمل · مركبة",flowRent:"تأجير",flowRentSub:"معدات · تجهيزات · مدة قصيرة",flowSearch:"بحث",flowSearchSub:"حاجة · غرض · خدمة",flowShare:"مشاركة",flowShareSub:"من هاتف إلى هاتف",storyTitle:"🌍 الإعلان المحلي يمكن أن ينتقل",storyText:"مثال: دراجة معروضة في داكار. يشارك عم يعيش بعيدًا الإعلان مع ابن أخيه. يتواصل ابن الأخ مع البائع عبر واتساب ويطلب فيديو أو يرتب زيارة. إذا اتفقا، يتم الدفع مباشرة بينهما بالطريقة التي يختارانها.",shareTitle:"دع الفرصة الجيدة تنتقل",shareText:"يسمح الويب للإعلان المحلي بالانتقال من هاتف إلى هاتف دون حبس الناس داخل إقليم واحد.",shareButton:"📲 مشاركة BONNE AFFAIRE"});
+Object.assign(T.fr,{editionKicker:"RENDEZ-VOUS HEBDOMADAIRE",editionTitle:"NOUVELLE ÉDITION CHAQUE JEUDI",editionText:"Les nouvelles annonces paraissent ensemble le jeudi pour préparer naturellement le week-end."});
+Object.assign(T.en,{editionKicker:"WEEKLY RENDEZVOUS",editionTitle:"NEW EDITION EVERY THURSDAY",editionText:"New listings are released together on Thursday to naturally prepare for the weekend."});
+Object.assign(T.es,{editionKicker:"CITA SEMANAL",editionTitle:"NUEVA EDICIÓN CADA JUEVES",editionText:"Los nuevos anuncios se publican juntos el jueves para preparar naturalmente el fin de semana."});
+Object.assign(T.pt,{editionKicker:"ENCONTRO SEMANAL",editionTitle:"NOVA EDIÇÃO TODAS AS QUINTAS-FEIRAS",editionText:"Os novos anúncios são publicados em conjunto na quinta-feira para preparar naturalmente o fim de semana."});
+Object.assign(T.de,{editionKicker:"WÖCHENTLICHER TERMIN",editionTitle:"NEUE AUSGABE JEDEN DONNERSTAG",editionText:"Neue Anzeigen erscheinen gemeinsam am Donnerstag, passend zur Vorbereitung auf das Wochenende."});
+Object.assign(T.it,{editionKicker:"APPUNTAMENTO SETTIMANALE",editionTitle:"NUOVA EDIZIONE OGNI GIOVEDÌ",editionText:"I nuovi annunci vengono pubblicati insieme il giovedì per preparare naturalmente il fine settimana."});
+Object.assign(T.nl,{editionKicker:"WEKELIJKS MOMENT",editionTitle:"ELKE DONDERDAG EEN NIEUWE EDITIE",editionText:"Nieuwe advertenties verschijnen samen op donderdag, als natuurlijke voorbereiding op het weekend."});
+Object.assign(T.ar,{editionKicker:"موعد أسبوعي",editionTitle:"إصدار جديد كل يوم خميس",editionText:"تُنشر الإعلانات الجديدة معًا يوم الخميس استعدادًا طبيعيًا لعطلة نهاية الأسبوع."});
+
 function setLang(lang){
   if(!T[lang]) lang='fr';
   document.documentElement.lang=lang;
