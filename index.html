@@ -1042,6 +1042,50 @@ setLang(new URLSearchParams(location.search).get('lang')||'fr');
     </article>`;
   }
 
+  function updateListingMachineMetadata(rows) {
+    let jsonLd = document.getElementById('digiy-bonne-affaire-schema');
+    if(!rows.length) {
+      if(jsonLd) jsonLd.remove();
+      return;
+    }
+    const items = rows.map(a => {
+      const pic = safeUrl(a.photo_url);
+      const fiche = safeUrl(a.fiche_url);
+      const location = [a.ville, a.zone, a.pays].filter(Boolean).join(' · ');
+      const offer = {
+        "@type":"Offer",
+        "name":a.titre,
+        "description":a.description || undefined,
+        "url":fiche || "https://bonne-affaire.digiylyfe.com/",
+        "image":pic || undefined,
+        "category":a.categorie || undefined,
+        "areaServed":location || undefined,
+        "availabilityEnds":a.expires_at || undefined,
+        "seller":a.contact_nom ? {"@type":"Person","name":a.contact_nom} : undefined
+      };
+      Object.keys(offer).forEach(key => offer[key] === undefined && delete offer[key]);
+      return offer;
+    });
+    const schema = {
+      "@context":"https://schema.org",
+      "@type":"ItemList",
+      "name":"DIGIY BONNE AFFAIRE — Annonces actives",
+      "url":"https://bonne-affaire.digiylyfe.com/",
+      "itemListElement":items.map((item,index) => ({
+        "@type":"ListItem",
+        "position":index + 1,
+        "item":item
+      }))
+    };
+    if(!jsonLd) {
+      jsonLd = document.createElement('script');
+      jsonLd.type = 'application/ld+json';
+      jsonLd.id = 'digiy-bonne-affaire-schema';
+      document.head.appendChild(jsonLd);
+    }
+    jsonLd.textContent = JSON.stringify(schema);
+  }
+
   async function loadListings() {
     const box = document.getElementById('ba-live-listings');
     const msg = document.getElementById('ba-live-message');
@@ -1055,6 +1099,7 @@ setLang(new URLSearchParams(location.search).get('lang')||'fr');
       });
       if(!r.ok) throw new Error('HTTP ' + r.status);
       const rows = await r.json();
+      updateListingMachineMetadata(rows);
       count.textContent = rows.length + (rows.length > 1 ? ' annonces' : ' annonce');
       if(rows.length) {
         box.innerHTML = rows.map(card).join('');
