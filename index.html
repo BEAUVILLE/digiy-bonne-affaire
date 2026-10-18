@@ -437,27 +437,7 @@ html[dir="rtl"] body{direction:rtl} html[dir="rtl"] .rule{border-left:0;border-r
 
   <div class="ba-real-grid">
 
-    <article class="ba-real-card">
-      <a class="ba-real-media" href="https://wesqmwjjtsefyjnluosj.supabase.co/functions/v1/digiy-bonne-affaire-terrain-contact" rel="noopener noreferrer" aria-label="Contacter le propriétaire sur WhatsApp pour le terrain à Saly">
-        <img src="https://digiylyfe.net/wp-content/uploads/2026/10/Image-ChatGPT-2-oct.-2026-12_47_23.png" alt="Illustration plage pour l’annonce du terrain à Saly" loading="lazy">
-        <span class="ba-real-overlay"><span class="ba-real-badge">🏡 IMMOBILIER · SALY</span><span class="ba-real-note">PHOTO ILLUSTRATIVE</span></span>
-      </a>
-      <div class="ba-real-body">
-        <div class="ba-real-kicker">VENTE DIRECTE PROPRIÉTAIRE</div>
-        <h3>Terrain 300 m² · derrière le golf</h3>
-        <p><strong>20 000 000 FCFA.</strong> Titre foncier payé. Contact direct uniquement avec un acheteur réellement intéressé.</p>
-        <div class="ba-real-chips"><span>300 m²</span><span>Saly</span><span>20 M FCFA</span><span>Titre foncier payé</span></div>
-        <p><strong>Pas de courtier · pas d’intermédiaire · curieux s’abstenir.</strong></p><p class="ba-real-private-note">💬 Contact uniquement par message WhatsApp · merci de préciser votre nom et votre intérêt réel pour le terrain.</p>
-        <div class="ba-real-actions"><a class="ba-real-whatsapp" href="https://wesqmwjjtsefyjnluosj.supabase.co/functions/v1/digiy-bonne-affaire-terrain-contact" rel="noopener noreferrer">💬 WHATSAPP · CONTACT PROPRIÉTAIRE</a></div>
-        <div id="ba-terrain-video" hidden style="margin-top:12px">
-          <p style="font-weight:900;font-size:12px">🎬 Vidéo de présentation du terrain</p>
-          <video controls preload="metadata" playsinline style="display:block;width:100%;max-width:420px;aspect-ratio:9/16;background:#073f32;border-radius:12px" aria-label="Vidéo terrain Saly Tapée Extension 3">
-            <source src="assets/videos/DIGIYLYFE_TERRAIN_SALY_V2_FINAL_AVEC_VOIX_MAC.mp4" type="video/mp4">
-            Votre navigateur ne peut pas lire cette vidéo.
-          </video>
-        </div>
-      </div>
-    </article>
+
 
     <article class="ba-real-card">
       <a class="ba-real-media" href="https://explore.digiylyfe.com/fiche.html?slug=sortie-peche-jb-baptiste-760a00ad" target="_blank" rel="noopener noreferrer">
@@ -1131,17 +1111,6 @@ setLang(new URLSearchParams(location.search).get('lang')||'fr');
 })();
 </script>
 
-<script>
-/* Afficher le lecteur de la carte terrain uniquement si le MP4 public est effectivement disponible. */
-(async () => {
-  const node = document.getElementById('ba-terrain-video');
-  if (!node) return;
-  const url = new URL('assets/videos/DIGIYLYFE_TERRAIN_SALY_V2_FINAL_AVEC_VOIX_MAC.mp4', document.baseURI);
-  try {
-    const response = await fetch(url, { method: 'HEAD' });
-    if (response.ok && (response.headers.get('content-type') || '').includes('video')) node.hidden = false;
-  } catch (_) { /* Pas de vidéo publique : garder la carte inchangée. */ }
-})();
-</script>
+
 </body>
 </html>
