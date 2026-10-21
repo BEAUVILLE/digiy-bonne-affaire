@@ -447,6 +447,10 @@ html[dir="rtl"] body{direction:rtl} html[dir="rtl"] .rule{border-left:0;border-r
         <strong>Salon de coiffure by Sly</strong>
         <p>Coiffure · Beauté · Soins capillaires · Saly</p>
         <a href="tel:+221783064180" style="display:inline-block;padding:11px 14px;border-radius:999px;background:#073f32;color:white;text-decoration:none;font-weight:900">📞 Appeler directement · +221 78 306 41 80</a>
+        <div style="display:flex;flex-wrap:wrap;gap:9px;margin-top:12px">
+          <button type="button" id="shareSalonSly" style="min-height:44px;padding:10px 16px;border:0;border-radius:12px;background:#d8ad46;color:#073f32;font:inherit;font-weight:900;cursor:pointer">↗️ Partager la carte</button>
+          <a href="./salon_by_sly_affiche_QR_corrige.png" download="Salon-by-Sly-carte.png" style="min-height:44px;padding:10px 16px;border:1px solid #073f32;border-radius:12px;color:#073f32;text-decoration:none;font-weight:900">⬇️ Télécharger</a>
+        </div>
       </div>
     </article>
 
@@ -1125,5 +1129,45 @@ setLang(new URLSearchParams(location.search).get('lang')||'fr');
 </script>
 
 
+
+<script>
+(function(){
+  'use strict';
+  const btn=document.getElementById('shareSalonSly');
+  if(!btn)return;
+  btn.addEventListener('click',async function(){
+    const imageUrl=new URL('./salon_by_sly_affiche_QR_corrige.png',location.href).href;
+    const text='Salon de coiffure by Sly · Saly · +221 78 306 41 80';
+    if(navigator.share){
+      try{
+        // Share the original PNG when the phone supports file sharing.
+        if(navigator.canShare && window.File){
+          const response=await fetch(imageUrl);
+          if(response.ok){
+            const blob=await response.blob();
+            const file=new File([blob],'Salon-by-Sly.png',{type:'image/png'});
+            if(navigator.canShare({files:[file]})){
+              await navigator.share({files:[file],title:'Salon by Sly',text});
+              return;
+            }
+          }
+        }
+      }catch(error){
+        if(error && error.name==='AbortError')return;
+      }
+      try{await navigator.share({title:'Salon by Sly',text,url:imageUrl});return}
+      catch(error){if(error && error.name==='AbortError')return}
+    }
+    try{
+      if(navigator.clipboard && window.isSecureContext){
+        await navigator.clipboard.writeText(imageUrl);
+        alert('Lien de la carte copié. Collez-le dans WhatsApp, SMS ou email.');
+        return;
+      }
+    }catch(error){}
+    window.prompt('Copiez le lien de la carte Salon by Sly :',imageUrl);
+  });
+})();
+</script>
 </body>
 </html>
