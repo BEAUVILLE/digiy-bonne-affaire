@@ -48,6 +48,13 @@ html[dir="rtl"] body{direction:rtl} html[dir="rtl"] .rule{border-left:0;border-r
   .doctrine{font-size:11px;padding:11px 12px} .section h1{font-size:22px} .section p{font-size:13px}
 }
 @media(max-width:380px){.listing{grid-template-columns:32% 68%} .visual{min-height:370px} .info{padding:8px 7px} h2{font-size:16px} .chip{font-size:7px;padding:3px 4px} .qr{width:48px;height:48px}}
+/* Show original professional cards in full, including their QR codes. */
+.ba-real-media{min-height:0}
+.ba-real-media img{height:auto;min-height:0;max-height:none;object-fit:contain}
+.ba-real-card:hover .ba-real-media img{transform:none}
+.ba-real-grid>*{min-width:0}
+main>.join{background:#073f32;color:white}
+#coach-ousmane-dione{width:100%;min-width:0}
 </style>
 
 <style id="bonne-affaire-extra">
@@ -343,10 +350,7 @@ html[dir="rtl"] body{direction:rtl} html[dir="rtl"] .rule{border-left:0;border-r
     <button data-lang="fr" class="active">🇫🇷 FR</button><button data-lang="en">🇬🇧 EN</button><button data-lang="es">🇪🇸 ES</button><button data-lang="pt">🇵🇹 PT</button>
     <button data-lang="de">🇩🇪 DE</button><button data-lang="it">🇮🇹 IT</button><button data-lang="nl">🇳🇱 NL</button><button data-lang="ar">🇸🇦 AR</button>
   </div>
-  <div class="join">
-    <div><strong data-i18n="joinq">Vous avez quelque chose à vendre, à louer ou à rechercher ?</strong><span data-i18n="jointext">Une annonce reste ancrée dans un territoire, mais elle peut circuler de téléphone en téléphone. Contact et transaction restent directs entre les personnes.</span></div>
-    <a href="https://bonne-affaire.digiylyfe.com/publier-auto.html?lang=fr" target="_blank" rel="noopener" data-i18n="join">VENDRE · LOUER · RECHERCHER</a>
-  </div>
+
 </div>
 </header>
 <main>
@@ -363,30 +367,6 @@ html[dir="rtl"] body{direction:rtl} html[dir="rtl"] .rule{border-left:0;border-r
     </div>
   </section>
 
-  <section class="ba-edition" aria-label="Rendez-vous hebdomadaire BONNE AFFAIRE">
-    <div class="ba-edition-icon" aria-hidden="true">📅</div>
-    <div>
-      <div class="ba-edition-kicker" data-i18n="editionKicker">RENDEZ-VOUS HEBDOMADAIRE</div>
-      <strong data-i18n="editionTitle">NOUVELLE ÉDITION CHAQUE JEUDI</strong>
-      <p data-i18n="editionText">Les nouvelles annonces paraissent ensemble le jeudi pour préparer naturellement le week-end.</p>
-    </div>
-  </section>
-
-  <section class="section"><div class="ico">🛍️</div><div><h1 data-i18n="title">DIGIY BONNE AFFAIRE · ANNONCES</h1><p data-i18n="subtitle">Occasion · Location · Services · Immobilier · Véhicules · Contact direct</p></div></section>
-  <div class="doctrine"><strong>🛡️ <span data-i18n="role">RÔLE DE DIGIYLYFE</span></strong><span data-i18n="doctrine">DIGIY BONNE AFFAIRE rend visibles des offres et des besoins ancrés dans un territoire, puis facilite leur circulation et le contact direct. Chaque annonceur reste seul responsable de l’objet, du service, du prix, de l’état réel, des documents nécessaires, de la disponibilité, de la transaction et de ses obligations. DIGIYLYFE ne garantit pas la vente, n’encaisse pas la transaction et ne conclut pas à la place des parties.</span></div>
-  <section class="ba-story" aria-label="Exemple de circulation d’une annonce">
-    <h3 data-i18n="storyTitle">🌍 UNE ANNONCE LOCALE PEUT VOYAGER</h3>
-    <p data-i18n="storyText">Exemple : un vélo est proposé à Dakar. Un oncle à distance partage l’annonce à son neveu. Le neveu échange avec le vendeur sur WhatsApp, demande une vidéo ou organise une visite. S’ils sont d’accord, le paiement se fait directement entre eux, par le moyen qu’ils choisissent.</p>
-    <div class="ba-story-line" aria-hidden="true"><span class="ba-story-step">📍 Dakar</span><span class="ba-story-arrow">→</span><span class="ba-story-step">📲 Partage</span><span class="ba-story-arrow">→</span><span class="ba-story-step">💬 WhatsApp</span><span class="ba-story-arrow">→</span><span class="ba-story-step">👀 Vérification</span><span class="ba-story-arrow">→</span><span class="ba-story-step">🤝 Accord direct</span></div>
-  </section>
-  <section class="ba-share" aria-label="Partager DIGIY BONNE AFFAIRE">
-    <div><strong data-i18n="shareTitle">FAITES CIRCULER LA BONNE AFFAIRE</strong><span data-i18n="shareText">Le web permet à une annonce locale de voyager de téléphone en téléphone sans enfermer les personnes dans un territoire.</span></div>
-    <button type="button" id="baShareButton" data-i18n="shareButton">📲 PARTAGER BONNE AFFAIRE</button>
-    <div class="ba-share-note" id="baShareNote" aria-live="polite"></div>
-  </section>
-  
-    
-    
     <section class="ba-real-network" aria-label="Sélection réelle du réseau DIGIYLYFE">
   <div class="ba-real-head">
     <div>
@@ -398,7 +378,7 @@ html[dir="rtl"] body{direction:rtl} html[dir="rtl"] .rule{border-left:0;border-r
 
   <div class="ba-real-grid">
     <!-- Salon by Sly · Commerce réel, contact direct -->
-    <section id="coach-ousmane-dione" aria-label="Coach Ousmane Dione" style="max-width:750px;margin:22px auto;padding:18px;background:#102920;color:#fff;border:2px solid #dcb45a;border-radius:20px;box-sizing:border-box;clear:both"><h2 style="font:800 23px system-ui,sans-serif;color:#ffdf8c;margin:0 0 12px">🏋️ Coach Ousmane Dione · Saly</h2><a href="./coach-ousmane-dione.html" style="display:block;max-width:440px;margin:0 auto 13px"><img src="https://drive.google.com/thumbnail?id=1T2nTZ0P5mXtDGCjxaBBy42_nkh-lqEm_&sz=w1200" alt="Carte de visite verticale de Coach Ousmane Dione · coaching sportif et services web" loading="lazy" style="display:block;width:100%;height:auto;aspect-ratio:9/16;object-fit:contain;background:#0b0b0b;border-radius:14px" onerror="this.alt='Affiche indisponible : ouvrir la fiche du coach'"></a><p style="font:500 15px/1.5 system-ui,sans-serif;margin:10px 0">Coach sportif et services web pour téléphone · Contact direct, sans commission.</p><div style="display:flex;flex-wrap:wrap;gap:9px"><a href="./coach-ousmane-dione.html" style="background:#dcb45a;color:#062414;padding:12px;border-radius:12px;font-weight:800;text-decoration:none">Voir la carte et partager</a><a href="https://wa.me/221771594373" style="background:#25d366;color:#052315;padding:12px;border-radius:12px;font-weight:800;text-decoration:none">WhatsApp</a><a href="tel:+221771594373" style="background:white;color:#062414;padding:12px;border-radius:12px;font-weight:800;text-decoration:none">Appeler</a></div></section>
+    <section id="coach-ousmane-dione" aria-label="Coach Ousmane Dione" style="max-width:750px;margin:22px auto;padding:18px;background:#102920;color:#fff;border:2px solid #dcb45a;border-radius:20px;box-sizing:border-box;clear:both"><h2 style="font:800 23px system-ui,sans-serif;color:#ffdf8c;margin:0 0 12px">🏋️ Coach Ousmane Dione · Saly</h2><a href="./coach-ousmane-dione.html" style="display:block;max-width:440px;margin:0 auto 13px"><img src="./assets/coach-ousmane-dione-original.png" alt="Carte de visite verticale de Coach Ousmane Dione · coaching sportif et services web" loading="eager" width="941" height="1672" style="display:block;width:100%;height:auto;aspect-ratio:9/16;object-fit:contain;background:#0b0b0b;border-radius:14px" onerror="this.alt='Affiche indisponible : ouvrir la fiche du coach'"></a><p style="font:500 15px/1.5 system-ui,sans-serif;margin:10px 0">Coach sportif et services web pour téléphone · Contact direct, sans commission.</p><div style="display:flex;flex-wrap:wrap;gap:9px"><a href="./coach-ousmane-dione.html" style="background:#dcb45a;color:#062414;padding:12px;border-radius:12px;font-weight:800;text-decoration:none">Voir la fiche</a><a href="https://wa.me/221771594373" style="background:#25d366;color:#052315;padding:12px;border-radius:12px;font-weight:800;text-decoration:none">WhatsApp</a><a href="tel:+221771594373" style="background:white;color:#062414;padding:12px;border-radius:12px;font-weight:800;text-decoration:none">Appeler</a><button type="button" data-share-coach style="background:#fff;color:#062414;padding:12px;border:0;border-radius:12px;font:inherit;font-weight:800;cursor:pointer">Partager</button></div><p id="coach-share-status" role="status" style="overflow-wrap:anywhere"></p></section>
 <article class="ba-real-card" id="salon-by-sly">
       <a class="ba-real-media" href="./salon_by_sly_affiche_QR_corrige.png" target="_blank" rel="noopener noreferrer" aria-label="Agrandir l’affiche originale de Salon by Sly et son QR code">
         <img src="./salon_by_sly_affiche_QR_corrige.png" alt="Affiche originale Salon de coiffure by Sly à Saly, avec photo et QR code Google Maps" width="1254" height="1254" loading="lazy" decoding="async">
@@ -560,6 +540,36 @@ html[dir="rtl"] body{direction:rtl} html[dir="rtl"] .rule{border-left:0;border-r
 
   <div class="ba-real-warning">DIGIY BONNE AFFAIRE rend ces activités et offres visibles et facilite le contact. Les prix, disponibilités, documents, prestations et conditions restent à vérifier directement avec chaque annonceur ou professionnel.</div>
 </section>
+<section id="ba-live-section" aria-live="polite">
+  <div class="ba-live-head">
+    <strong>🔥 ANNONCES ACTIVES</strong>
+    <span class="ba-live-count" id="ba-live-count">Chargement…</span>
+  </div>
+  <div id="ba-live-message" class="ba-live-loading">Connexion aux annonces DIGIY BONNE AFFAIRE…</div>
+  <div id="ba-live-listings"></div>
+</section>
+  <section class="ba-edition" aria-label="Rendez-vous hebdomadaire BONNE AFFAIRE">
+    <div class="ba-edition-icon" aria-hidden="true">📅</div>
+    <div>
+      <div class="ba-edition-kicker" data-i18n="editionKicker">RENDEZ-VOUS HEBDOMADAIRE</div>
+      <strong data-i18n="editionTitle">NOUVELLE ÉDITION CHAQUE JEUDI</strong>
+      <p data-i18n="editionText">Les nouvelles annonces paraissent ensemble le jeudi pour préparer naturellement le week-end.</p>
+    </div>
+  </section>
+
+  <section class="section"><div class="ico">🛍️</div><div><h1 data-i18n="title">DIGIY BONNE AFFAIRE · ANNONCES</h1><p data-i18n="subtitle">Occasion · Location · Services · Immobilier · Véhicules · Contact direct</p></div></section>
+  <div class="doctrine"><strong>🛡️ <span data-i18n="role">RÔLE DE DIGIYLYFE</span></strong><span data-i18n="doctrine">DIGIY BONNE AFFAIRE rend visibles des offres et des besoins ancrés dans un territoire, puis facilite leur circulation et le contact direct. Chaque annonceur reste seul responsable de l’objet, du service, du prix, de l’état réel, des documents nécessaires, de la disponibilité, de la transaction et de ses obligations. DIGIYLYFE ne garantit pas la vente, n’encaisse pas la transaction et ne conclut pas à la place des parties.</span></div>
+  <section class="ba-story" aria-label="Exemple de circulation d’une annonce">
+    <h3 data-i18n="storyTitle">🌍 UNE ANNONCE LOCALE PEUT VOYAGER</h3>
+    <p data-i18n="storyText">Exemple : un vélo est proposé à Dakar. Un oncle à distance partage l’annonce à son neveu. Le neveu échange avec le vendeur sur WhatsApp, demande une vidéo ou organise une visite. S’ils sont d’accord, le paiement se fait directement entre eux, par le moyen qu’ils choisissent.</p>
+    <div class="ba-story-line" aria-hidden="true"><span class="ba-story-step">📍 Dakar</span><span class="ba-story-arrow">→</span><span class="ba-story-step">📲 Partage</span><span class="ba-story-arrow">→</span><span class="ba-story-step">💬 WhatsApp</span><span class="ba-story-arrow">→</span><span class="ba-story-step">👀 Vérification</span><span class="ba-story-arrow">→</span><span class="ba-story-step">🤝 Accord direct</span></div>
+  </section>
+  <section class="ba-share" aria-label="Partager DIGIY BONNE AFFAIRE">
+    <div><strong data-i18n="shareTitle">FAITES CIRCULER LA BONNE AFFAIRE</strong><span data-i18n="shareText">Le web permet à une annonce locale de voyager de téléphone en téléphone sans enfermer les personnes dans un territoire.</span></div>
+    <button type="button" id="baShareButton" data-i18n="shareButton">📲 PARTAGER BONNE AFFAIRE</button>
+    <div class="ba-share-note" id="baShareNote" aria-live="polite"></div>
+  </section>
+
 <section class="ba-pricing" aria-label="Tarifs DIGIY BONNE AFFAIRE">
       <h2>CHOISISSEZ VOTRE FAÇON DE VENDRE</h2>
       <p class="lead">Choisissez votre pays : une seule devise et les tarifs correspondants s’affichent. 0 % commission DIGIY sur la vente.</p>
@@ -603,14 +613,7 @@ html[dir="rtl"] body{direction:rtl} html[dir="rtl"] .rule{border-left:0;border-r
 
 
 
-<section id="ba-live-section" aria-live="polite">
-  <div class="ba-live-head">
-    <strong>🔥 ANNONCES ACTIVES</strong>
-    <span class="ba-live-count" id="ba-live-count">Chargement…</span>
-  </div>
-  <div id="ba-live-message" class="ba-live-loading">Connexion aux annonces DIGIY BONNE AFFAIRE…</div>
-  <div id="ba-live-listings"></div>
-</section>
+
 
 <div class="category-band">
       <strong>CATÉGORIES VISIBLES DANS BONNE AFFAIRE</strong>
@@ -891,6 +894,10 @@ html[dir="rtl"] body{direction:rtl} html[dir="rtl"] .rule{border-left:0;border-r
 <!-- DIGIY Coach Ousmane Dione | affiche 9:16 visible -->
 
 
+  <div class="join">
+    <div><strong data-i18n="joinq">Vous avez quelque chose à vendre, à louer ou à rechercher ?</strong><span data-i18n="jointext">Une annonce reste ancrée dans un territoire, mais elle peut circuler de téléphone en téléphone. Contact et transaction restent directs entre les personnes.</span></div>
+    <a href="https://bonne-affaire.digiylyfe.com/publier-auto.html?lang=fr" target="_blank" rel="noopener" data-i18n="join">VENDRE · LOUER · RECHERCHER</a>
+  </div>
 </main>
 <script>
 const T = {"fr": {"tag": "ADHÉRENT DIGIYLYFE", "title": "DIGIY BONNE AFFAIRE · ANNONCES", "subtitle": "Occasion · Services · Immobilier · Véhicules · Contact direct", "joinq": "Vous avez quelque chose à vendre ou un service à proposer ?", "join": "VENDRE / PUBLIER", "jointext": "Une annonce doit rester claire, locale et en contact direct. La présence de l’annonceur est validée avant publication.", "role": "RÔLE DE DIGIYLYFE", "doctrine": "DIGIY BONNE AFFAIRE présente des annonces et facilite le contact direct. Chaque annonceur reste seul responsable de l’objet, du service, du prix, de l’état réel, des documents nécessaires, de la disponibilité, de la transaction et de ses obligations. DIGIYLYFE ne garantit pas la vente, n’encaisse pas la transaction et ne conclut pas à la place des parties.", "contact": "Contact direct", "payment": "Paiement direct", "merchant": "au commerçant", "commission": "commission DIGIYLYFE", "availability": "Produits, disponibilité, prix et conditions : accord direct avec le commerçant, sous sa responsabilité.", "qr": "Scannez pour ouvrir et conserver sa présence DIGIYLYFE.", "card": "VOIR LA CARTE", "fiche": "VOIR LA FICHE", "site": "VOIR LE SITE", "wa": "WhatsApp direct", "footer": "DIGIYLYFE.COM · BONNE AFFAIRE · 0 % COMMISSION"}, "en": {"tag": "DIGIYLYFE MEMBER", "title": "DIGIY BONNE AFFAIRE · LISTINGS", "subtitle": "Used goods · Services · Property · Vehicles · Direct contact", "joinq": "Do you have something to sell or a service to offer?", "join": "SELL / PUBLISH", "jointext": "A listing should stay clear, local and direct-contact. The advertiser's presence is validated before publication.", "role": "ROLE OF DIGIYLYFE", "doctrine": "DIGIYLYFE publishes the digital presence of its members. Each merchant remains solely responsible for their business, products, prices, professional and administrative obligations, stock, sales, deliveries and commitments to customers. DIGIYLYFE does not sell on their behalf and does not collect payment for their sales.", "contact": "Direct contact", "payment": "Direct payment", "merchant": "to merchant", "commission": "DIGIYLYFE commission", "availability": "Products, availability, prices and conditions: agreed directly with the merchant, under their responsibility.", "qr": "Scan to open and save their DIGIYLYFE presence.", "card": "VIEW CARD", "fiche": "VIEW PROFILE", "site": "VIEW SITE", "wa": "Direct WhatsApp", "footer": "DIGIYLYFE.COM · BONNE AFFAIRE · 0 % COMMISSION"}, "es": {"tag": "MIEMBRO DIGIYLYFE", "title": "DIGIY BONNE AFFAIRE · ANUNCIOS", "subtitle": "Ocasión · Servicios · Inmuebles · Vehículos · Contacto directo", "joinq": "¿Tienes algo que vender o un servicio que ofrecer?", "join": "VENDER / PUBLICAR", "jointext": "Únete a DIGIYLYFE como miembro y prepara tu tarjeta de visita digital.", "role": "PAPEL DE DIGIYLYFE", "doctrine": "DIGIYLYFE publica la presencia digital de sus miembros. Cada comerciante es el único responsable de su actividad, productos, precios, obligaciones, stock, ventas, entregas y compromisos con sus clientes. DIGIYLYFE no vende en su nombre ni cobra sus ventas.", "contact": "Contacto directo", "payment": "Pago directo", "merchant": "al comerciante", "commission": "comisión DIGIYLYFE", "availability": "Productos, disponibilidad, precios y condiciones: acuerdo directo con el comerciante, bajo su responsabilidad.", "qr": "Escanea para abrir y guardar su presencia DIGIYLYFE.", "card": "VER TARJETA", "fiche": "VER FICHA", "site": "VER SITIO", "wa": "WhatsApp directo", "footer": "DIGIYLYFE.COM · BONNE AFFAIRE · 0 % COMMISSION"}, "pt": {"tag": "MEMBRO DIGIYLYFE", "title": "DIGIY BONNE AFFAIRE · ANÚNCIOS", "subtitle": "Usados · Serviços · Imóveis · Veículos · Contacto direto", "joinq": "Tem algo para vender ou um serviço para oferecer?", "join": "VENDER / PUBLICAR", "jointext": "Junte-se à DIGIYLYFE como membro e prepare o seu cartão de visita digital.", "role": "PAPEL DA DIGIYLYFE", "doctrine": "A DIGIYLYFE publica a presença digital dos seus membros. Cada comerciante é o único responsável pela sua atividade, produtos, preços, obrigações, stock, vendas, entregas e compromissos com os clientes. A DIGIYLYFE não vende em seu nome nem recebe o pagamento das suas vendas.", "contact": "Contacto direto", "payment": "Pagamento direto", "merchant": "ao comerciante", "commission": "comissão DIGIYLYFE", "availability": "Produtos, disponibilidade, preços e condições: acordo direto com o comerciante, sob a sua responsabilidade.", "qr": "Digitalize para abrir e guardar a presença DIGIYLYFE.", "card": "VER CARTÃO", "fiche": "VER FICHA", "site": "VER SITE", "wa": "WhatsApp direto", "footer": "DIGIYLYFE.COM · BONNE AFFAIRE · 0 % COMMISSION"}, "de": {"tag": "DIGIYLYFE MITGLIED", "title": "DIGIY BONNE AFFAIRE · ANZEIGEN", "subtitle": "Gebraucht · Dienstleistungen · Immobilien · Fahrzeuge · Direktkontakt", "joinq": "Möchten Sie etwas verkaufen oder eine Dienstleistung anbieten?", "join": "VERKAUFEN / VERÖFFENTLICHEN", "jointext": "Werden Sie DIGIYLYFE-Mitglied und erstellen Sie Ihre digitale Visitenkarte.", "role": "ROLLE VON DIGIYLYFE", "doctrine": "DIGIYLYFE veröffentlicht die digitale Präsenz seiner Mitglieder. Jeder Händler ist allein verantwortlich für Tätigkeit, Produkte, Preise, Pflichten, Bestand, Verkäufe, Lieferungen und Zusagen gegenüber Kunden. DIGIYLYFE verkauft nicht in seinem Namen und nimmt keine Zahlungen für seine Verkäufe entgegen.", "contact": "Direkter Kontakt", "payment": "Direkte Zahlung", "merchant": "an den Händler", "commission": "DIGIYLYFE Provision", "availability": "Produkte, Verfügbarkeit, Preise und Bedingungen: direkte Vereinbarung mit dem Händler in dessen Verantwortung.", "qr": "Scannen, um die DIGIYLYFE-Präsenz zu öffnen und zu speichern.", "card": "KARTE ANSEHEN", "fiche": "PROFIL ANSEHEN", "site": "WEBSITE", "wa": "WhatsApp direkt", "footer": "DIGIYLYFE.COM · BONNE AFFAIRE · 0 % COMMISSION"}, "it": {"tag": "ADERENTE DIGIYLYFE", "title": "DIGIY BONNE AFFAIRE · ANNUNCI", "subtitle": "Usato · Servizi · Immobili · Veicoli · Contatto diretto", "joinq": "Hai qualcosa da vendere o un servizio da proporre?", "join": "VENDERE / PUBBLICARE", "jointext": "Entra in DIGIYLYFE come aderente e prepara il tuo biglietto da visita digitale.", "role": "RUOLO DI DIGIYLYFE", "doctrine": "DIGIYLYFE pubblica la presenza digitale dei suoi aderenti. Ogni commerciante resta l'unico responsabile della propria attività, prodotti, prezzi, obblighi, scorte, vendite, consegne e impegni verso i clienti. DIGIYLYFE non vende al suo posto e non incassa i pagamenti delle sue vendite.", "contact": "Contatto diretto", "payment": "Pagamento diretto", "merchant": "al commerciante", "commission": "commissione DIGIYLYFE", "availability": "Prodotti, disponibilità, prezzi e condizioni: accordo diretto con il commerciante, sotto la sua responsabilità.", "qr": "Scansiona per aprire e salvare la presenza DIGIYLYFE.", "card": "VEDI BIGLIETTO", "fiche": "VEDI SCHEDA", "site": "VEDI SITO", "wa": "WhatsApp diretto", "footer": "DIGIYLYFE.COM · BONNE AFFAIRE · 0 % COMMISSION"}, "nl": {"tag": "DIGIYLYFE LID", "title": "DIGIY BONNE AFFAIRE · ADVERTENTIES", "subtitle": "Tweedehands · Diensten · Vastgoed · Voertuigen · Direct contact", "joinq": "Heb je iets te verkopen of een dienst aan te bieden?", "join": "VERKOPEN / PUBLICEREN", "jointext": "Word lid van DIGIYLYFE en maak je digitale visitekaart klaar.", "role": "ROL VAN DIGIYLYFE", "doctrine": "DIGIYLYFE publiceert de digitale aanwezigheid van zijn leden. Elke handelaar blijft zelf verantwoordelijk voor zijn activiteit, producten, prijzen, verplichtingen, voorraad, verkoop, leveringen en afspraken met klanten. DIGIYLYFE verkoopt niet namens hem en ontvangt geen betalingen voor zijn verkopen.", "contact": "Direct contact", "payment": "Direct betalen", "merchant": "aan handelaar", "commission": "DIGIYLYFE commissie", "availability": "Producten, beschikbaarheid, prijzen en voorwaarden: rechtstreeks afgesproken met de handelaar, onder diens verantwoordelijkheid.", "qr": "Scan om de DIGIYLYFE-pagina te openen en te bewaren.", "card": "BEKIJK KAART", "fiche": "BEKIJK FICHE", "site": "BEKIJK SITE", "wa": "WhatsApp direct", "footer": "DIGIYLYFE.COM · BONNE AFFAIRE · 0 % COMMISSION"}, "ar": {"tag": "عضو DIGIYLYFE", "title": "DIGIY BONNE AFFAIRE · إعلانات", "subtitle": "مستعمل · خدمات · عقار · مركبات · تواصل مباشر", "joinq": "هل لديك شيء للبيع أو خدمة لتقديمها؟", "join": "بيع / نشر", "jointext": "انضم إلى DIGIYLYFE كعضو وجهّز بطاقة عملك الرقمية.", "role": "دور DIGIYLYFE", "doctrine": "تنشر DIGIYLYFE الحضور الرقمي لأعضائها. يبقى كل تاجر مسؤولاً وحده عن نشاطه ومنتجاته وأسعاره والتزاماته ومخزونه ومبيعاته وتسليماته وتعهداته تجاه العملاء. لا تبيع DIGIYLYFE نيابة عنه ولا تستلم مدفوعات مبيعاته.", "contact": "تواصل مباشر", "payment": "دفع مباشر", "merchant": "للتاجر", "commission": "عمولة DIGIYLYFE", "availability": "المنتجات والتوفر والأسعار والشروط: اتفاق مباشر مع التاجر وتحت مسؤوليته.", "qr": "امسح الرمز لفتح وحفظ حضور DIGIYLYFE.", "card": "عرض البطاقة", "fiche": "عرض الصفحة", "site": "عرض الموقع", "wa": "واتساب مباشر", "footer": "DIGIYLYFE.COM · BONNE AFFAIRE · 0 % COMMISSION"}};
@@ -1176,5 +1183,6 @@ setLang(new URLSearchParams(location.search).get('lang')||'fr');
   });
 })();
 </script>
+<script src="./assets/coach-share.js"></script>
 </body>
 </html>
