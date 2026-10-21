@@ -1,6 +1,14 @@
 # Audit vitrines — 21 octobre 2026
 
-## État : correction proposée, publication NON validée
+## Mise à jour QR — 21 octobre 2026
+
+Le fondateur a demandé explicitement de corriger le QR après fusion des premières PR. Le nouveau fichier `assets/coach-ousmane-dione-qr-verifie.png` remplace uniquement la zone QR (x=646..879, y=1198..1419). Le reste des pixels est identique à l’original, conservé dans le dépôt.
+
+Décodage ZXing réussi sur l’affiche entière aux largeurs 941, 630, 440 et 390 px. Contenu vCard 3.0 : Ousmane Dione, +221771594373, oussze92@gmail.com (adresse fournie par le fondateur). Le QR permet l’enregistrement du contact, sans URL ni redirection. Cela résout le blocage de décodage ci-dessous, qui décrit l’ancien PNG. Aucun test caméra iPhone ni déploiement public n’est revendiqué. La divergence de l’adresse imprimée reste à confirmer.
+
+SHA-256 corrigé : `16204c0a78fa602e7ec44288b7a9f6a80b2245c8561ec37b58387253b1cdff59`.
+
+## Audit initial — conservé pour traçabilité
 
 Base `main` inspectée : `cebf231c16d68e8b0c9a3245c09b5dec7f2ab86c`. PR historique #11 confirmée fusionnée par GitHub. Sa description indiquait explicitement que le PNG n'était pas hébergé dans le dépôt et que QR/PWA restaient à contrôler.
 
