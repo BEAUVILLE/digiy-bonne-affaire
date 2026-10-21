@@ -1,5 +1,10 @@
 # Audit vitrines — 21 octobre 2026
 
+## Destination QR demandée : carte partageable
+
+Le fondateur précise que le QR doit ouvrir sa carte de visite. La version active `coach-ousmane-dione-qr-carte.png` encode donc `https://bonne-affaire.digiylyfe.com/coach-ousmane-dione.html`, au lieu de la vCard décrite dans la mise à jour précédente. Le décodage exact de cette URL est vérifié à 941, 630, 440 et 390 pixels de largeur. Seule la zone QR est modifiée. La fiche possède le bouton Partager avec partage natif, copie du lien ou lien visible en secours. Le rendu public après fusion et le partage iOS réel restent à contrôler.
+
+
 ## Mise à jour QR — 21 octobre 2026
 
 Le fondateur a demandé explicitement de corriger le QR après fusion des premières PR. Le nouveau fichier `assets/coach-ousmane-dione-qr-verifie.png` remplace uniquement la zone QR (x=646..879, y=1198..1419). Le reste des pixels est identique à l’original, conservé dans le dépôt.
