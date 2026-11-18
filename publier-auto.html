@@ -41,7 +41,7 @@ button{background:var(--green);color:#fff;margin-top:14px}.cta{background:var(--
   <div class="doors">
     <div class="door">
       <h2 data-publish-copy="3">👤 PARTICULIER · VENTE PONCTUELLE</h2>
-      <p>Choisissez la durée de votre annonce. Après règlement, envoyez votre preuve : DIGIYLYFE contrôle le paiement puis contrôle l’annonce avant publication.</p>
+      <p data-pack-copy="5">Choisissez la durée de votre annonce. Après règlement, envoyez votre preuve : DIGIYLYFE contrôle le paiement puis contrôle l’annonce avant publication.</p>
       <div class="packs" id="packs"></div>
     </div>
     <div class="door">
@@ -52,10 +52,10 @@ button{background:var(--green);color:#fff;margin-top:14px}.cta{background:var(--
   </div>
 
   <div class="paybox">
-    <strong>💳 RÈGLEMENT DE L’ANNONCE</strong>
+    <strong data-pack-copy="3">💳 RÈGLEMENT DE L’ANNONCE</strong>
     <p id="packSummary"></p>
     <div class="payline" id="payLine"></div>
-    <p>Le système ne valide pas l’argent. <strong>Une personne DIGIYLYFE contrôle votre preuve avant publication.</strong></p>
+    <p data-pack-copy="4">Le système ne valide pas l’argent. <strong>Une personne DIGIYLYFE contrôle votre preuve avant publication.</strong></p>
   </div>
 </section>
 
@@ -170,6 +170,24 @@ button{background:var(--green);color:#fff;margin-top:14px}.cta{background:var(--
     });
   }
   const formCopy=(i,french)=>localizedForm?.[i]??french;
+  const packLanguages={
+  "fr": "jours|Votre demande|Elle entrera en attente de contrôle humain.|Règlement de l’annonce|DIGIYLYFE vérifie le justificatif avant publication.|Choisissez la durée de votre annonce. Après règlement, transmettez votre justificatif pour que DIGIYLYFE contrôle le paiement et l’annonce.|Devise|Indicatif",
+  "en": "days|Your request|It will be queued for human review.|Listing payment|DIGIYLYFE checks proof of payment before publication.|Choose how long your listing should run. After payment, submit proof so DIGIYLYFE can review the payment and listing.|Currency|Dialling code",
+  "es": "días|Tu solicitud|Quedará pendiente de revisión humana.|Pago del anuncio|DIGIYLYFE verifica el comprobante antes de publicar.|Elige la duración del anuncio. Tras pagar, envía el comprobante para que DIGIYLYFE revise el pago y el anuncio.|Moneda|Prefijo",
+  "pt": "dias|O seu pedido|Ficará pendente de revisão humana.|Pagamento do anúncio|A DIGIYLYFE verifica o comprovativo antes da publicação.|Escolha a duração do anúncio. Após pagar, envie o comprovativo para a DIGIYLYFE verificar o pagamento e o anúncio.|Moeda|Indicativo",
+  "it": "giorni|La tua richiesta|Sarà in attesa di verifica umana.|Pagamento dell’annuncio|DIGIYLYFE verifica la ricevuta prima della pubblicazione.|Scegli la durata dell’annuncio. Dopo il pagamento, invia la ricevuta per consentire a DIGIYLYFE di verificare pagamento e annuncio.|Valuta|Prefisso",
+  "de": "Tage|Deine Anfrage|Sie wartet auf eine persönliche Prüfung.|Anzeigenzahlung|DIGIYLYFE prüft den Beleg vor der Veröffentlichung.|Wähle die Laufzeit der Anzeige. Reiche danach den Zahlungsbeleg ein, damit DIGIYLYFE Zahlung und Anzeige prüfen kann.|Währung|Vorwahl",
+  "nl": "dagen|Je aanvraag|Deze wacht op menselijke controle.|Betaling voor de advertentie|DIGIYLYFE controleert het bewijs vóór publicatie.|Kies de looptijd van je advertentie. Stuur na betaling het bewijs zodat DIGIYLYFE betaling en advertentie kan controleren.|Valuta|Landnummer",
+  "ar": "أيام|طلبك|سينتظر مراجعة بشرية.|دفع رسوم الإعلان|تراجع DIGIYLYFE إثبات الدفع قبل النشر.|اختر مدة الإعلان. بعد الدفع، أرسل الإثبات لتراجع DIGIYLYFE الدفع والإعلان.|العملة|رمز الاتصال",
+  "wo": "fan|Sa laaj|Dina xaar nit ku koy seet.|Fey yégle bi|DIGIYLYFE day seet firnde pey bi bala muy siiwal.|Tànnal diiru yégle bi. Boo feyee, yónneel firnde bi ngir DIGIYLYFE seet pey bi ak yégle bi.|Xaalisu réew mi|Koodu telefon",
+  "zh": "天|您的申请|申请将等待人工审核。|发布费用|DIGIYLYFE 会在发布前核验付款凭证。|请选择发布时长。付款后提交凭证，以便 DIGIYLYFE 审核付款及发布内容。|币种|国际区号"
+};
+  const packCopy=packLanguages[lang].split('|');
+  if(lang!=='fr')document.querySelectorAll('[data-pack-copy]').forEach(el=>{
+    const i=Number(el.dataset.packCopy);
+    el.textContent=(i===3?'💳 ':'')+packCopy[i];
+  });
+  const packDuration=days=>lang==='zh'?days+packCopy[0]:days+' '+packCopy[0];
   let country=(Q.get('country')||'sn').toUpperCase();if(!MARKETS[country])country='SN';
   let selectedPack=(Q.get('pack')||'A').toUpperCase();if(!['A','B','C'].includes(selectedPack))selectedPack='A';
   const packInput=document.getElementById('pack'),countryInput=document.getElementById('countryId'),packSummary=document.getElementById('packSummary'),finalSummary=document.getElementById('finalSummary');
@@ -180,9 +198,9 @@ button{background:var(--green);color:#fff;margin-top:14px}.cta{background:var(--
   function renderCountry(){
     const m=current();countryInput.value=country;document.getElementById('countryLabel').value=m.label;
     document.querySelectorAll('[data-country]').forEach(b=>b.classList.toggle('active',b.dataset.country===country));
-    document.getElementById('marketMeta').textContent=`${m.label} · devise ${m.currency} · indicatif ${m.calling} · tarifs appliqués automatiquement.`;
+    document.getElementById('marketMeta').textContent=lang==='fr'?`${m.label} · devise ${m.currency} · indicatif ${m.calling} · tarifs appliqués automatiquement.`:`${m.label} · ${packCopy[6]} ${m.currency} · ${packCopy[7]} ${m.calling}`;
     document.getElementById('proText').textContent=`${publishCopy[5]} · ${money(m.pro,m.currency)} ${publishCopy[7]}.`;
-    document.getElementById('packs').innerHTML=Object.entries(m.packs).map(([k,v])=>`<div class="pack ${k===selectedPack?'active':''}" data-pack="${k}">${money(v.price,m.currency)}<small>${v.days} jours</small></div>`).join('');
+    document.getElementById('packs').innerHTML=Object.entries(m.packs).map(([k,v])=>`<div class="pack ${k===selectedPack?'active':''}" data-pack="${k}">${money(v.price,m.currency)}<small>${packDuration(v.days)}</small></div>`).join('');
     document.querySelectorAll('.pack').forEach(el=>el.addEventListener('click',()=>{selectedPack=el.dataset.pack;renderPack()}));
     document.getElementById('payLine').innerHTML=m.pay.map(x=>`<div class="payitem"><b>${x[0]}</b><br>${x[1]}<br>${x[2]}</div>`).join('');
     document.getElementById('paymentMethod').value=m.method;
@@ -195,8 +213,8 @@ button{background:var(--green);color:#fff;margin-top:14px}.cta{background:var(--
     const m=current(),x=m.packs[selectedPack]||m.packs.A;packInput.value=selectedPack;
     document.querySelectorAll('.pack').forEach(el=>el.classList.toggle('active',el.dataset.pack===selectedPack));
     const price=money(x.price,m.currency);
-    packSummary.textContent=`PACK ${selectedPack} · ${price} · ${x.days} jours`;
-    finalSummary.textContent=`Votre demande : ${m.label} · PACK ${selectedPack} · ${price} · ${x.days} jours. Elle entrera en attente de contrôle humain.`;
+    packSummary.textContent=`PACK ${selectedPack} · ${price} · ${packDuration(x.days)}`;
+    finalSummary.textContent=`${packCopy[1]} : ${m.label} · PACK ${selectedPack} · ${price} · ${packDuration(x.days)}. ${packCopy[2]}`;
     updateUrl();
   }
   document.querySelectorAll('[data-country]').forEach(b=>b.addEventListener('click',()=>{country=b.dataset.country;selectedPack='A';renderCountry()}));
