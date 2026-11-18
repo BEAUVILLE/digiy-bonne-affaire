@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Salon by Sly · Bonne Affaire</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f9f2e4;color:#173b29;font:1rem system-ui,sans-serif}main{max-width:640px;margin:auto;padding:16px}
+nav,.actions{display:flex;flex-wrap:wrap;gap:8px;margin-block:12px}a{color:#164331}nav a,.actions a{border:1px solid #957124;border-radius:10px;padding:10px;text-decoration:none}[aria-current=true]{background:#164331;color:#fff}
+article{padding:16px;border:1px solid #af893e;border-radius:16px;background:#fffaf0}
+.photo{width:min(100%,320px);aspect-ratio:1;margin:auto;border-radius:12px;background:url("./salon_by_sly_affiche_QR_corrige.png") 100% 3% / 278.67% no-repeat}
+.qr{width:180px;aspect-ratio:1;margin:12px auto;background:url("./salon_by_sly_affiche_QR_corrige.png") 91.4% 86.72% / 551.3% no-repeat}figcaption{text-align:center}
+</style></head><body><main>
+<nav aria-label="Langue / Language"><a href="?lang=fr" data-lang="fr">FR</a><a href="?lang=en" data-lang="en">EN</a><a href="?lang=es" data-lang="es">ES</a><a href="?lang=pt" data-lang="pt">PT</a><a href="?lang=it" data-lang="it">IT</a><a href="?lang=de" data-lang="de">DE</a><a href="?lang=nl" data-lang="nl">NL</a><a href="?lang=ar" data-lang="ar">AR</a><a href="?lang=wo" data-lang="wo">WO</a><a href="?lang=zh" data-lang="zh">ZH</a></nav>
+<article><div class="photo" aria-hidden="true"></div><h1>Salon by Sly</h1>
+<h2 data-copy="0">Salon de coiffure</h2>
+<ul><li data-copy="1">Coupes</li><li data-copy="2">Brushings</li><li data-copy="3">Soins capillaires</li><li data-copy="4">Colorations et mèches</li></ul>
+<p>Saly · <span data-copy="5">Route de Ngaparou</span></p>
+<div class="actions"><a data-copy="6" href="tel:+221783064180">Appeler</a><a data-copy="7" href="./salon_by_sly_affiche_QR_corrige.png" target="_blank" rel="noopener">Affiche originale</a></div>
+<figure><div class="qr" role="img" aria-label="QR Google Maps"></div><figcaption data-copy="8">Scannez pour ouvrir Google Maps</figcaption></figure>
+</article><p><a id="back" href="./" data-copy="9">Retour à Bonne Affaire</a></p></main>
+<script>
+(() => {
+ const translations={
+  "fr": "Salon de coiffure|Coupes|Brushings|Soins capillaires|Colorations et mèches|Route de Ngaparou|Appeler|Affiche originale|Scannez pour ouvrir Google Maps|Retour à Bonne Affaire",
+  "en": "Hair salon|Haircuts|Blow-dries|Hair treatments|Colour and highlights|Ngaparou Road|Call|Original poster|Scan to open Google Maps|Back to Bonne Affaire",
+  "es": "Peluquería|Cortes|Secado con cepillo|Tratamientos capilares|Coloración y mechas|Carretera de Ngaparou|Llamar|Cartel original|Escanea para abrir Google Maps|Volver a Bonne Affaire",
+  "pt": "Cabeleireiro|Cortes|Escova|Tratamentos capilares|Coloração e madeixas|Estrada de Ngaparou|Ligar|Cartaz original|Leia o QR para abrir o Google Maps|Voltar a Bonne Affaire",
+  "it": "Parrucchiere|Tagli|Messa in piega|Trattamenti per capelli|Colorazione e mèches|Strada per Ngaparou|Chiama|Locandina originale|Scansiona per aprire Google Maps|Torna a Bonne Affaire",
+  "de": "Friseursalon|Haarschnitte|Föhnfrisuren|Haarpflege|Färben und Strähnen|Straße nach Ngaparou|Anrufen|Originalplakat|Scannen, um Google Maps zu öffnen|Zurück zu Bonne Affaire",
+  "nl": "Kapsalon|Knippen|Föhnen|Haarbehandelingen|Kleuren en highlights|Weg naar Ngaparou|Bellen|Originele poster|Scan om Google Maps te openen|Terug naar Bonne Affaire",
+  "ar": "صالون تصفيف الشعر|قص الشعر|تصفيف بالمجفف|علاجات الشعر|صبغات وخصل|طريق نغابارو|اتصال|الملصق الأصلي|امسح الرمز لفتح خرائط Google|العودة إلى Bonne Affaire",
+  "wo": "Salon bu ñuy def kawar|Dagge kawar|Ñor kawar ak bross|Toppatoo kawar|Melo ak mèches|Yoonu Ngaparou|Woo|Afis bu njëkk bi|Eskane QR bi ngir ubbi Google Maps|Dellu ci Bonne Affaire",
+  "zh": "美发沙龙|剪发|吹发造型|头发护理|染发与挑染|恩加帕鲁路|拨打电话|原始海报|扫码打开 Google 地图|返回 Bonne Affaire"
+};
+ const selected=new URLSearchParams(location.search).get('lang');
+ const lang=Object.hasOwn(translations,selected)?selected:'fr';
+ document.documentElement.lang=lang;
+ document.documentElement.dir=lang==='ar'?'rtl':'ltr';
+ document.querySelector('[data-lang="'+lang+'"]').setAttribute('aria-current','true');
+ const text=translations[lang].split('|');
+ document.querySelectorAll('[data-copy]').forEach(el=>{el.textContent=text[Number(el.dataset.copy)]});
+ document.getElementById('back').href='./?lang='+lang;
+})();
+</script></body></html>
