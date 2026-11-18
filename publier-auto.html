@@ -95,10 +95,10 @@ button{background:var(--green);color:#fff;margin-top:14px}.cta{background:var(--
   <label><span data-form-copy="11">Référence / nom du paiement</span><input name="payment_reference" maxlength="120" placeholder="Optionnel : nom affiché, référence Wave…"></label>
 
   <label><span data-form-copy="12">Photo de l’annonce</span><input name="photo" type="file" accept="image/jpeg,image/png,image/webp"></label>
-  <div class="file-help">Optionnelle · JPG, PNG ou WEBP · 5 Mo maximum.</div>
+  <div class="file-help" data-pay-copy="0">Optionnelle · JPG, PNG ou WEBP · 5 Mo maximum.</div>
 
   <label><span data-form-copy="13">Preuve de paiement</span> <span class="required">*</span><input name="payment_proof" type="file" accept="image/jpeg,image/png,image/webp,application/pdf" required></label>
-  <div class="file-help">Obligatoire · capture du règlement ou PDF · 5 Mo maximum. La preuve reste privée et n’est visible que dans le cockpit DIGIYLYFE.</div>
+  <div class="file-help" data-pay-copy="1">Obligatoire · capture du règlement ou PDF · 5 Mo maximum. La preuve reste privée et n’est visible que dans le cockpit DIGIYLYFE.</div>
 
   <label style="display:none">Ne pas remplir<input name="website" autocomplete="off" tabindex="-1"></label>
 
@@ -188,6 +188,21 @@ button{background:var(--green);color:#fff;margin-top:14px}.cta{background:var(--
     el.textContent=(i===3?'💳 ':'')+packCopy[i];
   });
   const packDuration=days=>lang==='zh'?days+packCopy[0]:days+' '+packCopy[0];
+  const paymentLanguages={
+  "en": "Optional · JPG, PNG or WEBP · up to 5 MB.|Required · payment screenshot or PDF · up to 5 MB. The proof is private and only visible in the DIGIYLYFE dashboard.|💶 Price shown in euros|Use the pack amount shown above|A person will review the proof of payment",
+  "es": "Opcional · JPG, PNG o WEBP · máximo 5 MB.|Obligatorio · captura del pago o PDF · máximo 5 MB. El comprobante es privado y solo se ve en el panel de DIGIYLYFE.|💶 Precio en euros|Usa el importe del paquete indicado arriba|Una persona revisará el comprobante",
+  "pt": "Opcional · JPG, PNG ou WEBP · até 5 MB.|Obrigatório · captura do pagamento ou PDF · até 5 MB. O comprovativo é privado e só é visível no painel DIGIYLYFE.|💶 Preço em euros|Use o valor do pacote indicado acima|Uma pessoa irá verificar o comprovativo",
+  "it": "Facoltativa · JPG, PNG o WEBP · massimo 5 MB.|Obbligatoria · schermata del pagamento o PDF · massimo 5 MB. La ricevuta è privata e visibile solo nel pannello DIGIYLYFE.|💶 Prezzo in euro|Usa l’importo del pacchetto indicato sopra|Una persona verificherà la ricevuta",
+  "de": "Optional · JPG, PNG oder WEBP · maximal 5 MB.|Erforderlich · Zahlungs-Screenshot oder PDF · maximal 5 MB. Der Beleg ist privat und nur im DIGIYLYFE-Dashboard sichtbar.|💶 Preis in Euro|Verwende den oben angezeigten Paketbetrag|Der Zahlungsbeleg wird persönlich geprüft",
+  "nl": "Optioneel · JPG, PNG of WEBP · maximaal 5 MB.|Verplicht · schermafbeelding van de betaling of pdf · maximaal 5 MB. Het bewijs is privé en alleen zichtbaar in het DIGIYLYFE-dashboard.|💶 Prijs in euro|Gebruik het hierboven weergegeven pakketbedrag|Een persoon controleert het betaalbewijs",
+  "ar": "اختياري · JPG أو PNG أو WEBP · حتى 5 ميغابايت.|إلزامي · لقطة للدفع أو PDF · حتى 5 ميغابايت. إثبات الدفع خاص ولا يظهر إلا في لوحة DIGIYLYFE.|💶 السعر باليورو|استخدم مبلغ الباقة المعروض أعلاه|سيراجع شخص إثبات الدفع",
+  "wo": "Boo bëggee · JPG, PNG walla WEBP · ba ci 5 Mo.|War na · nataalu pey bi walla PDF · ba ci 5 Mo. Firnde bi sutura la te ci tableau DIGIYLYFE rekk lañu koy gis.|💶 Njëg bi ci euro|Jëfandikool njëgu pakk bi ñu wone ci kaw|Nit dina seet firnde pey bi",
+  "zh": "选填 · JPG、PNG 或 WEBP · 最大 5 MB。|必填 · 付款截图或 PDF · 最大 5 MB。凭证为私密资料，仅在 DIGIYLYFE 管理后台可见。|💶 价格以欧元显示|请使用上方显示的套餐金额|付款凭证将由人工核验"
+};
+  const paymentCopy=paymentLanguages[lang]?.split('|');
+  if(paymentCopy)document.querySelectorAll('[data-pay-copy]').forEach(el=>{
+    el.textContent=paymentCopy[Number(el.dataset.payCopy)];
+  });
   let country=(Q.get('country')||'sn').toUpperCase();if(!MARKETS[country])country='SN';
   let selectedPack=(Q.get('pack')||'A').toUpperCase();if(!['A','B','C'].includes(selectedPack))selectedPack='A';
   const packInput=document.getElementById('pack'),countryInput=document.getElementById('countryId'),packSummary=document.getElementById('packSummary'),finalSummary=document.getElementById('finalSummary');
@@ -202,7 +217,10 @@ button{background:var(--green);color:#fff;margin-top:14px}.cta{background:var(--
     document.getElementById('proText').textContent=`${publishCopy[5]} · ${money(m.pro,m.currency)} ${publishCopy[7]}.`;
     document.getElementById('packs').innerHTML=Object.entries(m.packs).map(([k,v])=>`<div class="pack ${k===selectedPack?'active':''}" data-pack="${k}">${money(v.price,m.currency)}<small>${packDuration(v.days)}</small></div>`).join('');
     document.querySelectorAll('.pack').forEach(el=>el.addEventListener('click',()=>{selectedPack=el.dataset.pack;renderPack()}));
-    document.getElementById('payLine').innerHTML=m.pay.map(x=>`<div class="payitem"><b>${x[0]}</b><br>${x[1]}<br>${x[2]}</div>`).join('');
+    document.getElementById('payLine').innerHTML=m.pay.map((original,index)=>{
+      const x=country==='FR'&&index===1&&paymentCopy?paymentCopy.slice(2):original;
+      return `<div class="payitem"><b>${x[0]}</b><br>${x[1]}<br>${x[2]}</div>`;
+    }).join('');
     document.getElementById('paymentMethod').value=m.method;
     document.getElementById('itemPrice').placeholder=m.item;document.getElementById('zone').placeholder=m.zone;document.getElementById('city').placeholder=m.city;
     document.getElementById('whatsapp').placeholder=m.calling+'…';document.getElementById('telephone').placeholder=m.calling+'…';
