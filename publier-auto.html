@@ -60,51 +60,51 @@ button{background:var(--green);color:#fff;margin-top:14px}.cta{background:var(--
 </section>
 
 <form class="card" id="form">
-  <strong>PRÉPARER MON ANNONCE + MA PREUVE</strong>
+  <strong data-form-copy="0">PRÉPARER MON ANNONCE + MA PREUVE</strong>
   <input type="hidden" id="pack" name="pack" value="A">
   <input type="hidden" id="countryId" name="country_id" value="SN">
 
   <div class="grid two">
-    <label>Titre <span class="required">*</span><input name="titre" maxlength="120" required placeholder="Ex. Toyota Corolla 2018"></label>
-    <label>Catégorie <span class="required">*</span><select name="categorie" required>
-      <option>Occasion</option><option>Service</option><option>Immobilier</option><option>Véhicule</option><option>Pro</option><option>Emploi / mission</option>
+    <label><span data-form-copy="1">Titre</span> <span class="required">*</span><input name="titre" maxlength="120" required placeholder="Ex. Toyota Corolla 2018"></label>
+    <label><span data-form-copy="2">Catégorie</span> <span class="required">*</span><select name="categorie" required>
+      <option value="Occasion" data-form-category="0">Occasion</option><option value="Service" data-form-category="1">Service</option><option value="Immobilier" data-form-category="2">Immobilier</option><option value="Véhicule" data-form-category="3">Véhicule</option><option value="Pro" data-form-category="4">Pro</option><option value="Emploi / mission" data-form-category="5">Emploi / mission</option>
     </select></label>
   </div>
 
-  <label>Description<textarea name="description" maxlength="1500" placeholder="État réel, caractéristiques, conditions utiles…"></textarea></label>
+  <label><span data-form-copy="3">Description</span><textarea name="description" maxlength="1500" placeholder="État réel, caractéristiques, conditions utiles…"></textarea></label>
   <div class="grid two">
-    <label>Prix de l’objet<input name="prix_affiche" maxlength="80" id="itemPrice" placeholder="Ex. 4 500 000 FCFA"></label>
-    <label>Zone<input name="zone" maxlength="120" id="zone" placeholder="Petite Côte, Dakar…"></label>
+    <label><span data-form-copy="4">Prix de l’objet</span><input name="prix_affiche" maxlength="80" id="itemPrice" placeholder="Ex. 4 500 000 FCFA"></label>
+    <label><span data-form-copy="5">Zone</span><input name="zone" maxlength="120" id="zone" placeholder="Petite Côte, Dakar…"></label>
   </div>
 
   <div class="grid two">
-    <label>Ville <span class="required">*</span><input name="ville" maxlength="100" required id="city" placeholder="Saly"></label>
-    <label>Pays <input id="countryLabel" value="Sénégal" readonly></label>
+    <label><span data-form-copy="6">Ville</span> <span class="required">*</span><input name="ville" maxlength="100" required id="city" placeholder="Saly"></label>
+    <label><span data-form-copy="7">Pays</span> <input id="countryLabel" value="Sénégal" readonly></label>
   </div>
 
   <div class="grid two">
-    <label>Nom du vendeur <span class="required">*</span><input name="contact_nom" maxlength="120" required></label>
-    <label>Méthode de paiement<select name="payment_method" id="paymentMethod"><option value="Wave">Wave</option><option value="Sendwave">Sendwave → Wave</option><option value="Autre">Autre</option></select></label>
+    <label><span data-form-copy="8">Nom du vendeur</span> <span class="required">*</span><input name="contact_nom" maxlength="120" required></label>
+    <label><span data-form-copy="9">Méthode de paiement</span><select name="payment_method" id="paymentMethod"><option value="Wave">Wave</option><option value="Sendwave">Sendwave → Wave</option><option value="Autre" data-form-category="6">Autre</option></select></label>
   </div>
 
   <div class="grid two">
     <label>WhatsApp<input name="whatsapp" inputmode="tel" id="whatsapp" placeholder="+221…"></label>
-    <label>Téléphone<input name="telephone" inputmode="tel" id="telephone" placeholder="+221…"></label>
+    <label><span data-form-copy="10">Téléphone</span><input name="telephone" inputmode="tel" id="telephone" placeholder="+221…"></label>
   </div>
 
-  <label>Référence / nom du paiement<input name="payment_reference" maxlength="120" placeholder="Optionnel : nom affiché, référence Wave…"></label>
+  <label><span data-form-copy="11">Référence / nom du paiement</span><input name="payment_reference" maxlength="120" placeholder="Optionnel : nom affiché, référence Wave…"></label>
 
-  <label>Photo de l’annonce<input name="photo" type="file" accept="image/jpeg,image/png,image/webp"></label>
+  <label><span data-form-copy="12">Photo de l’annonce</span><input name="photo" type="file" accept="image/jpeg,image/png,image/webp"></label>
   <div class="file-help">Optionnelle · JPG, PNG ou WEBP · 5 Mo maximum.</div>
 
-  <label>Preuve de paiement <span class="required">*</span><input name="payment_proof" type="file" accept="image/jpeg,image/png,image/webp,application/pdf" required></label>
+  <label><span data-form-copy="13">Preuve de paiement</span> <span class="required">*</span><input name="payment_proof" type="file" accept="image/jpeg,image/png,image/webp,application/pdf" required></label>
   <div class="file-help">Obligatoire · capture du règlement ou PDF · 5 Mo maximum. La preuve reste privée et n’est visible que dans le cockpit DIGIYLYFE.</div>
 
   <label style="display:none">Ne pas remplir<input name="website" autocomplete="off" tabindex="-1"></label>
 
   <div class="summary" id="finalSummary"></div>
-  <p class="note">L’envoi ne publie jamais immédiatement. DIGIYLYFE contrôle d’abord la preuve de paiement, puis l’annonce. La vente reste ensuite directe entre vendeur et acheteur.</p>
-  <button type="submit" id="submit">ENVOYER POUR CONTRÔLE</button>
+  <p class="note" data-form-copy="20">L’envoi ne publie jamais immédiatement. DIGIYLYFE contrôle d’abord la preuve de paiement, puis l’annonce. La vente reste ensuite directe entre vendeur et acheteur.</p>
+  <button type="submit" id="submit" data-form-copy="14">ENVOYER POUR CONTRÔLE</button>
   <div class="ok" id="ok">✅ Demande reçue. Paiement à contrôler par DIGIYLYFE. Votre annonce n’est pas encore publiée.</div>
   <div class="err" id="err"></div>
 </form>
@@ -137,6 +137,39 @@ button{background:var(--green);color:#fff;margin-top:14px}.cta{background:var(--
   if(lang!=='fr')document.querySelectorAll('[data-publish-copy]').forEach(el=>{
     el.textContent=publishCopy[Number(el.dataset.publishCopy)];
   });
+  const formLanguages={
+  "en": "Prepare listing and proof|Title|Category|Description|Item price|Area|City|Country|Seller name|Payment method|Phone|Payment reference or name|Listing photo|Payment proof|Send for review|Add a WhatsApp number or phone number.|Attach proof of payment.|Sending…|Submission failed. Check the fields and connection, then try again.|Request received. DIGIYLYFE will review the payment.|Your listing will be published after review of the payment proof and listing.",
+  "es": "Preparar anuncio y comprobante|Título|Categoría|Descripción|Precio del artículo|Zona|Ciudad|País|Nombre del vendedor|Método de pago|Teléfono|Referencia o nombre del pago|Foto del anuncio|Comprobante de pago|Enviar para revisión|Añade un número de WhatsApp o teléfono.|Adjunta el comprobante de pago.|Enviando…|No se pudo enviar. Revisa los campos y la conexión e inténtalo otra vez.|Solicitud recibida. DIGIYLYFE revisará el pago.|El anuncio se publicará tras revisar el comprobante de pago y el anuncio.",
+  "pt": "Preparar anúncio e comprovativo|Título|Categoria|Descrição|Preço do artigo|Zona|Cidade|País|Nome do vendedor|Método de pagamento|Telefone|Referência ou nome do pagamento|Foto do anúncio|Comprovativo de pagamento|Enviar para revisão|Adicione um número de WhatsApp ou telefone.|Anexe o comprovativo de pagamento.|A enviar…|Falha no envio. Verifique os campos e a ligação e tente novamente.|Pedido recebido. A DIGIYLYFE verificará o pagamento.|O anúncio será publicado após a revisão do comprovativo e do anúncio.",
+  "it": "Prepara annuncio e ricevuta|Titolo|Categoria|Descrizione|Prezzo dell’articolo|Zona|Città|Paese|Nome del venditore|Metodo di pagamento|Telefono|Riferimento o nome del pagamento|Foto dell’annuncio|Ricevuta di pagamento|Invia per la verifica|Aggiungi un numero WhatsApp o di telefono.|Allega la ricevuta di pagamento.|Invio…|Invio non riuscito. Controlla i campi e la connessione e riprova.|Richiesta ricevuta. DIGIYLYFE verificherà il pagamento.|L’annuncio sarà pubblicato dopo la verifica della ricevuta e dell’annuncio.",
+  "de": "Anzeige und Beleg vorbereiten|Titel|Kategorie|Beschreibung|Artikelpreis|Gegend|Stadt|Land|Name des Verkäufers|Zahlungsmethode|Telefon|Zahlungsreferenz oder Name|Anzeigenfoto|Zahlungsbeleg|Zur Prüfung senden|Gib eine WhatsApp- oder Telefonnummer an.|Füge den Zahlungsbeleg hinzu.|Wird gesendet…|Senden fehlgeschlagen. Prüfe die Felder und die Verbindung und versuche es erneut.|Anfrage eingegangen. DIGIYLYFE prüft die Zahlung.|Die Anzeige wird nach Prüfung des Zahlungsbelegs und der Anzeige veröffentlicht.",
+  "nl": "Advertentie en betaalbewijs voorbereiden|Titel|Categorie|Beschrijving|Artikelprijs|Regio|Plaats|Land|Naam verkoper|Betaalmethode|Telefoon|Betalingskenmerk of naam|Advertentiefoto|Betaalbewijs|Stuur ter controle|Voeg een WhatsApp- of telefoonnummer toe.|Voeg het betaalbewijs toe.|Verzenden…|Verzenden mislukt. Controleer de velden en je verbinding en probeer opnieuw.|Aanvraag ontvangen. DIGIYLYFE controleert de betaling.|De advertentie wordt gepubliceerd na controle van het betaalbewijs en de advertentie.",
+  "ar": "إعداد الإعلان وإثبات الدفع|العنوان|الفئة|الوصف|سعر السلعة|المنطقة|المدينة|البلد|اسم البائع|طريقة الدفع|الهاتف|مرجع الدفع أو الاسم|صورة الإعلان|إثبات الدفع|إرسال للمراجعة|أضف رقم واتساب أو هاتف.|أرفق إثبات الدفع.|جارٍ الإرسال…|تعذّر الإرسال. تحقق من الحقول والاتصال وحاول مرة أخرى.|تم استلام الطلب. ستراجع DIGIYLYFE الدفع.|يُنشر الإعلان بعد مراجعة إثبات الدفع والإعلان.",
+  "wo": "Waajal yégle bi ak firnde bi|Boppu yégle bi|Xeet|Leeral|Njëgu yëf bi|Gox|Dëkk|Réew|Turu jaaykat bi|Yoonu fey|Telefon|Référence walla turu pey bi|Nataalu yégle bi|Firnde pey bi|Yónnee ngir ñu seet|Dugal nimero WhatsApp walla telefon.|Teg firnde pey bi.|Ñu ngi yónnee…|Yónnee bi antuwul. Seetal li nga dugal ak koneksiyoŋ bi te jéemaat.|Jot nañu sa laaj. DIGIYLYFE dina seet pey bi.|Dañuy seet firnde pey bi ak yégle bi bala ñu koy siiwal.",
+  "zh": "准备发布信息和付款凭证|标题|类别|描述|商品价格|区域|城市|国家|卖家姓名|付款方式|电话|付款参考号或姓名|信息图片|付款凭证|提交审核|请输入 WhatsApp 号码或电话号码。|请上传付款凭证。|正在提交…|提交失败。请检查填写内容及网络连接，然后重试。|已收到申请。DIGIYLYFE 将核验付款。|付款凭证和发布信息均需审核后才能发布。"
+};
+  const formCategories={
+  "en": "Used goods|Service|Property|Vehicle|Professional|Job / assignment|Other",
+  "es": "Segunda mano|Servicio|Inmobiliario|Vehículo|Profesional|Empleo / encargo|Otro",
+  "pt": "Segunda mão|Serviço|Imobiliário|Veículo|Profissional|Emprego / tarefa|Outro",
+  "it": "Usato|Servizio|Immobili|Veicolo|Professionista|Lavoro / incarico|Altro",
+  "de": "Gebrauchtwaren|Dienstleistung|Immobilien|Fahrzeug|Gewerbe|Job / Auftrag|Andere",
+  "nl": "Tweedehands|Dienst|Vastgoed|Voertuig|Zakelijk|Baan / opdracht|Anders",
+  "ar": "مستعمل|خدمة|عقار|مركبة|مهني|وظيفة / مهمة|أخرى",
+  "wo": "Yëf yu ñu jëfandikoo|Sarwiis|Kër|Motoor|Profesioneel|Liggéey / yónnee|Beneen",
+  "zh": "二手商品|服务|房产|车辆|专业服务|工作 / 任务|其他"
+};
+  const localizedForm=formLanguages[lang]?.split('|');
+  if(localizedForm){
+    document.querySelectorAll('[data-form-copy]').forEach(el=>{
+      el.textContent=localizedForm[Number(el.dataset.formCopy)];
+    });
+    const names=formCategories[lang].split('|');
+    document.querySelectorAll('[data-form-category]').forEach(el=>{
+      el.textContent=names[Number(el.dataset.formCategory)];
+    });
+  }
+  const formCopy=(i,french)=>localizedForm?.[i]??french;
   let country=(Q.get('country')||'sn').toUpperCase();if(!MARKETS[country])country='SN';
   let selectedPack=(Q.get('pack')||'A').toUpperCase();if(!['A','B','C'].includes(selectedPack))selectedPack='A';
   const packInput=document.getElementById('pack'),countryInput=document.getElementById('countryId'),packSummary=document.getElementById('packSummary'),finalSummary=document.getElementById('finalSummary');
@@ -174,21 +207,21 @@ button{background:var(--green);color:#fff;margin-top:14px}.cta{background:var(--
     ok.style.display='none';err.style.display='none';
     const fd=new FormData(form);fd.set('pack',selectedPack);fd.set('country_id',country);
     const wa=String(fd.get('whatsapp')||'').trim(),tel=String(fd.get('telephone')||'').trim();
-    if(!wa&&!tel){err.textContent='Ajoutez un WhatsApp ou un téléphone.';err.style.display='block';return}
+    if(!wa&&!tel){err.textContent=formCopy(15,'Ajoutez un WhatsApp ou un téléphone.');err.style.display='block';return}
     const proof=fd.get('payment_proof');
-    if(!(proof instanceof File)||!proof.size){err.textContent='Ajoutez la preuve de paiement.';err.style.display='block';return}
-    btn.disabled=true;btn.textContent='ENVOI…';
+    if(!(proof instanceof File)||!proof.size){err.textContent=formCopy(16,'Ajoutez la preuve de paiement.');err.style.display='block';return}
+    btn.disabled=true;btn.textContent=formCopy(17,'ENVOI…');
     try{
       const res=await fetch(API,{method:'POST',body:fd,headers:{'Accept':'application/json'}});
       let data=null;try{data=await res.json()}catch{}
       if(!res.ok||!data?.ok)throw new Error(data?.error||`HTTP ${res.status}`);
-      ok.textContent=`✅ Demande reçue · ${data.country_id||country} · PACK ${data.pack||selectedPack} · ${money(Number(data.amount||0),data.currency_code||current().currency)}. Paiement à contrôler par DIGIYLYFE.`;
+      ok.textContent=localizedForm?`✅ ${localizedForm[19]} · ${data.country_id||country} · PACK ${data.pack||selectedPack} · ${money(Number(data.amount||0),data.currency_code||current().currency)}`:`✅ Demande reçue · ${data.country_id||country} · PACK ${data.pack||selectedPack} · ${money(Number(data.amount||0),data.currency_code||current().currency)}. Paiement à contrôler par DIGIYLYFE.`;
       ok.style.display='block';
       form.reset();selectedPack='A';renderCountry();window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'});
     }catch(ex){
-      err.textContent='Envoi impossible pour le moment. Vérifiez les champs et la connexion puis réessayez.';
+      err.textContent=formCopy(18,'Envoi impossible pour le moment. Vérifiez les champs et la connexion puis réessayez.');
       err.style.display='block';console.error(ex);
-    }finally{btn.disabled=false;btn.textContent='ENVOYER POUR CONTRÔLE'}
+    }finally{btn.disabled=false;btn.textContent=formCopy(14,'ENVOYER POUR CONTRÔLE')}
   });
   renderCountry();
 })();
