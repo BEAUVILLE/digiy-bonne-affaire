@@ -23,12 +23,12 @@ button{background:var(--green);color:#fff;margin-top:14px}.cta{background:var(--
 </style>
 </head>
 <body>
-<header><div class="wrap"><h1>🏷️ DIGIY BONNE AFFAIRE</h1><div class="sub">Publier · règlement contrôlé humainement · 0 % commission DIGIY sur la transaction</div></div></header>
+<header><div class="wrap"><h1>🏷️ DIGIY BONNE AFFAIRE</h1><div class="sub" data-publish-copy="0">Publier · règlement contrôlé humainement · 0 % commission DIGIY sur la transaction</div></div></header>
 <main>
 <a data-digiy-return-home="1" href="https://digiylyfe.com/" aria-label="Retour DIGIYLYFE.COM" style="width:100%;min-height:52px;display:flex;align-items:center;justify-content:center;margin:0 0 14px;padding:11px 18px;border:2px solid #d8ad46;border-radius:999px;background:#073f32;color:#fff;text-decoration:none;font:950 15px/1.2 system-ui,-apple-system,Segoe UI,sans-serif;letter-spacing:.02em;box-shadow:0 8px 20px rgba(7,63,50,.20);box-sizing:border-box">← RETOUR DIGIYLYFE.COM</a>
 
 <section class="card">
-  <strong>CHOISISSEZ VOTRE PAYS</strong>
+  <strong data-publish-copy="1">CHOISISSEZ VOTRE PAYS</strong>
   <div class="countrybar">
     <button type="button" class="country active" data-country="SN">🇸🇳 Sénégal · FCFA</button>
     <button type="button" class="country" data-country="FR">🇫🇷 France · €</button>
@@ -37,17 +37,17 @@ button{background:var(--green);color:#fff;margin-top:14px}.cta{background:var(--
 </section>
 
 <section class="card">
-  <strong>CHOISISSEZ VOTRE PORTE</strong>
+  <strong data-publish-copy="2">CHOISISSEZ VOTRE PORTE</strong>
   <div class="doors">
     <div class="door">
-      <h2>👤 PARTICULIER · VENTE PONCTUELLE</h2>
+      <h2 data-publish-copy="3">👤 PARTICULIER · VENTE PONCTUELLE</h2>
       <p>Choisissez la durée de votre annonce. Après règlement, envoyez votre preuve : DIGIYLYFE contrôle le paiement puis contrôle l’annonce avant publication.</p>
       <div class="packs" id="packs"></div>
     </div>
     <div class="door">
-      <h2>🚗 VENDEUR / LOUEUR PRO</h2>
+      <h2 data-publish-copy="4">🚗 VENDEUR / LOUEUR PRO</h2>
       <p id="proText">Activité régulière : ADHÉRENT DIGIYLYFE.</p>
-      <a class="cta" id="proLink" href="https://digiylyfe.com/tarifs-adherents-1.html?lang=fr" target="_blank" rel="noopener">VOIR L’ADHÉSION PRO</a>
+      <a class="cta" id="proLink" data-publish-copy="6" href="https://digiylyfe.com/tarifs-adherents-1.html?lang=fr" target="_blank" rel="noopener">VOIR L’ADHÉSION PRO</a>
     </div>
   </div>
 
@@ -117,6 +117,26 @@ button{background:var(--green);color:#fff;margin-top:14px}.cta{background:var(--
     FR:{label:'France',currency:'EUR',calling:'+33',packs:{A:{price:9,days:7},B:{price:15,days:14},C:{price:25,days:30}},pro:45,city:'Sarlat-la-Canéda',zone:'Périgord · Vallée de la Dordogne…',item:'Ex. 850 €',method:'Sendwave',pay:[['🇫🇷 France / Europe · Sendwave','Jean Baptiste Beauville','→ Wave Sénégal · +221 77 134 28 89'],['💶 Tarif affiché en euro','Le montant du pack est celui affiché ci-dessus','La preuve sera contrôlée humainement']]}
   };
   const Q=new URLSearchParams(location.search);
+  const publishLanguages={
+  "fr": "Publier · règlement contrôlé humainement · 0 % commission DIGIY sur la transaction|Choisissez votre pays|Choisissez votre parcours|Particulier · vente ponctuelle|Vendeur / loueur pro|Activité régulière · adhésion DIGIYLYFE|Voir l’adhésion pro|par mois",
+  "en": "Publish · Payment reviewed by a person · 0% DIGIY commission on the transaction|Choose your country|Choose your path|Individual · Occasional sale|Professional seller / rental provider|Regular business · DIGIYLYFE membership|View professional membership|per month",
+  "es": "Publicar · Pago revisado por una persona · 0 % de comisión DIGIY sobre la transacción|Elige tu país|Elige tu opción|Particular · Venta puntual|Vendedor profesional / alquiler|Actividad habitual · Adhesión a DIGIYLYFE|Ver adhesión profesional|al mes",
+  "pt": "Publicar · Pagamento verificado por uma pessoa · 0% de comissão DIGIY na transação|Escolha o país|Escolha a opção|Particular · Venda ocasional|Vendedor profissional / aluguer|Atividade regular · Adesão DIGIYLYFE|Ver adesão profissional|por mês",
+  "it": "Pubblica · Pagamento verificato da una persona · 0% commissione DIGIY sulla transazione|Scegli il paese|Scegli l’opzione|Privato · Vendita occasionale|Venditore / noleggiatore professionale|Attività regolare · Adesione DIGIYLYFE|Vedi l’adesione professionale|al mese",
+  "de": "Veröffentlichen · Zahlung wird persönlich geprüft · 0 % DIGIY-Provision auf die Transaktion|Land auswählen|Option auswählen|Privat · Gelegentlicher Verkauf|Gewerblicher Verkauf / Vermietung|Regelmäßige Tätigkeit · DIGIYLYFE-Mitgliedschaft|Profi-Mitgliedschaft ansehen|pro Monat",
+  "nl": "Publiceren · Betaling wordt door een persoon gecontroleerd · 0% DIGIY-commissie op de transactie|Kies je land|Kies je optie|Particulier · Incidentele verkoop|Professionele verkoper / verhuurder|Regelmatige activiteit · DIGIYLYFE-lidmaatschap|Bekijk professioneel lidmaatschap|per maand",
+  "ar": "نشر · يتحقق شخص من الدفع · عمولة DIGIY على المعاملة 0٪|اختر بلدك|اختر مسارك|فرد · بيع عرضي|بائع / مؤجر محترف|نشاط منتظم · عضوية DIGIYLYFE|عرض العضوية المهنية|شهريًا",
+  "wo": "Siiwal · Nit moo seet pey bi · 0 % komisoŋ DIGIY ci jaay bi|Tànnal sa réew|Tànnal sa yoon|Nit ku jaay yenn saa|Jaaykat / ku di luwe ci liggéeyam|Liggéey bu sax · Bokk ci DIGIYLYFE|Xool bokku profesioneel yi|ci weer",
+  "zh": "发布 · 人工核验付款 · DIGIY 交易佣金为 0%|选择国家|选择发布方式|个人 · 偶尔出售|专业卖家 / 出租方|长期经营 · DIGIYLYFE 会员|查看专业会员方案|每月"
+};
+  const requestedLang=(Q.get('lang')||'').toLowerCase();
+  const lang=Object.hasOwn(publishLanguages,requestedLang)?requestedLang:'fr';
+  const publishCopy=publishLanguages[lang].split('|');
+  document.documentElement.lang=lang;
+  document.documentElement.dir=lang==='ar'?'rtl':'ltr';
+  if(lang!=='fr')document.querySelectorAll('[data-publish-copy]').forEach(el=>{
+    el.textContent=publishCopy[Number(el.dataset.publishCopy)];
+  });
   let country=(Q.get('country')||'sn').toUpperCase();if(!MARKETS[country])country='SN';
   let selectedPack=(Q.get('pack')||'A').toUpperCase();if(!['A','B','C'].includes(selectedPack))selectedPack='A';
   const packInput=document.getElementById('pack'),countryInput=document.getElementById('countryId'),packSummary=document.getElementById('packSummary'),finalSummary=document.getElementById('finalSummary');
@@ -128,14 +148,14 @@ button{background:var(--green);color:#fff;margin-top:14px}.cta{background:var(--
     const m=current();countryInput.value=country;document.getElementById('countryLabel').value=m.label;
     document.querySelectorAll('[data-country]').forEach(b=>b.classList.toggle('active',b.dataset.country===country));
     document.getElementById('marketMeta').textContent=`${m.label} · devise ${m.currency} · indicatif ${m.calling} · tarifs appliqués automatiquement.`;
-    document.getElementById('proText').textContent=`Activité régulière : ADHÉRENT DIGIYLYFE · ${money(m.pro,m.currency)} / mois.`;
+    document.getElementById('proText').textContent=`${publishCopy[5]} · ${money(m.pro,m.currency)} ${publishCopy[7]}.`;
     document.getElementById('packs').innerHTML=Object.entries(m.packs).map(([k,v])=>`<div class="pack ${k===selectedPack?'active':''}" data-pack="${k}">${money(v.price,m.currency)}<small>${v.days} jours</small></div>`).join('');
     document.querySelectorAll('.pack').forEach(el=>el.addEventListener('click',()=>{selectedPack=el.dataset.pack;renderPack()}));
     document.getElementById('payLine').innerHTML=m.pay.map(x=>`<div class="payitem"><b>${x[0]}</b><br>${x[1]}<br>${x[2]}</div>`).join('');
     document.getElementById('paymentMethod').value=m.method;
     document.getElementById('itemPrice').placeholder=m.item;document.getElementById('zone').placeholder=m.zone;document.getElementById('city').placeholder=m.city;
     document.getElementById('whatsapp').placeholder=m.calling+'…';document.getElementById('telephone').placeholder=m.calling+'…';
-    document.getElementById('proLink').href=`https://digiylyfe.com/tarifs-adherents-1.html?lang=fr&country=${country.toLowerCase()}`;
+    document.getElementById('proLink').href=`https://digiylyfe.com/tarifs-adherents-1.html?lang=${lang}&country=${country.toLowerCase()}`;
     renderPack();
   }
   function renderPack(){
